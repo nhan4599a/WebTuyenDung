@@ -1,0 +1,12 @@
+[
+  {
+    "id": 3,
+    "username": "hoang@gmail.com",
+    "passwordHashed": "8BB0CF6EB9B17D0F7D22B456F121257DC1254E1F01665370476383EA776DF414",
+    "name": "Hoàng",
+    "role": 0,
+    "birthDay": "06/10/2000",
+    "address": "Thành phố Hồ Chí Minh",
+    "phoneNumber": "0123456789"
+  }
+]

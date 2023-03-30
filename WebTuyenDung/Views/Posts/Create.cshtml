@@ -1,0 +1,18 @@
+﻿@model WebTuyenDung.ViewModels.CreatePostViewModel
+
+@{
+  ViewBag.Title = "Tạo bài viết mới";
+  ViewBag.PrevPage = "Quản lý bài viết";
+  ViewBag.CurrentPage = "Tạo bài viết";
+  Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+  <script src="~/Assets/Plugins/ckeditor/ckeditor.js"></script>
+
+  <script>
+    var editor = CKEDITOR.replace("txtNoiDung");
+  </script>
+}
+
+@await Component.InvokeAsync("CreatePostViewComponent")

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 2,
+    "username": "nhatuyendung@gmail.com",
+    "passwordHashed": "0E9DB51810539883943E5599C9824A07985B6078261CCE78E7F876A5C155961C",
+    "name": "NCD Việt Nam",
+    "avatar": "logo223825242.png",
+    "coverImage": "bg-seccity220613511.jpg",
+    "role": 1,
+    "site": "Hà Nội",
+    "website": "https://ncd.com",
+    "size": "50 - 100 người",
+    "address": "Thành phố Hồ Chí Minh",
+    "description": "Công ty NCD Việt Nam",
+    "phoneNumber": "0123456789"
+  }
+]

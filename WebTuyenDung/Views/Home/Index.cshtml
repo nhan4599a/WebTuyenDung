@@ -1,0 +1,241 @@
+﻿@using WebTuyenDung.ViewModels
+@model HomePageViewModel
+
+@{
+  ViewData["Title"] = "Home Page";
+}
+
+@section css_Main {
+  <link rel="stylesheet" href="~/Assets/Client/css/home.css">
+}
+
+@section scripts_Main {
+  <script src="~/Assets/Client/js/style.js"></script>
+  <script src="~/Assets/Client/js/searchkey.js"></script>
+  <script src="~/Assets/Client/js/home.js"></script>
+  <script>
+    $(document).on({
+      ajaxStart: function () {
+        $("body").addClass("loading");
+      },
+      ajaxStop: function () {
+        $("body").removeClass("loading");
+      }
+    });
+  </script>
+}
+
+<div class="main__fixed bg-img"></div>
+<div class="main__search">
+  <div class="main__search--wrapper grid wide">
+    <h1 class="main__search--title">
+      Tìm việc làm cho sinh viên ngành Công nghệ thông tin
+    </h1>
+    @{
+      //Html.RenderAction("_ViewSearch", "Home");
+    }
+  </div>
+</div>
+
+<div class="main__cv">
+  <div class="main__cv--wrapper grid wide">
+    <div class="main__cv--content row">
+      <div class="cv__item col l-6 m-12 c-12">
+        <div class="cv__item--wrapper">
+          <div class="cv__item--description">
+            <h2>Tạo CV</h2>
+            <h3>Giúp bạn tạo CV xin việc trực tiếp trên hệ thống nhanh chóng, tiện lợi hơn bao giờ hết...</h3>
+            <a class="cv__item--link button--link" id="upload-cv">
+              <span><i class="fas fa-plus"></i></span>
+              Tạo CV ngay
+            </a>
+          </div>
+          <div class="cv__item--img">
+            <img class="full_width" src="~/Assets/Client/img/create_cv.png" alt="Tạo mới CV">
+          </div>
+        </div>
+      </div>
+      <div class="cv__item col l-6 m-12 c-12">
+        <div class="cv__item--wrapper">
+          <div class="cv__item--description">
+            <h2>Sử dụng CV sẵn có</h2>
+            <h3>Nếu bạn đã có CV của riêng mình, hãy tải lên cho nhà tuyển dụng nhìn thấy</h3>
+            <a href="javascript:void(0)" class="cv__item--link button--link">
+              <span><i class="fas fa-upload"></i></span>
+              Upload CV ngay
+            </a>
+          </div>
+          <div class="cv__item--img">
+            <img class="full_width" src="~/Assets/Client/img/upload_cv.png" alt="Upload CV của bạn">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main__recruitment">
+  <div class="main__recruitment--wrapper grid wide">
+    <h1 class="main__recruitment--title main__item--title">
+      Tin tuyển dụng mới nhất
+    </h1>
+    <div class="main__recruitment--content row">
+      @foreach (var item in Model.TopRecruimentNews)
+      {
+        <div class="recruitment__item col l-4 m-6 c-12">
+          <div class="recruitment__item--wrapper">
+            <div class="recruitment__item--img">
+              <img class="full_width" src="@item.Employer.AvatarUrl" alt="Logo nhà tuyển dụng">
+              <div class="recruitment__item--time">@item.Employer.Site</div>
+            </div>
+            <div class="recruitment__item--name">
+              <h2 class="recruitment__name--title">
+                <a href="/tin-tuyen-dung/@item.Id" class="recruitment__name--link text-line-1">
+                  @item.JobTitle
+                </a>
+              </h2>
+              <div class="recruitment__name--employer">
+                <a href="/cong-ty/@item.Employer.Name-@item.Employer.Id" class="recruitment__employer--link text-line-1">
+                  <span class="recruitment__icon"><i class="far fa-building"></i></span>
+                  <span class="">@item.Employer.Name</span>
+                </a>
+              </div>
+              <p class="recruitment__salary">
+                <span class="recruitment__icon"><i class="fas fa-money-check-alt"></i></span>
+                <span>@item.SalaryRange</span>
+              </p>
+              <p class="recruitment__address">
+                <span class="recruitment__icon"><i class="fas fa-map-marked"></i></span>
+                <span>@item.JobType</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<div class="main__employer">
+  <div class="main__employer--wrapper grid wide">
+    <h1 class="main__employer--title main__item--title">
+      TOP nhà tuyển dụng hàng đầu
+    </h1>
+    <div class="main__employer--content row">
+      <div class="employer__item col l-2-4 m-4 c-6">
+        <div class="employer__item--wrapper">
+          <a href="" class="employer__item--link">
+            <img class="" src="~/Assets/Client/img/Employer/avatar_1639983010356.png" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="employer__item col l-2-4 m-4 c-6">
+        <div class="employer__item--wrapper">
+          <a href="" class="employer__item--link">
+            <img class="" src="~/Assets/Client/img/Employer/avatar_1599494254872.png" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="employer__item col l-2-4 m-4 c-6">
+        <div class="employer__item--wrapper">
+          <a href="" class="employer__item--link">
+            <img class="" src="~/Assets/Client/img/Employer/avatar_1639983010356.png" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="employer__item col l-2-4 m-4 c-6">
+        <div class="employer__item--wrapper">
+          <a href="" class="employer__item--link">
+            <img class="" src="~/Assets/Client/img/Employer/avatar_1639967923096.png" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="employer__item col l-2-4 m-4 c-6">
+        <div class="employer__item--wrapper">
+          <a href="" class="employer__item--link">
+            <img class="" src="~/Assets/Client/img/Employer/avatar_1639464398593.png" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="employer__item col l-2-4 m-4 c-6">
+        <div class="employer__item--wrapper">
+          <a href="" class="employer__item--link">
+            <img class="" src="~/Assets/Client/img/Employer/avatar_1626082875301.png" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="employer__item col l-2-4 m-4 c-6">
+        <div class="employer__item--wrapper">
+          <a href="" class="employer__item--link">
+            <img class="" src="~/Assets/Client/img/Employer/avatar_1625285710869.png" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="employer__item col l-2-4 m-4 c-6">
+        <div class="employer__item--wrapper">
+          <a href="" class="employer__item--link">
+            <img class="" src="~/Assets/Client/img/Employer/avatar_1618804000607.png" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="employer__item col l-2-4 m-4 c-6">
+        <div class="employer__item--wrapper">
+          <a href="" class="employer__item--link">
+            <img class="" src="~/Assets/Client/img/Employer/avatar_1603344490671.png" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="employer__item col l-2-4 m-4 c-6">
+        <div class="employer__item--wrapper">
+          <a href="" class="employer__item--link">
+            <img class="" src="~/Assets/Client/img/Employer/avatar_1599494254872.png" alt="">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main__blog">
+  <div class="main__blog--wrapper grid wide">
+    <h1 class="main__blog--title main__item--title">
+      Bài viết cho bạn
+    </h1>
+    <div class="main__blog--content row">
+      @foreach (var item in Model.TopPosts)
+      {
+        <div class="blog__item col l-4">
+          <div class="blog__item--wrapper">
+            <a href="#" class="blog__item--link">
+              <div class="blog__item--img">
+                <img class="full_width" src="@item.Image" alt="@item.Title">
+              </div>
+              <div class="blog__item--content">
+                <div class="blog__item--description">
+                  <h3 class="blog__item--name text-line-2">
+                    @item.Title
+                  </h3>
+                  <p class="blog__item--data text-line-2">
+                    <strong>@item.PostedBy</strong>
+                  </p>
+                  <p class="blog__item--see">Xem thêm>></p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+@section scripts_Main {
+  @if (User.Identity!.IsAuthenticated)
+  {
+    <script>
+      $('#upload-cv').click(() => {
+        window.location.href = '/cv'
+      })
+    </script>
+  }
+}
