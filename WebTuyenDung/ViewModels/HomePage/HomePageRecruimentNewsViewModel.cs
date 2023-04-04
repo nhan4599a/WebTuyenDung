@@ -8,7 +8,7 @@
 
         public EmployerViewModel Employer { get; set; } = default!;
 
-        public string SalaryRange { get; set; } = default!;
+        public string Salary { get; set; } = default!;
 
         public string JobType { get; set; } = default!;
     }

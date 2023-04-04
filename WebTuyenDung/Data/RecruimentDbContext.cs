@@ -21,26 +21,26 @@ namespace WebTuyenDung.Data
 
         public DbSet<Candidate> Candidates { get; set; }
 
+        public DbSet<Locale> Locales { get; set; }
+
+        public DbSet<CurriculumVitae> CVs { get; set; }
+
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
             base.ConfigureConventions(configurationBuilder);
+
             configurationBuilder
                 .Properties<DateOnly>()
                 .HaveConversion<DateOnlyConverter>();
+
+            configurationBuilder
+                .Properties<DateOnly?>()
+                .HaveConversion<NullableDateOnlyConverter>();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder
-                .Entity<BaseEntity>()
-                .HasQueryFilter(e => !e.IsDeleted);
-
-            modelBuilder
-                .Entity<BaseEntity>()
-                .Property(e => e.CreatedAt)
-                .HasDefaultValueSql("GETDATE()");
 
             modelBuilder
                 .Ignore<BaseEntity>()
@@ -53,7 +53,8 @@ namespace WebTuyenDung.Data
             modelBuilder
                 .HasUserData()
                 .HasData<RecruimentNews>()
-                .HasData<Post>();
+                .HasData<Post>()
+                .HasData<Locale>();
         }
     }
 }

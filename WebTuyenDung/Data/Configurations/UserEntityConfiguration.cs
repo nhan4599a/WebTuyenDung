@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WebTuyenDung.Enums;
 using WebTuyenDung.Models;
 
 namespace WebTuyenDung.Data.Configurations
 {
     public class UserEntityConfiguration
-        : IEntityTypeConfiguration<User>, IEntityTypeConfiguration<Candidate>, IEntityTypeConfiguration<Employer>
+        : BaseEntityConfiguration<User>, IEntityTypeConfiguration<Candidate>, IEntityTypeConfiguration<Employer>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public override void Configure(EntityTypeBuilder<User> builder)
         {
+            base.Configure(builder);
+
             builder
                 .HasIndex(e => e.Role);
 

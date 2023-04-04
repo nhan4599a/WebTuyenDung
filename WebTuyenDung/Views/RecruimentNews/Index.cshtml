@@ -1,4 +1,6 @@
-﻿@using WebTuyenDung.ViewModels.RecruimentNews
+﻿@using WebTuyenDung.Constants;
+@using WebTuyenDung.Helper;
+@using WebTuyenDung.ViewModels.RecruimentNews
 @model DetailRecruimentNewsViewModel
 
 @{
@@ -11,13 +13,13 @@
 }
 
 @section css_Main {
-  <link rel="stylesheet" href="~/Assets/Client/css/tintuyendung.css">
+  <link rel="stylesheet" href="~/Assets/Client/css/recruiment-news.css">
 }
 
 @section scripts_Main {
   <script src="~/Assets/Client/js/style.js"></script>
   <script src="~/Assets/Client/js/searchkey.js"></script>
-  <script src="~/Assets/Client/js/tintuyendung.js"></script>
+  <script src="~/Assets/Client/js/recruiment-news.js"></script>
 }
 
 <div class="main__fixed bg-img"></div>
@@ -50,7 +52,7 @@
         </div>
       </div>
       <div class="employer__info--apply">
-        @if (DateTime.ParseExact(Model.Deadline, "dd/MM/yyyy HH:mm", null) > DateTime.Now)
+        @if (Model.Deadline == "" || (Model.Deadline != "" && DateOnly.ParseExact(Model.Deadline, DateTimeFormatConstants.DATE_ONLY_FORMAT, null) > DateTimeHelper.Today))
         {
           <div class="employer__apply--cv">
             <button class="apply__cv--button button--link">Ứng tuyển</button>
@@ -80,13 +82,12 @@
             </button>
           </form>
         }
-        else
+        else if (Model.Deadline != "")
         {
           <div class="employer__apply--cv">
             Hết hạn ứng tuyển
           </div>
         }
-
       </div>
     </div>
     <div class="main__employer--content row">
@@ -117,7 +118,7 @@
         <div class="employer__content--info">
           <h3 class="content__info--title">1. Thông tin tuyển dụng</h3>
           <ul class="content__info--list">
-            <li>Mức lương: @Model.SalaryRange</li>
+            <li>Mức lương: @Model.Salary</li>
             <li>Hình thức làm việc: @Model.JobType</li>
             <li>Giới tính: @Model.Gender</li>
             <li>Số lượng tuyển: @Model.NumberOfCandidates</li>
@@ -147,7 +148,7 @@
           <h3 class="content__info--title">5. Quyền lợi</h3>
           <div style="padding-left: 20px">
             <p>
-              @*@Html.Raw(Model.KyNangLienQuan)*@
+              @Html.Raw(Model.Benefit)
             </p>
           </div>
         </div>
@@ -180,7 +181,7 @@
                   <a href="/HoSoXinViec/HoSo?ungvien=@item.MaUngVien&id=@item.MaHoSo" target="_blank">@item.TenHoSo</a>
                 </div>
               }
-            }*@
+            }
             else
             {
               <div>
@@ -189,7 +190,7 @@
               <div>
                 <a class="btn btn-success" href="/HoSoXinViec/Create">Tạo hồ sơ mới</a>
               </div>
-            }
+            }*@
           </div>
         </div>
       </div>

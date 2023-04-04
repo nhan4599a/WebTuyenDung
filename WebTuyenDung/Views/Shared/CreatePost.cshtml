@@ -1,4 +1,5 @@
-﻿@model WebTuyenDung.ViewModels.CreatePostViewModel
+﻿@using WebTuyenDung.ViewComponents;
+@model WebTuyenDung.ViewModels.CreatePostViewModel
 
 @{
   ViewBag.Title = "Tạo bài viết mới";
@@ -15,4 +16,4 @@
   </script>
 }
 
-@await Component.InvokeAsync("CreatePostViewComponent")
+@await (Component.InvokeAsync<CreatePostViewComponent>())

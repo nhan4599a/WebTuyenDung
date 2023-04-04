@@ -1,7 +1,7 @@
 ﻿@model WebTuyenDung.ViewModels.CreatePostViewModel
 
 @{
-  var areaName = ViewContext.RouteData.DataTokens["area"];
+  var areaName = TempData["area"];
   var backToPreviousPageUrl = areaName + "/posts";
 }
 

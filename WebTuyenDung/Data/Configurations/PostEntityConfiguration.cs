@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WebTuyenDung.Models;
 
 namespace WebTuyenDung.Data.Configurations
 {
-    public class PostEntityConfiguration : IEntityTypeConfiguration<Post>
+    public class PostEntityConfiguration : BaseEntityConfiguration<Post>
     {
-        public void Configure(EntityTypeBuilder<Post> builder)
+        public override void Configure(EntityTypeBuilder<Post> builder)
         {
+            base.Configure(builder);
+
             builder
                 .HasOne(e => e.Author)
                 .WithMany()

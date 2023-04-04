@@ -1,0 +1,22 @@
+﻿@using WebTuyenDung.ViewComponents;
+@{
+  ViewBag.Title = "Sửa thông tin bài viết";
+  ViewBag.PrevPage = "Bài viết";
+  ViewBag.CurrentPage = "Sửa bài viết";
+  Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@section scripts {
+  <script src="~/Assets/Plugins/ckeditor/ckeditor.js"></script>
+
+  <script>
+    var editor = CKEDITOR.replace("txtNoiDung");
+
+    $('#Image').change(() => {
+      $('#image_update').css('display', 'none');
+    })
+  </script>
+}
+
+@await (Component.InvokeAsync<EditPostViewComponent>())

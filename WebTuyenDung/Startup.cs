@@ -46,11 +46,17 @@ namespace WebTuyenDung
                 {
                     policy.RequireRole(AuthorizationConstants.EMPLOYER_ROLE, AuthorizationConstants.ADMIN_ROLE);
                 });
+
+                options.AddPolicy(AuthorizationConstants.CANDIDATE_ROLE, policy =>
+                {
+                    policy.RequireRole(AuthorizationConstants.CANDIDATE_ROLE);
+                });
             });
 
-            services.AddSingleton<ImageService>();
+            services.AddSingleton<FileService>();
             services.AddSingleton<IAuthorizationMiddlewareResultHandler, AppAuthorizationResultHandler>();
             services.AddScoped<CreatePostService>();
+            services.AddScoped<LocaleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +82,8 @@ namespace WebTuyenDung
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
+
                 endpoints.MapControllerRoute(
                     name: "areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

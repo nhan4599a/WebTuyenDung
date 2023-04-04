@@ -13,5 +13,7 @@
         public string Deadline { get; set; } = default!;
 
         public string Status { get; set; } = default!;
+
+        public int View { get; set; }
     }
 }

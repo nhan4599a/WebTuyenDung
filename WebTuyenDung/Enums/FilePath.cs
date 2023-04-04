@@ -2,18 +2,20 @@
 
 namespace WebTuyenDung.Enums
 {
-    public enum ImagePath
+    public enum FilePath
     {
-        Post
+        Post,
+        CurriculumTitae
     }
 
     public static class ImagePathGenerator
     {
-        public static string GetContentDirectory(this ImagePath imagePath)
+        public static string GetContentDirectory(this FilePath imagePath)
         {
             return imagePath switch
             {
-                ImagePath.Post => "Blogs",
+                FilePath.Post => "Posts",
+                FilePath.CurriculumTitae => "CurriculumVitae",
                 _ => throw new NotImplementedException()
             } + "/";
         }

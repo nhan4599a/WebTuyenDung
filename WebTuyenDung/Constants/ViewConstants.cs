@@ -13,5 +13,7 @@
         public const string WAIT_FOR_APPROVAL_RECRUIMENT_NEWS = "WaitForApprovalRecruimentNews";
 
         public const string WAIT_FOR_APPROVAL_POSTS = "WaitForApprovalRecruimentPosts";
+
+        public const string CITIES = "Cities";
     }
 }

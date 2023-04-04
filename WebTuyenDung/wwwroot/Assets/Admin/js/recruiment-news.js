@@ -4,7 +4,10 @@
     if (!isApprovedRawString) {
         isApprovedRawString = '1';
     }
-    const isApproved = isApprovedRawString.toLowerCase() === '1';
+
+    const isApproved = isApprovedRawString === '1';
+
+    console.log(isApproved)
 
     $.ajax({
         url: "/admin/recruiment-news/search",
@@ -33,6 +36,11 @@
                 str += "<td>" + value.deadline + "</td>";
                 str += "<td>" + value.view + "</td>";
                 str += "<td><span class='badge badge-success'>" + value.status + "</span></td>";
+                if (!isApproved) {
+                    str += `<td>
+                                <a class="btn btn-success mt-1" href="#" data-id="${value.id}">Duyệt bài</a>
+                            </td>`
+                }
                 str += "</tr>";
 
                 //create pagination
@@ -61,3 +69,19 @@
         }
     });
 }
+
+$('body').on('click', '#datatablesSimple a.btn.btn-success', function (e) {
+    e.preventDefault();
+
+    const recruimentNewsId = $(this).data('id');
+
+    if (confirm(`Bạn có muốn duyệt tin tuyển dụng có Mã = ${recruimentNewsId} này không?`)) {
+        $.ajax({
+            url: `/admin/recruiment-news/approve/${recruimentNewsId}`,
+            type: 'PUT',
+            success: () => {
+                location.reload();
+            }
+        })
+    }
+})

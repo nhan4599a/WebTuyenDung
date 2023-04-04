@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using WebTuyenDung.Constants;
 using WebTuyenDung.Data;
+using Z.EntityFramework.Plus;
 
 namespace WebTuyenDung.Areas.Admin.ViewComponents
 {
@@ -13,9 +15,22 @@ namespace WebTuyenDung.Areas.Admin.ViewComponents
             this.dbContext = dbContext;
         }
 
-        public Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            return Task.FromResult((IViewComponentResult)View());
+            var waitForApprovalRecruimentNewsCount = dbContext
+                                                        .RecruimentNews
+                                                        .DeferredCount(e => !e.IsApproved)
+                                                        .FutureValue();
+
+            var waitForApprovalPostsCount = dbContext
+                                                .Posts
+                                                .DeferredCount(e => !e.IsApproved)
+                                                .FutureValue();
+
+            ViewData[ViewConstants.WAIT_FOR_APPROVAL_RECRUIMENT_NEWS] = await waitForApprovalRecruimentNewsCount.ValueAsync();
+            ViewData[ViewConstants.WAIT_FOR_APPROVAL_POSTS] = await waitForApprovalPostsCount.ValueAsync();
+
+            return View();
         }
     }
 }

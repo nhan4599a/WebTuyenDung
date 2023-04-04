@@ -28,7 +28,7 @@ namespace WebTuyenDung.Helper
             var data = await futureData.ToListAsync();
             var count = futureCount.Value;
 
-            var totalPages = (data.Count == 0 || count == 0) ? 0 : Math.Ceiling(((double)data.Count) / count);
+            var totalPages = (data.Count == 0 || count == 0) ? 0 : Math.Ceiling((count * 1.0) / pageSize);
 
             return new PaginationResult<TResult>((int)totalPages, count, data);
         }

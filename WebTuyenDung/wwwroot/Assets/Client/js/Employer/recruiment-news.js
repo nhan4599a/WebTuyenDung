@@ -1,31 +1,40 @@
 ﻿var load = function (keyWord, pageIndex, pageSize) {
+
+    const mode = getQueryParams().mode ?? 0;
+
     $.ajax({
         url: "/employer/recruiment-news/search",
         data: {
-            trangThai: true,
             keyWord: keyWord,
             pageIndex: pageIndex,
-            pageSize: pageSize
+            pageSize: pageSize,
+            mode: mode
         },
         type: "GET",
         success: function (response) {
-            var pageCurrent = pageIndex;
+            var pageCurrent = parseInt(pageIndex);
             var totalPages = response.totalPages;
 
             var str = "";
             var info = `Trang ${pageCurrent} / ${totalPages}`;
+            var startSTT = ((pageCurrent - 1) * pageSize) + 1;
+
             $("#selection-datatable_info").text(info);
             $.each(response.data, function (index, value) {
                 str += "<tr>";
-                str += "<td>" + value.id + "</td>";
-                str += `<td><a target="_blank" href="/tin-tuyen-dung/${value.TieuDeTTD}-${value.MaTTD}">${value.TenCongViec}</td>`;
+                str += "<td>" + (startSTT + index) + "</td>";
+                str += `<td><a target="_blank" href="/recruiment-news/${value.id}">${value.title}</td>`;
                 str += "<td>" + value.numberOfCandidates + "</td>";
                 str += "<td>" + value.createdAt + "</td>";
                 str += "<td>" + value.deadline + "</td>";
                 str += "<td>" + value.view + "</td>";
                 str += "<td><span class='badge badge-success'>" + value.status + "</span></td>";
-                str += '<td class="d-flex"><a class="btn btn-warning" href="/nha-tuyen-dung/TinTuyenDung/Edit/' + value.id + '">Sửa</a>';
-                str += '<a class="btn btn-danger ml-1" href="#" data-user=' + value.id + '>Xóa</a>';
+                if (mode == 0 || mode == 1) {
+                    str += `<td class="d-flex"><a class="btn btn-warning" href="/employer/recruiment-news/edit/${value.id}">Sửa</a>`;
+                    str += `<a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a>`;
+                } else if (mode == 2) {
+                    str += `<td class="d-flex"><a class="btn btn-danger ml-1" href="/employer/recrument-news/edit/${value.id}">Gia hạn thêm</a></td>`
+                }
 
                 //create pagination
                 var pagination_string = "";
@@ -60,11 +69,9 @@ $("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
     var member_delete = $(this).attr('data-user');
     if (confirm("Bạn có muốn xóa tin tuyển dụng có Mã = " + member_delete + " này không?")) {
         $.ajax({
-            url: "/nha-tuyen-dung/TinTuyenDung/Delete",
-            type: "POST",
-            data: { maTTD: member_delete },
-            dataType: "json",
-            success: (result) => {
+            url: `/employer/recruiment-news/delete/${member_delete}`,
+            type: "DELETE",
+            success: () => {
                 location.reload();
             }
         });

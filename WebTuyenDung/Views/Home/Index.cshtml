@@ -23,6 +23,28 @@
       }
     });
   </script>
+
+  @if (User.Identity!.IsAuthenticated)
+  {
+    <script>
+      $('#upload-cv').click(() => {
+        window.location.href = '/cv'
+      })
+    </script>
+  }
+
+  <script>
+    // Show apply form
+    __('#upload-cv, .upload__button--cancel, .upload--close, .main__upload').forEach((item) => {
+      item.addEventListener('click', () => {
+        _('.main__upload').classList.toggle('show');
+      })
+    })
+
+    _('.main__upload--post').addEventListener('click', (e) => {
+      e.stopPropagation();
+    })
+  </script>
 }
 
 <div class="main__fixed bg-img"></div>
@@ -45,7 +67,7 @@
           <div class="cv__item--description">
             <h2>Tạo CV</h2>
             <h3>Giúp bạn tạo CV xin việc trực tiếp trên hệ thống nhanh chóng, tiện lợi hơn bao giờ hết...</h3>
-            <a class="cv__item--link button--link" id="upload-cv">
+            <a class="cv__item--link button--link" id="create-cv">
               <span><i class="fas fa-plus"></i></span>
               Tạo CV ngay
             </a>
@@ -60,7 +82,7 @@
           <div class="cv__item--description">
             <h2>Sử dụng CV sẵn có</h2>
             <h3>Nếu bạn đã có CV của riêng mình, hãy tải lên cho nhà tuyển dụng nhìn thấy</h3>
-            <a href="javascript:void(0)" class="cv__item--link button--link">
+            <a href="javascript:void(0)" class="cv__item--link button--link" id="upload-cv">
               <span><i class="fas fa-upload"></i></span>
               Upload CV ngay
             </a>
@@ -90,7 +112,7 @@
             </div>
             <div class="recruitment__item--name">
               <h2 class="recruitment__name--title">
-                <a href="/tin-tuyen-dung/@item.Id" class="recruitment__name--link text-line-1">
+                <a href="/recruiment-news/@item.Id" class="recruitment__name--link text-line-1">
                   @item.JobTitle
                 </a>
               </h2>
@@ -102,7 +124,7 @@
               </div>
               <p class="recruitment__salary">
                 <span class="recruitment__icon"><i class="fas fa-money-check-alt"></i></span>
-                <span>@item.SalaryRange</span>
+                <span>@item.Salary</span>
               </p>
               <p class="recruitment__address">
                 <span class="recruitment__icon"><i class="fas fa-map-marked"></i></span>
@@ -229,13 +251,31 @@
   </div>
 </div>
 
-@section scripts_Main {
-  @if (User.Identity!.IsAuthenticated)
-  {
-    <script>
-      $('#upload-cv').click(() => {
-        window.location.href = '/cv'
-      })
-    </script>
-  }
-}
+<div class="main__upload">
+  <form action="/cv/upload" method="post" class="main__upload--post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="main__upload--title">
+      <h4>Upload CV của bạn</h4>
+      <div class="upload--close"></div>
+    </div>
+    <div class="main__upload--content">
+      <div class="main__upload--upload">
+        <div>
+          <label for="cv_type-upload">Tải CV từ máy tính</label>
+          <div class="apply__content--uploadcv">
+            <input type="file" name="FileCV" id="cv_upload" hidden>
+            <label for="cv_upload" class="lb_upload">
+              <i class="fa-solid fa-upload"></i>
+              Chọn file
+            </label>
+            <span></span>
+          </div>
+        </div>
+      </div>
+      <div class="main__upload--button">
+        <button class="upload__button--cancel">Bỏ qua</button>
+        <button class="upload__button--submit">Upload CV</button>
+      </div>
+    </div>
+  </form>
+</div>

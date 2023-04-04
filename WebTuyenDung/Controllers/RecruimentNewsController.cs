@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using WebTuyenDung.Helper;
+using WebTuyenDung.Requests;
+using Microsoft.AspNetCore.Authorization;
+using WebTuyenDung.Constants;
 
 namespace WebTuyenDung.Controllers
 {
@@ -27,7 +31,7 @@ namespace WebTuyenDung.Controllers
                                         .Select(e => new DetailRecruimentNewsViewModel
                                         {
                                             Id = e.Id,
-                                            SalaryRange = e.Salary,
+                                            Salary = e.Salary,
                                             Gender = e.EmployeeGender.GetRepresentation(),
                                             JobType = e.JobType.GetRepresentation(),
                                             JobTitle = e.JobName,
@@ -42,10 +46,24 @@ namespace WebTuyenDung.Controllers
                                                 Description = e.Employer.Description,
                                                 Size = e.Employer.Size
                                             },
-                                            Deadline = e.Deadline.ToString("dd/MM/yyyy HH:mm")
+                                            Deadline = e.Deadline.GetApplicationTimeRepresentation()
                                         })
                                         .FirstOrDefaultAsync(e => e.Id == id);
+
+            if (recruimentNews == null)
+            {
+                return NotFound();
+            }
+
             return View(recruimentNews);
+        }
+
+        [Authorize(Policy = AuthorizationConstants.CANDIDATE_ONLY_POLICY)]
+        [HttpPost]
+        public async Task<IActionResult> Apply(int id, [FromForm] ApplyJobRequest request)
+        {
+
+            return View();
         }
     }
 }

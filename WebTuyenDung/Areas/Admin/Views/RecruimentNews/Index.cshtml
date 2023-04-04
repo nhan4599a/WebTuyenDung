@@ -1,7 +1,14 @@
-﻿@{
+﻿@using Microsoft.Extensions.Primitives;
+@{
   ViewBag.Title = "Danh sách tin tuyển dụng";
   ViewBag.PrevPage = "Quản lý tuyển dụng";
   ViewBag.CurrentPage = "Danh sách tin tuyển dụng";
+
+  var isApproved = Context.Request.Query["isApproved"];
+  if (isApproved == StringValues.Empty)
+  {
+    isApproved = "1";
+  }
 }
 
 @section scripts {
@@ -61,6 +68,10 @@
                   <th>Hạn nộp</th>
                   <th>Lượt xem</th>
                   <th>Trạng thái</th>
+                  @if (isApproved != "1")
+                  {
+                    <th>Chức năng</th>
+                  }
                 </tr>
               </thead>
               <tbody>

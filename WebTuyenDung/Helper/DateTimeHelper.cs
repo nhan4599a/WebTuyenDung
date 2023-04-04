@@ -17,6 +17,16 @@ namespace WebTuyenDung.Helper
             return date.ToString(DateTimeFormatConstants.DATE_ONLY_FORMAT);
         }
 
+        public static string GetApplicationTimeRepresentation(this DateOnly? date)
+        {
+            if (!date.HasValue)
+            {
+                return string.Empty;
+            }
+
+            return date.Value.GetApplicationTimeRepresentation();
+        }
+
         public static DateOnly ToDateOnly(this string date)
         {
             return DateOnly.ParseExact(date, DateTimeFormatConstants.DATE_ONLY_FORMAT);

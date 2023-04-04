@@ -11,7 +11,7 @@ using WebTuyenDung.ViewModels.Admin;
 
 namespace WebTuyenDung.Areas.Admin.Controllers
 {
-    [Route("{area}/recruiment-news/{action=Index}")]
+    [Route("{area}/recruiment-news/{action=Index}/{id?}")]
     public class RecruimentNewsController : BaseAdminController
     {
         private readonly RecruimentDbContext dbContext;

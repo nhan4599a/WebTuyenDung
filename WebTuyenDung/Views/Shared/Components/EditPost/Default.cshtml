@@ -1,0 +1,67 @@
+﻿@model Post
+
+@{
+  var areaName = TempData["area"];
+  var backToPreviousPageUrl = areaName + "/posts";
+}
+
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header py-2">
+          <h4 class="header-title mb-0">Sửa thông tin bài viết mã số: @Model.Id</h4>
+        </div>
+        <div class="collapse pt-3 show">
+          <form action="/posts/edit/@Model.Id" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+              @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+              <div class="form-group align-items-center row">
+                @Html.LabelFor(model => model.Title, "Tên bài viết", new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                  @Html.TextAreaFor(model => model.Title, new { @class = "form-control" })
+                  @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+              </div>
+
+              <div class="form-group align-items-center row">
+                @Html.LabelFor(model => model.Image, "Ảnh chính", new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                  @if (ViewBag.AnhChinh != null)
+                  {
+                    <div class="mb-1" id="image_update">
+                      <img src="@ViewBag.AnhChinh" width="150" height="100" />
+                    </div>
+                  }
+                  <input name="Image" id="Image" type="file" accept="image/*" />
+                </div>
+              </div>
+
+              <div class="form-group align-items-center row">
+                @Html.LabelFor(model => model.Content, "Nội dung", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                  @Html.TextAreaFor(model => model.Content, new { @class = "form-control", id = "txtNoiDung" })
+                  @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                </div>
+              </div>
+
+              <div class="form-group align-items-center row mt-3">
+                <div class="col-md-2">
+                  @Html.ActionLink("Trở về", "Index", "BaiViet", null, new { @class = "btn btn-light" })
+                  <a class="btn btn-light" href="@backToPreviousPageUrl">Trở về</a>
+                </div>
+
+                <div class="col-md-6">
+                  <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

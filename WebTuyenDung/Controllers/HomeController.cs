@@ -42,12 +42,12 @@ namespace WebTuyenDung.Controllers
                                 Id = e.Id,
                                 JobTitle = e.JobName,
                                 JobType = e.JobType.GetRepresentation(),
-                                SalaryRange = e.Salary,
+                                Salary = e.Salary,
                                 Employer = new EmployerViewModel
                                 {
                                     Id = e.Employer.Id,
                                     Name = e.Employer.Name,
-                                    Site = e.Employer.Site,
+                                    Site = e.Employer.Address,
                                     AvatarUrl = e.Employer.Avatar!
                                 }
                             })

@@ -12,9 +12,9 @@ namespace WebTuyenDung.Services
     public class CreatePostService
     {
         private readonly RecruimentDbContext dbContext;
-        private readonly ImageService imageService;
+        private readonly FileService imageService;
 
-        public CreatePostService(RecruimentDbContext dbContext, ImageService imageService)
+        public CreatePostService(RecruimentDbContext dbContext, FileService imageService)
         {
             this.dbContext = dbContext;
             this.imageService = imageService;
@@ -32,7 +32,7 @@ namespace WebTuyenDung.Services
             var post = new Post
             {
                 Title = createPostViewModel.Title,
-                Image = await imageService.SaveAsync(createPostViewModel.Image, ImagePath.Post),
+                Image = await imageService.SaveAsync(createPostViewModel.Image, FilePath.Post),
                 Content = createPostViewModel.Content,
                 CreatedBy = controller.User.GetUserId(),
                 IsApproved = areaName == "admin"

@@ -1,4 +1,12 @@
-﻿<div id="sidebar-menu">
+﻿@using WebTuyenDung.Constants;
+@using WebTuyenDung.Helper;
+
+@{
+  int waitForApprovalRecruimentNews = (int)ViewData[ViewConstants.WAIT_FOR_APPROVAL_RECRUIMENT_NEWS]!;
+  int waitForApprovalPosts = (int)ViewData[ViewConstants.WAIT_FOR_APPROVAL_POSTS]!;
+}
+
+<div id="sidebar-menu">
 
   <ul class="metismenu" id="side-menu">
 
@@ -42,14 +50,14 @@
       <a href="javascript: void(0);" class="waves-effect">
         <i class="remixicon-mail-open-line"></i>
         <span> Quản lý tuyển dụng </span>
-        @*@if (tinChuaDuyet > 0)
+        @if (waitForApprovalRecruimentNews > 0)
         {
-          <span class="badge badge-pink badge-pill float-right">@tinChuaDuyet</span>
+          <span class="badge badge-pink badge-pill float-right">@waitForApprovalRecruimentNews</span>
         }
         else
         {
           <span class="menu-arrow"></span>
-        }*@
+        }
         <span class="menu-arrow"></span>
       </a>
       <ul class="nav-second-level" aria-expanded="false">
@@ -61,10 +69,10 @@
         </li>
         <li>
           <a href="/admin/recruiment-news?isApproved=0" class="waves-effect">
-            @*@if (tinChuaDuyet > 0)
+            @if (waitForApprovalRecruimentNews > 0)
             {
-              <span class="badge badge-pink badge-pill float-right">@tinChuaDuyet</span>
-            }*@
+              <span class="badge badge-pink badge-pill float-right">@waitForApprovalRecruimentNews</span>
+            }
             <span> Tin tuyển dụng chờ duyệt </span>
           </a>
         </li>
@@ -73,41 +81,16 @@
 
     <li>
       <a href="javascript: void(0);" class="waves-effect">
-        <i class="remixicon-file-copy-2-line"></i>
-        <span> Quản lý danh mục </span>
-        <span class="menu-arrow"></span>
-      </a>
-      <ul class="nav-second-level" aria-expanded="false">
-        <li>
-          <a href="@Url.Action("ChuyenNganh","DanhMuc")">Chuyên ngành</a>
-        </li>
-        <li>
-          <a href="@Url.Action("CapBac","DanhMuc")">Cấp bậc</a>
-        </li>
-        <li>
-          <a href="@Url.Action("DiaChi","DanhMuc")">Địa chỉ</a>
-        </li>
-        <li>
-          <a href="@Url.Action("MucLuong","DanhMuc")">Mức lương</a>
-        </li>
-        <li>
-          <a href="@Url.Action("LoaiCongViec","DanhMuc")">Loại công việc</a>
-        </li>
-      </ul>
-    </li>
-
-    <li>
-      <a href="javascript: void(0);" class="waves-effect">
         <i class="remixicon-pages-line"></i>
         <span> Quản lý bài viết </span>
-        @*@if (baiVietChuaDuyet > 0)
+        @if (waitForApprovalPosts > 0)
         {
-          <span class="badge badge-pink badge-pill float-right">@baiVietChuaDuyet</span>
+          <span class="badge badge-pink badge-pill float-right">@waitForApprovalPosts</span>
         }
         else
         {
           <span class="menu-arrow"></span>
-        }*@
+        }
         <span class="menu-arrow"></span>
 
       </a>
@@ -120,10 +103,10 @@
         </li>
         <li>
           <a href="/admin/posts?isApproved=0" class="waves-effect">
-            @*@if (baiVietChuaDuyet > 0)
+            @if (waitForApprovalPosts > 0)
             {
-              <span class="badge badge-pink badge-pill float-right">@baiVietChuaDuyet</span>
-            }*@
+              <span class="badge badge-pink badge-pill float-right">@waitForApprovalPosts</span>
+            }
             <span> Bài viết chờ duyệt </span>
           </a>
         </li>

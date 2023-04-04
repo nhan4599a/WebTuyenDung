@@ -8,6 +8,7 @@
 		<ItemGroup>
 		  <Content Remove="DataSamples\CandidateData.json" />
 		  <Content Remove="DataSamples\EmployerData.json" />
+		  <Content Remove="DataSamples\LocaleData.json" />
 		  <Content Remove="DataSamples\PostData.json" />
 		  <Content Remove="DataSamples\RecruimentNewsData.json" />
 		  <Content Remove="DataSamples\UserData.json" />
@@ -25,19 +26,22 @@
 
 		<ItemGroup>
 		  <EmbeddedResource Include="DataSamples\CandidateData.json">
-		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  </EmbeddedResource>
 		  <EmbeddedResource Include="DataSamples\EmployerData.json">
-		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  </EmbeddedResource>
+		  <EmbeddedResource Include="DataSamples\LocaleData.json">
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  </EmbeddedResource>
 		  <EmbeddedResource Include="DataSamples\PostData.json">
-		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  </EmbeddedResource>
 		  <EmbeddedResource Include="DataSamples\RecruimentNewsData.json">
-		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  </EmbeddedResource>
 		  <EmbeddedResource Include="DataSamples\UserData.json">
-		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  </EmbeddedResource>
 		</ItemGroup>
 

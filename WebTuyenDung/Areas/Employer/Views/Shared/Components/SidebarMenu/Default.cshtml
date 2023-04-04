@@ -36,10 +36,10 @@
       </a>
       <ul class="nav-second-level" aria-expanded="false">
         <li>
-          <a href="@Url.Action("Index","TinTuyenDung")">Đang hiển thị</a>
+          <a href="/employer/recruiment-news">Đang hiển thị</a>
         </li>
         <li>
-          <a href="@Url.Action("ChoDuyet","TinTuyenDung")">
+          <a href="/employer/recruiment-news?mode=1">
             @if (waitForApprovalRecruimentNews > 0)
             {
               <span class="badge badge-pink badge-pill float-right">@waitForApprovalRecruimentNews</span>
@@ -48,10 +48,10 @@
           </a>
         </li>
         <li>
-          <a href="@Url.Action("HetHan","TinTuyenDung")">Hết hạn ứng tuyển</a>
+          <a href="/employer/recruiment-news?mode=2">Hết hạn ứng tuyển</a>
         </li>
         <li>
-          <a href="@Url.Action("Create","TinTuyenDung")">Đăng tin mới</a>
+          <a href="/employer/recruiment-news/create">Đăng tin mới</a>
         </li>
       </ul>
     </li>
@@ -90,7 +90,7 @@
           <a href="/employer/posts">Bài viết của bạn</a>
         </li>
         <li>
-          <a href="/employer/posts" class="waves-effect">
+          <a href="/employer/posts?isApproved=0" class="waves-effect">
             @if (waitForApprovalPosts > 0)
             {
               <span class="badge badge-pink badge-pill float-right">@waitForApprovalPosts</span>

@@ -42,7 +42,7 @@ namespace WebTuyenDung.Areas.Admin.Controllers
                                 Id = e.Id,
                                 Name = e.Name,
                                 Size = e.Size,
-                                Address = e.Site,
+                                Address = e.Address,
                                 PhoneNumber = e.PhoneNumber,
                                 Website = e.Website
                             });
