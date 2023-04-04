@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WebTuyenDung.Models;
 
 namespace WebTuyenDung.Data.Configurations
@@ -8,6 +9,13 @@ namespace WebTuyenDung.Data.Configurations
         public override void Configure(EntityTypeBuilder<RecruimentNews> builder)
         {
             base.Configure(builder);
+
+            builder
+                .HasOne(e => e.Employer)
+                .WithMany()
+                .HasForeignKey(e => e.EmployerId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasQueryFilter(e => !e.IsDeleted && !e.Employer.IsDeleted);
