@@ -4,10 +4,8 @@ namespace WebTuyenDung.Requests
 {
     public class ApplyJobRequest
     {
-        public bool IsCurriculumVitaeUploaded { get; set; }
+        public IFormFile? CV { get; set; }
 
-        public IFormFile? CurriculumVitae { get; set; }
-
-        public int? CurriculumVitaeId { get; set; }
+        public int? CVId { get; set; }
     }
 }

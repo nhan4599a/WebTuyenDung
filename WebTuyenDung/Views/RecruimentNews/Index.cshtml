@@ -158,64 +158,62 @@
 </div>
 
 <div class="main__apply">
-  @using (Html.BeginForm("UngTuyen", "Recruitment", FormMethod.Post, new { @class = "main__apply--post", enctype = "multipart/form-data" }))
-  {
-    @Html.AntiForgeryToken()
-    @Html.Hidden("MaTTD", Model.Id)
-    <div class="main__apply--title">
-      <h4>Ứng tuyển <span>@Model.JobTitle</span></h4>
-      <div class="apply--close"></div>
-    </div>
-    <div class="main__apply--content">
-      <div class="main__apply--online">
-        <div>
-          <input type="radio" hidden name="cv_type" id="cv_type-online">
-          <label for="cv_type-online">Sử dụng CV online</label>
-          <div class="apply__online--content">
-            @*@if (listCV.Count > 0)
-            {
-              foreach (var item in listCV)
-              {
-                <div class="apply__content--cv">
-                  <input type="radio" name="HoSo" value="/HoSoXinViec/HoSo?ungvien=@item.MaUngVien&id=@item.MaHoSo">
-                  <a href="/HoSoXinViec/HoSo?ungvien=@item.MaUngVien&id=@item.MaHoSo" target="_blank">@item.TenHoSo</a>
+  <form action="/recruiment-news/apply/@Model.Id" method="post" class="main__apply--post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div class="main__apply--title">
+            <h4>Ứng tuyển <span>@Model.JobTitle</span></h4>
+            <div class="apply--close"></div>
+        </div>
+        <div class="main__apply--content">
+            <div class="main__apply--online">
+                <div>
+                    <input type="radio" hidden name="cv_type" id="cv_type-online">
+                    <label for="cv_type-online">Sử dụng CV online</label>
+                    <div class="apply__online--content">
+                        @*@if (listCV.Count > 0)
+                        {
+                        foreach (var item in listCV)
+                        {
+                        <div class="apply__content--cv">
+                        <input type="radio" name="HoSo" value="/HoSoXinViec/HoSo?ungvien=@item.MaUngVien&id=@item.MaHoSo">
+                        <a href="/HoSoXinViec/HoSo?ungvien=@item.MaUngVien&id=@item.MaHoSo" target="_blank">@item.TenHoSo</a>
+                        </div>
+                        }
+                        }
+                        else
+                        {
+                        <div>
+                        <strong>Bạn chưa có hồ sơ xin việc</strong>
+                        </div>
+                        <div>
+                        <a class="btn btn-success" href="/HoSoXinViec/Create">Tạo hồ sơ mới</a>
+                        </div>
+                        }*@
+                    </div>
                 </div>
-              }
-            }
-            else
-            {
-              <div>
-                <strong>Bạn chưa có hồ sơ xin việc</strong>
-              </div>
-              <div>
-                <a class="btn btn-success" href="/HoSoXinViec/Create">Tạo hồ sơ mới</a>
-              </div>
-            }*@
-          </div>
+            </div>
+            <div class="main__apply--upload">
+                <div>
+                    <input type="radio" hidden name="cv_type" id="cv_type-upload">
+                    <label for="cv_type-upload">Tải CV từ máy tính</label>
+                    <div class="apply__content--uploadcv">
+                        <input type="file" name="cv" id="cv" hidden>
+                        <label for="cv" class="lb_upload">
+                            <i class="fa-solid fa-upload"></i>
+                            Chọn file
+                        </label>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="main__apply--note">
+                <h4>Lời nhắn:</h4>
+                <textarea name="letter" id="letter" rows="3" placeholder="Bạn có thể nêu mong muốn, lý do lựa chọn công ty này nhằm gây ấn tượng với nhà tuyển dụng..."></textarea>
+            </div>
+            <div class="main__apply--button">
+                <button class="apply__button--cancel">Bỏ qua</button>
+                <button class="apply__button--submit">Nộp CV</button>
+            </div>
         </div>
-      </div>
-      <div class="main__apply--upload">
-        <div>
-          <input type="radio" hidden name="cv_type" id="cv_type-upload">
-          <label for="cv_type-upload">Tải CV từ máy tính</label>
-          <div class="apply__content--uploadcv">
-            <input type="file" name="FileCV" id="cv_upload" hidden>
-            <label for="cv_upload" class="lb_upload">
-              <i class="fa-solid fa-upload"></i>
-              Chọn file
-            </label>
-            <span></span>
-          </div>
-        </div>
-      </div>
-      <div class="main__apply--note">
-        <h4>Lời nhắn:</h4>
-        <textarea name="letter" id="letter" rows="3" placeholder="Bạn có thể nêu mong muốn, lý do lựa chọn công ty này nhằm gây ấn tượng với nhà tuyển dụng..."></textarea>
-      </div>
-      <div class="main__apply--button">
-        <button class="apply__button--cancel">Bỏ qua</button>
-        <button class="apply__button--submit">Nộp CV</button>
-      </div>
-    </div>
-  }
+  </form>
 </div>

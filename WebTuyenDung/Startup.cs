@@ -47,9 +47,14 @@ namespace WebTuyenDung
                     policy.RequireRole(AuthorizationConstants.EMPLOYER_ROLE, AuthorizationConstants.ADMIN_ROLE);
                 });
 
-                options.AddPolicy(AuthorizationConstants.CANDIDATE_ROLE, policy =>
+                options.AddPolicy(AuthorizationConstants.CANDIDATE_ONLY_POLICY, policy =>
                 {
                     policy.RequireRole(AuthorizationConstants.CANDIDATE_ROLE);
+                });
+
+                options.AddPolicy(AuthorizationConstants.NOT_ADMIN_POLICY, policy =>
+                {
+                    policy.RequireRole(AuthorizationConstants.CANDIDATE_ROLE, AuthorizationConstants.EMPLOYER_ROLE);
                 });
             });
 

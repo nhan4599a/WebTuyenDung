@@ -6,6 +6,8 @@
 
         public const string CANDIDATE_ONLY_POLICY = "CandidateOnly";
 
+        public const string NOT_ADMIN_POLICY = "NotAdmin";
+
         public const string ADMIN_ROLE = "Admin";
 
         public const string EMPLOYER_ROLE = "Employer";

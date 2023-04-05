@@ -1,15 +1,17 @@
-﻿using WebTuyenDung.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+using WebTuyenDung.Constants;
+using WebTuyenDung.Data;
 using WebTuyenDung.Enums;
+using WebTuyenDung.Helper;
+using WebTuyenDung.Models;
+using WebTuyenDung.Requests;
+using WebTuyenDung.Services;
 using WebTuyenDung.ViewModels;
 using WebTuyenDung.ViewModels.RecruimentNews;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-using WebTuyenDung.Helper;
-using WebTuyenDung.Requests;
-using Microsoft.AspNetCore.Authorization;
-using WebTuyenDung.Constants;
 
 namespace WebTuyenDung.Controllers
 {
@@ -17,10 +19,12 @@ namespace WebTuyenDung.Controllers
     public class RecruimentNewsController : Controller
     {
         private readonly RecruimentDbContext dbContext;
+        private readonly FileService fileService;
 
-        public RecruimentNewsController(RecruimentDbContext dbContext)
+        public RecruimentNewsController(RecruimentDbContext dbContext, FileService fileService)
         {
             this.dbContext = dbContext;
+            this.fileService = fileService;
         }
 
         [Route("{id}")]
@@ -59,11 +63,64 @@ namespace WebTuyenDung.Controllers
         }
 
         [Authorize(Policy = AuthorizationConstants.CANDIDATE_ONLY_POLICY)]
-        [HttpPost]
+        [HttpPost("apply/{id}")]
         public async Task<IActionResult> Apply(int id, [FromForm] ApplyJobRequest request)
         {
+            var candidateName = User.GetName();
+            var jobTitle = await dbContext.RecruimentNews.Where(e => e.Id == id).Select(e => e.JobName).FirstOrDefaultAsync();
 
-            return View();
+            if (request.CV != null)
+            {
+                var cvFilePath = await fileService.SaveAsync(request.CV, FilePath.CurriculumTitae);
+
+                var transaction = await dbContext.Database.BeginTransactionAsync();
+
+                var savedCV = new CurriculumVitae
+                {
+                    Name = cvFilePath[..cvFilePath.IndexOf('.')],
+                    FilePath = cvFilePath,
+                    CandidateId = User.GetUserId(),
+                    IsUploadDirectlyByUser = false
+                };
+
+                dbContext.CVs.Add(savedCV);
+
+                await dbContext.SaveChangesAsync();
+
+                dbContext
+                    .JobApplications
+                    .Add(new JobApplication
+                    {
+                        CVId = savedCV.Id,
+                        RecruimentNewsId = id,
+                        CandidateId = User.GetUserId(),
+                        Status = JobApplicationStatus.Received,
+                        CandidateName = candidateName,
+                        JobTitle = jobTitle!
+                    });
+
+                await dbContext.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+            }
+            else
+            {
+                dbContext
+                    .JobApplications
+                    .Add(new JobApplication
+                    {
+                        CVId = request.CVId!.Value,
+                        RecruimentNewsId = id,
+                        CandidateId = User.GetUserId(),
+                        Status = JobApplicationStatus.Received,
+                        CandidateName = candidateName,
+                        JobTitle = jobTitle!
+                    });
+
+                await dbContext.SaveChangesAsync();
+            }
+
+            return Redirect($"/recruiment-news/{id}");
         }
     }
 }

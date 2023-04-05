@@ -20,6 +20,11 @@ namespace WebTuyenDung.Helper
             return int.Parse(identity.FindFirst(AuthenticationConstants.USER_ID_KEY)!.Value);
         }
 
+        public static string GetName(this ClaimsPrincipal identity)
+        {
+            return identity.FindFirst(AuthenticationConstants.USER_FORMAL_NAME_KEY)!.Value;
+        }
+
         public static Task SignInAsync(this HttpContext httpContext, User user)
         {
             var claimsPrinciple = user.GetClaimsPrinciple();

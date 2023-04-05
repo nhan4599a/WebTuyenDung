@@ -1,0 +1,110 @@
+﻿@using WebTuyenDung.Enums;
+@model WebTuyenDung.Models.JobApplication
+
+@{
+    ViewBag.Title = "Cập nhật trạng thái";
+    ViewBag.PrevPage = "Danh sách ứng tuyển";
+    ViewBag.CurrentPage = "Cập nhật trạng thái";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header py-2">
+                    <h4 class="header-title mb-0">Cập nhật trạng thái ứng tuyển của ứng viên</h4>
+                </div>
+                <div class="collapse pt-3 show">
+                    <form action="/employer/applications/edit/@Model.Id" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div class="form-group align-items-center row">
+                                @Html.LabelFor(model => model.JobTitle, "Tên công việc", new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.DisplayFor(model => model.JobTitle,  new { @class = "form-control", @readonly = "true" })
+                                </div>
+                            </div>
+
+                            <div class="form-group align-items-center row">
+                                @Html.LabelFor(model => model.CandidateName, "Tên ứng viên", new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.DisplayFor(model => model.CandidateName,  new { @class = "form-control", @readonly = "true" })
+                                </div>
+                            </div>
+
+                            <div class="form-group align-items-center row">
+                                @Html.LabelFor(model => model.CVId, "Hồ sơ", new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    <a href="/cv/@Model.CVId" target="_blank">Xem CV</a>
+                                </div>
+                            </div>
+
+                            <div class="form-group align-items-center row">
+                                @Html.LabelFor(model => model.Status, "Trạng thái", new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    <select name="status">
+                                        @if (Model.Status == JobApplicationStatus.Seen)
+                                        {
+                                            <option value="1" selected>Đã xem</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="1">Đã xem</option>
+                                        }
+                                        @if (Model.Status == JobApplicationStatus.Potential)
+                                        {
+                                            <option value="2" selected>Ứng viên tiềm năng</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="2">Ứng viên tiềm năng</option>
+                                        }
+                                        @if (Model.Status == JobApplicationStatus.Scheduled)
+                                        {
+                                            <option value="3">Đã Hẹn phỏng vấn</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="3">Đã Hẹn phỏng vấn</option>
+                                        }
+                                        @if (Model.Status == JobApplicationStatus.Passed)
+                                        {
+                                            <option value="4"selected>Đã vượt qua phỏng vấn</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="4">Đã vượt qua phỏng vấn</option>
+                                        }
+                                        @if (Model.Status == JobApplicationStatus.Rejected)
+                                        {
+                                            <option value="5" selected>Đã trượt</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="5">Đã trượt</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group align-items-center row mt-3">
+                                <div class="col-md-2">
+                                    <a class="btn btn-light" action="/employer/applications">Trở về</a>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

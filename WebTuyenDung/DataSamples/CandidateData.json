@@ -1,12 +1,12 @@
 [
-  {
-    "id": 3,
-    "username": "hoang@gmail.com",
-    "passwordHashed": "8BB0CF6EB9B17D0F7D22B456F121257DC1254E1F01665370476383EA776DF414",
-    "name": "Hoàng",
-    "role": 0,
-    "birthDay": "06/10/2000",
-    "address": "Thành phố Hồ Chí Minh",
-    "phoneNumber": "0123456789"
-  }
+    {
+        "id": 3,
+        "username": "hoang@gmail.com",
+        "passwordHashed": "ADAAAF16012951A6F84930B255397DE300A21BE67134CA88C4A055B2CB0A53F4",
+        "name": "Hoàng",
+        "role": 0,
+        "birthDay": "06/10/2000",
+        "address": "Thành phố Hồ Chí Minh",
+        "phoneNumber": "0123456789"
+    }
 ]

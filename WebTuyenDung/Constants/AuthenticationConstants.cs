@@ -11,6 +11,8 @@ namespace WebTuyenDung.Constants
 
         public const string USER_ID_KEY = ClaimTypes.NameIdentifier;
 
+        public const string USER_FORMAL_NAME_KEY = ClaimTypes.Name;
+
         public const string RETURN_URL = "ReturnUrl";
     }
 }

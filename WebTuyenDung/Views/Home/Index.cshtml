@@ -2,517 +2,529 @@
 @model HomePageViewModel
 
 @{
-  ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home Page";
 }
 
 @section css_Main {
-  <link rel="stylesheet" href="~/Assets/Client/css/home.css">
+    <link rel="stylesheet" href="~/Assets/Client/css/home.css">
 }
 
 @section scripts_Main {
-  <script src="~/Assets/Client/js/style.js"></script>
-  <script src="~/Assets/Client/js/searchkey.js"></script>
-  <script src="~/Assets/Client/js/home.js"></script>
-  <script>
-    $(document).on({
-      ajaxStart: function () {
-        $("body").addClass("loading");
-      },
-      ajaxStop: function () {
-        $("body").removeClass("loading");
-      }
-    });
-  </script>
-
-  @if (User.Identity!.IsAuthenticated)
-  {
+    <script src="~/Assets/Client/js/style.js"></script>
+    <script src="~/Assets/Client/js/searchkey.js"></script>
+    <script src="~/Assets/Client/js/home.js"></script>
     <script>
-      $('#upload-cv').click(() => {
-        window.location.href = '/cv'
-      })
+        $(document).on({
+            ajaxStart: function () {
+                $("body").addClass("loading");
+            },
+            ajaxStop: function () {
+                $("body").removeClass("loading");
+            }
+        });
     </script>
-  }
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
- <style>
-     .form-container {
-	width: 100vw;
-	height: 100vh;
-	background-color: #7b2cbf;
-	display: flex;
-   	justify-content: center;
-	align-items: center;
-}
-.upload-files-container {
-	background-color: #f7fff7;
-	width: 420px;
-	padding: 30px 60px;
-	border-radius: 40px;
-	display: flex;
-   	align-items: center;
-   	justify-content: center;
-	flex-direction: column;
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 10px 20px, rgba(0, 0, 0, 0.28) 0px 6px 6px;
-}
-.drag-file-area {
-	border: 2px dashed #7b2cbf;
-	border-radius: 40px;
-	margin: 10px 55px 15px;
-	padding: 30px 50px;
-	width: 350px;
-	text-align: center;
-}
-.drag-file-area .upload-icon {
-	font-size: 40px;
-}
-.drag-file-area h3 {
-	font-size: 20px;
-	margin: 15px 0;
-}
-.drag-file-area label {
-    color: black;
-	font-size: 19px;
-}
-.drag-file-area label .browse-files-text {
-	color: #7b2cbf;
-	font-weight: bolder;
-	cursor: pointer;
-}
-.browse-files span {
-	position: relative;
-	top: -25px;
-}
-.default-file-input {
-	opacity: 0;
-}
-.cannot-upload-message {
-	background-color: #ffc6c4;
-	font-size: 17px;
-	display: flex;
-	align-items: center;
-	margin: 5px 0;
-	padding: 5px 10px 5px 30px;
-	border-radius: 5px;
-	color: #BB0000;
-	display: none;
-}
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        .form-container {
+            width: 100vw;
+            height: 100vh;
+            background-color: #7b2cbf;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.cannot-upload-message span, .upload-button-icon {
-	padding-right: 10px;
-    padding-left: 20%;
-}
-.cannot-upload-message span:last-child {
-	padding-left: 20px;
-	cursor: pointer;
-}
-.file-block {
-	color: #f7fff7;
-	background-color: #7b2cbf;
-  	transition: all 1s;
-	width: 100%;
-	position: relative;
-	display: none;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	margin: 10px 0 15px;
-	padding: 10px 20px;
-	border-radius: 25px;
-	cursor: pointer;
-}
-.file-info {
-	display: flex;
-	align-items: center;
-	font-size: 15px;
-}
-.file-icon {
-	margin-right: 10px;
-}
-.file-name, .file-size {
-	padding: 0 3px;
-}
-.remove-file-icon {
-	cursor: pointer;
-}
-.progress-bar {
-	display: flex;
-	position: absolute;
-	bottom: 0;
-	left: 4.5%;
-	width: 0;
-	height: 5px;
-	border-radius: 25px;
-	background-color: #4BB543;
-}
-.upload-button {    
-	background-color: #7b2cbf;
-	color: #f7fff7;
-	display: flex;
-	align-items: center;
-	font-size: 18px;
-	border: none;
-	border-radius: 20px;
-	margin: 10px 150px;
-	padding: 7.5px 50px;
-	cursor: pointer;
-    text-transform: uppercase
-}
- </style>
+        .upload-files-container {
+            background-color: #f7fff7;
+            width: 420px;
+            padding: 30px 60px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 10px 20px, rgba(0, 0, 0, 0.28) 0px 6px 6px;
+        }
 
- <script>
-     var isAdvancedUpload = function() {
-  var div = document.createElement('div');
-  return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
-}();
+        .drag-file-area {
+            border: 2px dashed #7b2cbf;
+            border-radius: 40px;
+            margin: 10px 55px 15px;
+            padding: 30px 50px;
+            width: 350px;
+            text-align: center;
+        }
 
-let draggableFileArea = document.querySelector(".drag-file-area");
-let browseFileText = document.querySelector(".browse-files");
-let uploadIcon = document.querySelector(".upload-icon");
-let dragDropText = document.querySelector(".dynamic-message");
-let fileInput = document.querySelector(".default-file-input");
-let cannotUploadMessage = document.querySelector(".cannot-upload-message");
-let cancelAlertButton = document.querySelector(".cancel-alert-button");
-let uploadedFile = document.querySelector(".file-block");
-let fileName = document.querySelector(".file-name");
-let fileSize = document.querySelector(".file-size");
-let progressBar = document.querySelector(".progress-bar");
-let removeFileButton = document.querySelector(".remove-file-icon");
-let uploadButton = document.querySelector(".upload-button");
-let fileFlag = 0;
+            .drag-file-area .upload-icon {
+                font-size: 40px;
+            }
 
-fileInput.addEventListener("click", () => {
-	fileInput.value = '';
-	console.log(fileInput.value);
-});
+            .drag-file-area h3 {
+                font-size: 20px;
+                margin: 15px 0;
+            }
 
-fileInput.addEventListener("change", e => {
-	console.log(" > " + fileInput.value)
-	uploadIcon.innerHTML = 'check_circle';
-	dragDropText.innerHTML = 'File Dropped Successfully!';
-	document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" class="default-file-input" style=""/> <span class="browse-files-text" style="top: 0; left: 10px"> browse file</span></span>`;
-	uploadButton.innerHTML = `Upload`;
-	fileName.innerHTML = fileInput.files[0].name;
-	fileSize.innerHTML = (fileInput.files[0].size/1024).toFixed(1) + " KB";
-	uploadedFile.style.cssText = "display: flex;";
-	progressBar.style.width = 0;
-	fileFlag = 0;
-});
+            .drag-file-area label {
+                color: black;
+                font-size: 19px;
+            }
 
-uploadButton.addEventListener("click", () => {
-	let isFileUploaded = fileInput.value;
-	if(isFileUploaded != '') {
-		if (fileFlag == 0) {
-    		fileFlag = 1;
-    		var width = 0;
-    		var id = setInterval(frame, 50);
-    		function frame() {
-      			if (width >= 390) {
-        			clearInterval(id);
-					uploadButton.innerHTML = `<span class="material-icons-outlined upload-button-icon"> check_circle </span> Uploaded`;
-      			} else {
-        			width += 5;
-        			progressBar.style.width = width + "px";
-      			}
-    		}
-  		}
-	} else {
-		cannotUploadMessage.style.cssText = "display: flex; animation: fadeIn linear 1.5s;";
-	}
-});
+                .drag-file-area label .browse-files-text {
+                    color: #7b2cbf;
+                    font-weight: bolder;
+                    cursor: pointer;
+                }
 
-cancelAlertButton.addEventListener("click", () => {
-	cannotUploadMessage.style.cssText = "display: none;";
-});
+        .browse-files span {
+            position: relative;
+            top: -25px;
+        }
 
-if(isAdvancedUpload) {
-	["drag", "dragstart", "dragend", "dragover", "dragenter", "dragleave", "drop"].forEach( evt => 
-		draggableFileArea.addEventListener(evt, e => {
-			e.preventDefault();
-			e.stopPropagation();
-		})
-	);
+        .default-file-input {
+            opacity: 0;
+        }
 
-	["dragover", "dragenter"].forEach( evt => {
-		draggableFileArea.addEventListener(evt, e => {
-			e.preventDefault();
-			e.stopPropagation();
-			uploadIcon.innerHTML = 'file_download';
-			dragDropText.innerHTML = 'Drop your file here!';
-		});
-	});
+        .cannot-upload-message {
+            background-color: #ffc6c4;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            padding: 5px 10px 5px 30px;
+            border-radius: 5px;
+            color: #BB0000;
+            display: none;
+        }
 
-	draggableFileArea.addEventListener("drop", e => {
-		uploadIcon.innerHTML = 'check_circle';
-		dragDropText.innerHTML = 'File Dropped Successfully!';
-		document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" class="default-file-input" style=""/> <span class="browse-files-text" style="top: -23px; left: -20px;"> browse file</span> </span>`;
-		uploadButton.innerHTML = `Upload`;
-		
-		let files = e.dataTransfer.files;
-		fileInput.files = files;
-		console.log(files[0].name + " " + files[0].size);
-		console.log(document.querySelector(".default-file-input").value);
-		fileName.innerHTML = files[0].name;
-		fileSize.innerHTML = (files[0].size/1024).toFixed(1) + " KB";
-		uploadedFile.style.cssText = "display: flex;";
-		progressBar.style.width = 0;
-		fileFlag = 0;
-	});
-}
+            .cannot-upload-message span, .upload-button-icon {
+                padding-right: 10px;
+                padding-left: 20%;
+            }
 
-removeFileButton.addEventListener("click", () => {
-	uploadedFile.style.cssText = "display: none;";
-	fileInput.value = '';
-	uploadIcon.innerHTML = 'file_upload';
-	dragDropText.innerHTML = 'Drag & drop any file here';
-	document.querySelector(".label").innerHTML = `or <span class="browse-files"> <input type="file" class="default-file-input"/> <span class="browse-files-text">browse file</span> <span>from device</span> </span>`;
-	uploadButton.innerHTML = `Upload`;
-});
- </script>
+                .cannot-upload-message span:last-child {
+                    padding-left: 20px;
+                    cursor: pointer;
+                }
 
-  <script>
-    // Show apply form
-    __('#upload-cv, .upload__button--cancel, .upload--close, .main__upload').forEach((item) => {
-      item.addEventListener('click', () => {
-        _('.main__upload').classList.toggle('show');
-      })
-    })
+        .file-block {
+            color: #f7fff7;
+            background-color: #7b2cbf;
+            transition: all 1s;
+            width: 100%;
+            position: relative;
+            display: none;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0 15px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
 
-    _('.main__upload--post').addEventListener('click', (e) => {
-      e.stopPropagation();
-    })
-  </script>
+        .file-info {
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+        }
+
+        .file-icon {
+            margin-right: 10px;
+        }
+
+        .file-name, .file-size {
+            padding: 0 3px;
+        }
+
+        .remove-file-icon {
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            left: 4.5%;
+            width: 0;
+            height: 5px;
+            border-radius: 25px;
+            background-color: #4BB543;
+        }
+
+        .upload-button {
+            background-color: #7b2cbf;
+            color: #f7fff7;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            border: none;
+            border-radius: 20px;
+            margin: 10px 150px;
+            padding: 7.5px 50px;
+            cursor: pointer;
+            text-transform: uppercase
+        }
+    </style>
+
+    <script>
+        var isAdvancedUpload = function () {
+            var div = document.createElement('div');
+            return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
+        }();
+
+        let draggableFileArea = document.querySelector(".drag-file-area");
+        let browseFileText = document.querySelector(".browse-files");
+        let uploadIcon = document.querySelector(".upload-icon");
+        let dragDropText = document.querySelector(".dynamic-message");
+        let fileInput = document.querySelector(".default-file-input");
+        let cannotUploadMessage = document.querySelector(".cannot-upload-message");
+        let cancelAlertButton = document.querySelector(".cancel-alert-button");
+        let uploadedFile = document.querySelector(".file-block");
+        let fileName = document.querySelector(".file-name");
+        let fileSize = document.querySelector(".file-size");
+        let progressBar = document.querySelector(".progress-bar");
+        let removeFileButton = document.querySelector(".remove-file-icon");
+        let uploadButton = document.querySelector(".upload-button");
+        let fileFlag = 0;
+        let uploadForm = document.querySelector('#upload-cv-form');
+
+        fileInput.addEventListener("click", () => {
+            fileInput.value = '';
+            console.log(fileInput.value);
+        });
+
+        fileInput.addEventListener("change", e => {
+            console.log(" > " + fileInput.value)
+            uploadIcon.innerHTML = 'check_circle';
+            dragDropText.innerHTML = 'File Dropped Successfully!';
+            document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" name="CV" class="default-file-input" /> <span class="browse-files-text" style="top: 0; left: 10px"> browse file</span></span>`;
+            uploadButton.innerHTML = `Upload`;
+            fileName.innerHTML = fileInput.files[0].name;
+            fileSize.innerHTML = (fileInput.files[0].size / 1024).toFixed(1) + " KB";
+            uploadedFile.style.cssText = "display: flex;";
+            progressBar.style.width = 0;
+            fileFlag = 0;
+        });
+
+        uploadButton.addEventListener("click", () => {
+            let isFileUploaded = fileInput.value;
+            if (isFileUploaded != '') {
+                if (fileFlag == 0) {
+                    fileFlag = 1;
+                }
+            } else {
+                cannotUploadMessage.style.cssText = "display: flex; animation: fadeIn linear 1.5s;";
+            }
+        });
+
+        cancelAlertButton.addEventListener("click", () => {
+            cannotUploadMessage.style.cssText = "display: none;";
+        });
+
+        if (isAdvancedUpload) {
+            ["drag", "dragstart", "dragend", "dragover", "dragenter", "dragleave", "drop"].forEach(evt =>
+                draggableFileArea.addEventListener(evt, e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                })
+            );
+
+            ["dragover", "dragenter"].forEach(evt => {
+                draggableFileArea.addEventListener(evt, e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    uploadIcon.innerHTML = 'file_download';
+                    dragDropText.innerHTML = 'Drop your file here!';
+                });
+            });
+
+            draggableFileArea.addEventListener("drop", e => {
+                uploadIcon.innerHTML = 'check_circle';
+                dragDropText.innerHTML = 'File Dropped Successfully!';
+                document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" class="default-file-input" style=""/> <span class="browse-files-text" style="top: -23px; left: -20px;"> browse file</span> </span>`;
+                uploadButton.innerHTML = `Upload`;
+
+                let files = e.dataTransfer.files;
+                fileInput.files = files;
+                console.log(files[0].name + " " + files[0].size);
+                console.log(document.querySelector(".default-file-input").value);
+                fileName.innerHTML = files[0].name;
+                fileSize.innerHTML = (files[0].size / 1024).toFixed(1) + " KB";
+                uploadedFile.style.cssText = "display: flex;";
+                progressBar.style.width = 0;
+                fileFlag = 0;
+            });
+        }
+
+        removeFileButton.addEventListener("click", () => {
+            uploadedFile.style.cssText = "display: none;";
+            fileInput.value = '';
+            uploadIcon.innerHTML = 'file_upload';
+            dragDropText.innerHTML = 'Drag & drop any file here';
+            document.querySelector(".label").innerHTML = `or <span class="browse-files"> <input type="file" class="default-file-input" name="CV" /> <span class="browse-files-text">browse file</span> <span>from device</span> </span>`;
+            uploadButton.innerHTML = `Upload`;
+        });
+
+        uploadForm.addEventListener('submit', e => {
+            e.preventDefault();
+
+            let tempData = $(uploadForm).serializeArray();
+            let formData = new FormData();
+            formData.append('__RequestVerificationToken', tempData[0].value)
+            formData.append('name', tempData[1].value);
+            formData.append('cv', fileInput.files[0]);
+
+            $.ajax({
+                url: '/cv/upload',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: () => {
+                    _('.main__upload').classList.toggle('show');
+                    alert('Upload cv thành công')
+                }
+            })
+        })
+    </script>
+
+    <script>
+        // Show apply form
+        __('#upload-cv, .upload__button--cancel, .upload--close, .main__upload').forEach((item) => {
+            item.addEventListener('click', () => {
+                _('.main__upload').classList.toggle('show');
+            })
+        })
+
+        _('.main__upload--post').addEventListener('click', (e) => {
+            e.stopPropagation();
+        })
+    </script>
 }
 
 <div class="main__fixed bg-img"></div>
 <div class="main__search">
-  <div class="main__search--wrapper grid wide">
-    <h1 class="main__search--title">
-      Tìm việc làm cho sinh viên ngành Công nghệ thông tin
-    </h1>
-    @{
-      //Html.RenderAction("_ViewSearch", "Home");
-    }
-  </div>
+    <div class="main__search--wrapper grid wide">
+        <h1 class="main__search--title">
+            Tìm việc làm cho sinh viên ngành Công nghệ thông tin
+        </h1>
+        @{
+            //Html.RenderAction("_ViewSearch", "Home");
+        }
+    </div>
 </div>
 
 <div class="main__cv">
-  <div class="main__cv--wrapper grid wide">
-    <div class="main__cv--content row">
-      <div class="cv__item col l-6 m-12 c-12">
-        <div class="cv__item--wrapper">
-          <div class="cv__item--description">
-            <h2>Tạo CV</h2>
-            <h3>Giúp bạn tạo CV xin việc trực tiếp trên hệ thống nhanh chóng, tiện lợi hơn bao giờ hết...</h3>
-            <a class="cv__item--link button--link" id="create-cv">
-              <span><i class="fas fa-plus"></i></span>
-              Tạo CV ngay
-            </a>
-          </div>
-          <div class="cv__item--img">
-            <img class="full_width" src="~/Assets/Client/img/create_cv.png" alt="Tạo mới CV">
-          </div>
+    <div class="main__cv--wrapper grid wide">
+        <div class="main__cv--content row">
+            <div class="cv__item col l-6 m-12 c-12">
+                <div class="cv__item--wrapper">
+                    <div class="cv__item--description">
+                        <h2>Tạo CV</h2>
+                        <h3>Giúp bạn tạo CV xin việc trực tiếp trên hệ thống nhanh chóng, tiện lợi hơn bao giờ hết...</h3>
+                        <a class="cv__item--link button--link" id="create-cv">
+                            <span><i class="fas fa-plus"></i></span>
+                            Tạo CV ngay
+                        </a>
+                    </div>
+                    <div class="cv__item--img">
+                        <img class="full_width" src="~/Assets/Client/img/create_cv.png" alt="Tạo mới CV">
+                    </div>
+                </div>
+            </div>
+            <div class="cv__item col l-6 m-12 c-12">
+                <div class="cv__item--wrapper">
+                    <div class="cv__item--description">
+                        <h2>Sử dụng CV sẵn có</h2>
+                        <h3>Nếu bạn đã có CV của riêng mình, hãy tải lên cho nhà tuyển dụng nhìn thấy</h3>
+                        @if (User.Identity!.IsAuthenticated)
+                        {
+                            <a href="javascript:void(0)" class="cv__item--link button--link" id="upload-cv">
+                                <span><i class="fas fa-upload"></i></span>
+                                Upload CV ngay
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="/authentication/sign-in" class="cv__item--link button--link">
+                                <span><i class="fas fa-upload"></i></span>
+                                Upload CV ngay
+                            </a>
+                        }
+                    </div>
+                    <div class="cv__item--img">
+                        <img class="full_width" src="~/Assets/Client/img/upload_cv.png" alt="Upload CV của bạn">
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="cv__item col l-6 m-12 c-12">
-        <div class="cv__item--wrapper">
-          <div class="cv__item--description">
-            <h2>Sử dụng CV sẵn có</h2>
-            <h3>Nếu bạn đã có CV của riêng mình, hãy tải lên cho nhà tuyển dụng nhìn thấy</h3>
-            <a href="javascript:void(0)" class="cv__item--link button--link" id="upload-cv">
-              <span><i class="fas fa-upload"></i></span>
-              Upload CV ngay
-            </a>
-          </div>
-          <div class="cv__item--img">
-            <img class="full_width" src="~/Assets/Client/img/upload_cv.png" alt="Upload CV của bạn">
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <div class="main__recruitment">
-  <div class="main__recruitment--wrapper grid wide">
-    <h1 class="main__recruitment--title main__item--title">
-      Tin tuyển dụng mới nhất
-    </h1>
-    <div class="main__recruitment--content row">
-      @foreach (var item in Model.TopRecruimentNews)
-      {
-        <div class="recruitment__item col l-4 m-6 c-12">
-          <div class="recruitment__item--wrapper">
-            <div class="recruitment__item--img">
-              <img class="full_width" src="@item.Employer.AvatarUrl" alt="Logo nhà tuyển dụng">
-              <div class="recruitment__item--time">@item.Employer.Site</div>
-            </div>
-            <div class="recruitment__item--name">
-              <h2 class="recruitment__name--title">
-                <a href="/recruiment-news/@item.Id" class="recruitment__name--link text-line-1">
-                  @item.JobTitle
-                </a>
-              </h2>
-              <div class="recruitment__name--employer">
-                <a href="/cong-ty/@item.Employer.Name-@item.Employer.Id" class="recruitment__employer--link text-line-1">
-                  <span class="recruitment__icon"><i class="far fa-building"></i></span>
-                  <span class="">@item.Employer.Name</span>
-                </a>
-              </div>
-              <p class="recruitment__salary">
-                <span class="recruitment__icon"><i class="fas fa-money-check-alt"></i></span>
-                <span>@item.Salary</span>
-              </p>
-              <p class="recruitment__address">
-                <span class="recruitment__icon"><i class="fas fa-map-marked"></i></span>
-                <span>@item.JobType</span>
-              </p>
-            </div>
-          </div>
+    <div class="main__recruitment--wrapper grid wide">
+        <h1 class="main__recruitment--title main__item--title">
+            Tin tuyển dụng mới nhất
+        </h1>
+        <div class="main__recruitment--content row">
+            @foreach (var item in Model.TopRecruimentNews)
+            {
+                <div class="recruitment__item col l-4 m-6 c-12">
+                    <div class="recruitment__item--wrapper">
+                        <div class="recruitment__item--img">
+                            <img class="full_width" src="@item.Employer.AvatarUrl" alt="Logo nhà tuyển dụng">
+                            <div class="recruitment__item--time">@item.Employer.Site</div>
+                        </div>
+                        <div class="recruitment__item--name">
+                            <h2 class="recruitment__name--title">
+                                <a href="/recruiment-news/@item.Id" class="recruitment__name--link text-line-1">
+                                    @item.JobTitle
+                                </a>
+                            </h2>
+                            <div class="recruitment__name--employer">
+                                <a href="/cong-ty/@item.Employer.Name-@item.Employer.Id" class="recruitment__employer--link text-line-1">
+                                    <span class="recruitment__icon"><i class="far fa-building"></i></span>
+                                    <span class="">@item.Employer.Name</span>
+                                </a>
+                            </div>
+                            <p class="recruitment__salary">
+                                <span class="recruitment__icon"><i class="fas fa-money-check-alt"></i></span>
+                                <span>@item.Salary</span>
+                            </p>
+                            <p class="recruitment__address">
+                                <span class="recruitment__icon"><i class="fas fa-map-marked"></i></span>
+                                <span>@item.JobType</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-      }
     </div>
-  </div>
 </div>
 
 <div class="main__employer">
-  <div class="main__employer--wrapper grid wide">
-    <h1 class="main__employer--title main__item--title">
-      TOP nhà tuyển dụng hàng đầu
-    </h1>
-    <div class="main__employer--content row">
-      <div class="employer__item col l-2-4 m-4 c-6">
-        <div class="employer__item--wrapper">
-          <a href="" class="employer__item--link">
-            <img class="" src="~/Assets/Client/img/Employer/avatar_1639983010356.png" alt="">
-          </a>
+    <div class="main__employer--wrapper grid wide">
+        <h1 class="main__employer--title main__item--title">
+            TOP nhà tuyển dụng hàng đầu
+        </h1>
+        <div class="main__employer--content row">
+            <div class="employer__item col l-2-4 m-4 c-6">
+                <div class="employer__item--wrapper">
+                    <a href="" class="employer__item--link">
+                        <img class="" src="~/Assets/Client/img/Employer/avatar_1639983010356.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="employer__item col l-2-4 m-4 c-6">
+                <div class="employer__item--wrapper">
+                    <a href="" class="employer__item--link">
+                        <img class="" src="~/Assets/Client/img/Employer/avatar_1599494254872.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="employer__item col l-2-4 m-4 c-6">
+                <div class="employer__item--wrapper">
+                    <a href="" class="employer__item--link">
+                        <img class="" src="~/Assets/Client/img/Employer/avatar_1639983010356.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="employer__item col l-2-4 m-4 c-6">
+                <div class="employer__item--wrapper">
+                    <a href="" class="employer__item--link">
+                        <img class="" src="~/Assets/Client/img/Employer/avatar_1639967923096.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="employer__item col l-2-4 m-4 c-6">
+                <div class="employer__item--wrapper">
+                    <a href="" class="employer__item--link">
+                        <img class="" src="~/Assets/Client/img/Employer/avatar_1639464398593.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="employer__item col l-2-4 m-4 c-6">
+                <div class="employer__item--wrapper">
+                    <a href="" class="employer__item--link">
+                        <img class="" src="~/Assets/Client/img/Employer/avatar_1626082875301.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="employer__item col l-2-4 m-4 c-6">
+                <div class="employer__item--wrapper">
+                    <a href="" class="employer__item--link">
+                        <img class="" src="~/Assets/Client/img/Employer/avatar_1625285710869.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="employer__item col l-2-4 m-4 c-6">
+                <div class="employer__item--wrapper">
+                    <a href="" class="employer__item--link">
+                        <img class="" src="~/Assets/Client/img/Employer/avatar_1618804000607.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="employer__item col l-2-4 m-4 c-6">
+                <div class="employer__item--wrapper">
+                    <a href="" class="employer__item--link">
+                        <img class="" src="~/Assets/Client/img/Employer/avatar_1603344490671.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="employer__item col l-2-4 m-4 c-6">
+                <div class="employer__item--wrapper">
+                    <a href="" class="employer__item--link">
+                        <img class="" src="~/Assets/Client/img/Employer/avatar_1599494254872.png" alt="">
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="employer__item col l-2-4 m-4 c-6">
-        <div class="employer__item--wrapper">
-          <a href="" class="employer__item--link">
-            <img class="" src="~/Assets/Client/img/Employer/avatar_1599494254872.png" alt="">
-          </a>
-        </div>
-      </div>
-      <div class="employer__item col l-2-4 m-4 c-6">
-        <div class="employer__item--wrapper">
-          <a href="" class="employer__item--link">
-            <img class="" src="~/Assets/Client/img/Employer/avatar_1639983010356.png" alt="">
-          </a>
-        </div>
-      </div>
-      <div class="employer__item col l-2-4 m-4 c-6">
-        <div class="employer__item--wrapper">
-          <a href="" class="employer__item--link">
-            <img class="" src="~/Assets/Client/img/Employer/avatar_1639967923096.png" alt="">
-          </a>
-        </div>
-      </div>
-      <div class="employer__item col l-2-4 m-4 c-6">
-        <div class="employer__item--wrapper">
-          <a href="" class="employer__item--link">
-            <img class="" src="~/Assets/Client/img/Employer/avatar_1639464398593.png" alt="">
-          </a>
-        </div>
-      </div>
-      <div class="employer__item col l-2-4 m-4 c-6">
-        <div class="employer__item--wrapper">
-          <a href="" class="employer__item--link">
-            <img class="" src="~/Assets/Client/img/Employer/avatar_1626082875301.png" alt="">
-          </a>
-        </div>
-      </div>
-      <div class="employer__item col l-2-4 m-4 c-6">
-        <div class="employer__item--wrapper">
-          <a href="" class="employer__item--link">
-            <img class="" src="~/Assets/Client/img/Employer/avatar_1625285710869.png" alt="">
-          </a>
-        </div>
-      </div>
-      <div class="employer__item col l-2-4 m-4 c-6">
-        <div class="employer__item--wrapper">
-          <a href="" class="employer__item--link">
-            <img class="" src="~/Assets/Client/img/Employer/avatar_1618804000607.png" alt="">
-          </a>
-        </div>
-      </div>
-      <div class="employer__item col l-2-4 m-4 c-6">
-        <div class="employer__item--wrapper">
-          <a href="" class="employer__item--link">
-            <img class="" src="~/Assets/Client/img/Employer/avatar_1603344490671.png" alt="">
-          </a>
-        </div>
-      </div>
-      <div class="employer__item col l-2-4 m-4 c-6">
-        <div class="employer__item--wrapper">
-          <a href="" class="employer__item--link">
-            <img class="" src="~/Assets/Client/img/Employer/avatar_1599494254872.png" alt="">
-          </a>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <div class="main__blog">
-  <div class="main__blog--wrapper grid wide">
-    <h1 class="main__blog--title main__item--title">
-      Bài viết cho bạn
-    </h1>
-    <div class="main__blog--content row">
-      @foreach (var item in Model.TopPosts)
-      {
-        <div class="blog__item col l-4">
-          <div class="blog__item--wrapper">
-            <a href="#" class="blog__item--link">
-              <div class="blog__item--img">
-                <img class="full_width" src="@item.Image" alt="@item.Title">
-              </div>
-              <div class="blog__item--content">
-                <div class="blog__item--description">
-                  <h3 class="blog__item--name text-line-2">
-                    @item.Title
-                  </h3>
-                  <p class="blog__item--data text-line-2">
-                    <strong>@item.PostedBy</strong>
-                  </p>
-                  <p class="blog__item--see">Xem thêm>></p>
+    <div class="main__blog--wrapper grid wide">
+        <h1 class="main__blog--title main__item--title">
+            Bài viết cho bạn
+        </h1>
+        <div class="main__blog--content row">
+            @foreach (var item in Model.TopPosts)
+            {
+                <div class="blog__item col l-4">
+                    <div class="blog__item--wrapper">
+                        <a href="#" class="blog__item--link">
+                            <div class="blog__item--img">
+                                <img class="full_width" src="@item.Image" alt="@item.Title">
+                            </div>
+                            <div class="blog__item--content">
+                                <div class="blog__item--description">
+                                    <h3 class="blog__item--name text-line-2">
+                                        @item.Title
+                                    </h3>
+                                    <p class="blog__item--data text-line-2">
+                                        <strong>@item.PostedBy</strong>
+                                    </p>
+                                    <p class="blog__item--see">Xem thêm>></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-              </div>
-            </a>
-          </div>
+            }
         </div>
-      }
     </div>
-  </div>
 </div>
-
-<div class="main__upload">
-  <form action="/cv/upload" method="post" class="main__upload--post" enctype="multipart/form-data">
-    @Html.AntiForgeryToken()
-    <div class="main__upload--title">
-      <h4>Upload CV của bạn</h4>
-      <div class="upload--close"></div>
-    </div>
-    @*<div class="main__upload--content">
-      <div class="main__upload--upload">
-        <div>
-          <label for="cv_type-upload">Tải CV từ máy tính</label>
-          <div class="apply__content--uploadcv">
-            <input type="file" name="FileCV" id="cv_upload" hidden>
-            <label for="cv_upload" class="lb_upload">
-              <i class="fa-solid fa-upload"></i>
-              Chọn file
-            </label>
-            <span></span>
-          </div>
-        </div>
-      </div>
-      <div class="main__upload--button">
-        <button class="upload__button--cancel">Bỏ qua</button>
-        <button class="upload__button--submit">Upload CV</button>
-      </div>
-    </div>*@
-      @*#                        _oo0oo_
+@if (User.Identity!.IsAuthenticated)
+{
+    <div class="main__upload">
+        <form class="main__upload--post" id="upload-cv-form">
+            @Html.AntiForgeryToken()
+            <div class="main__upload--title">
+                <h4>Upload CV của bạn</h4>
+                <div class="upload--close"></div>
+            </div>
+            @*#                        _oo0oo_
         #                       o8888888o
         #                       88" . "88
         #                       (| -_- |)
@@ -525,41 +537,45 @@ removeFileButton.addEventListener("click", () => {
         #                | \_|  ''\---/''  |_/ |
         #                \  .-\__  '-'  ___/-. /
         #              ___'. .'  /--.--\  `. .'___
-        #           ."" '<  `.___\_<|>_/___.' >' "".    
+        #           ."" '<  `.___\_<|>_/___.' >' "".
         #          | | :  `- \`.;`\ _ /`;.`/ - ` : | |
         #          \  \ `_.   \_ __\ /__ _/   .-` /  /
         #      =====`-.____`.___ \_____/___.-`___.-'=====
         #                        `=---='*@
 
-    <form class="form-container" enctype='multipart/form-data'>
-        <input type="text" class="form-control form-control-sm" placeholder="Nhập tên CV của bạn" aria-controls="selection-datatable" id="txtcvname">
-        <div class="drag-file-area">
-            <span class="material-icons-outlined upload-icon"> file_upload </span>
-            <h3 class="dynamic-message"> Drag & drop any file here </h3>
-            <label class="label">or 
-                <span class="browse-files">
-                    <input type="file" class="default-file-input"/> 
-                    <span class="browse-files-text">browse file</span> 
-                    <span>from device</span> 
+            <form class="form-container">
+                <input type="text" class="form-control form-control-sm"
+                       placeholder="Nhập tên CV của bạn" aria-controls="selection-datatable"
+                       id="cvName"
+                       name="Name" />
+                <div class="drag-file-area">
+                    <span class="material-icons-outlined upload-icon"> file_upload </span>
+                    <h3 class="dynamic-message"> Drag & drop any file here </h3>
+                    <label class="label">
+                        or
+                        <span class="browse-files">
+                            <input type="file" name="CV" class="default-file-input" />
+                            <span class="browse-files-text">browse file</span>
+                            <span>from device</span>
+                        </span>
+                    </label>
+                </div>
+                <span class="cannot-upload-message">
+                    <span class="material-icons-outlined">error</span> Please select a file first
+                    <span class="material-icons-outlined cancel-alert-button">cancel</span>
                 </span>
-            </label>
-        </div>
-        <span class="cannot-upload-message"> 
-            <span class="material-icons-outlined">error</span> Please select a file first
-            <span class="material-icons-outlined cancel-alert-button">cancel</span> 
-        </span>
-        <div class="file-block">
-            <div class="file-info"> 
-                <span class="material-icons-outlined file-icon">description</span> 
-                <span class="file-name"> </span> | 
-                <span class="file-size">  </span> 
-            </div>
-            <span class="material-icons remove-file-icon">delete</span>
-            <div class="progress-bar"> </div>
-        </div>
-        <button type="button" class="upload-button"> Upload </button>
-    </form>
-  </form>
+                <div class="file-block">
+                    <div class="file-info">
+                        <span class="material-icons-outlined file-icon">description</span>
+                        <span class="file-name"> </span> |
+                        <span class="file-size">  </span>
+                    </div>
+                    <span class="material-icons remove-file-icon">delete</span>
+                    <div class="progress-bar"> </div>
+                </div>
+                <button type="submit" class="upload-button"> Upload </button>
+            </form>
+        </form>
 
-
-</div>
+    </div>
+}

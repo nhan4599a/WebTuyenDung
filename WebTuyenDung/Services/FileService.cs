@@ -12,9 +12,11 @@ namespace WebTuyenDung.Services
     {
         private readonly string _basePath;
 
+        private const string STATIC_FILES_DIRECTORY = "/Files/";
+
         public FileService(IWebHostEnvironment webHostEnvironment)
         {
-            _basePath = webHostEnvironment.WebRootPath + "/Files/";
+            _basePath = webHostEnvironment.WebRootPath + STATIC_FILES_DIRECTORY;
         }
 
         public async Task<string> SaveAsync(IFormFile file, FilePath filePath)
@@ -29,6 +31,11 @@ namespace WebTuyenDung.Services
         public string GetActualFilePath(string fileName, FilePath filePath)
         {
             return _basePath + filePath.GetContentDirectory() + fileName;
+        }
+
+        public string GetStaticFileUrlForFile(string fileName, FilePath filePath)
+        {
+            return STATIC_FILES_DIRECTORY + filePath.GetContentDirectory() + fileName;
         }
     }
 }

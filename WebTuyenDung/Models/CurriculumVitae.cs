@@ -14,5 +14,7 @@ namespace WebTuyenDung.Models
         public int CandidateId { get; set; }
 
         public DateTimeOffset LastModifiedDate { get; set; }
+
+        public bool IsUploadDirectlyByUser { get; set; }
     }
 }
