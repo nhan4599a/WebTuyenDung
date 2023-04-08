@@ -46,7 +46,7 @@ namespace WebTuyenDung.Controllers
                                                 Id = e.Employer.Id,
                                                 Name = e.Employer.Name,
                                                 Address = e.WorkingAddress,
-                                                AvatarUrl = e.Employer.Avatar!,
+                                                AvatarUrl = fileService.GetStaticFileUrlForFile(e.Employer.Avatar!, FilePath.Avatar),
                                                 Description = e.Employer.Description,
                                                 Size = e.Employer.Size
                                             },

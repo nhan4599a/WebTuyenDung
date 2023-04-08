@@ -46,7 +46,7 @@
 		</ItemGroup>
 
 		<ItemGroup>
-		  <Folder Include="wwwroot\Files\CurriculumVitae\" />
+		  <Folder Include="wwwroot\Files\CV\" />
 		</ItemGroup>
 
 </Project>

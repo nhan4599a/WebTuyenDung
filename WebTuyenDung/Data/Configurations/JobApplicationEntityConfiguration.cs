@@ -13,6 +13,9 @@ namespace WebTuyenDung.Data.Configurations
                 .HasIndex(e => e.RecruimentNewsId);
 
             builder
+                .HasIndex(e => new { e.RecruimentNewsId, e.Status });
+
+            builder
                 .HasIndex(e => new { e.CandidateId, e.RecruimentNewsId, e.Status })
                 .IsUnique();
 

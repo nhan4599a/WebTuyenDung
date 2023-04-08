@@ -5,7 +5,8 @@ namespace WebTuyenDung.Enums
     public enum FilePath
     {
         Post,
-        CurriculumTitae
+        CurriculumTitae,
+        Avatar
     }
 
     public static class ImagePathGenerator
@@ -15,7 +16,8 @@ namespace WebTuyenDung.Enums
             return imagePath switch
             {
                 FilePath.Post => "Posts",
-                FilePath.CurriculumTitae => "CurriculumVitae",
+                FilePath.CurriculumTitae => "CV",
+                FilePath.Avatar => "Avatar",
                 _ => throw new NotImplementedException()
             } + "/";
         }

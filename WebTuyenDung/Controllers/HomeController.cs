@@ -1,20 +1,23 @@
-﻿using WebTuyenDung.Data;
-using WebTuyenDung.Enums;
-using WebTuyenDung.ViewModels;
-using WebTuyenDung.ViewModels.HomePage;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using WebTuyenDung.Data;
+using WebTuyenDung.Enums;
+using WebTuyenDung.Services;
+using WebTuyenDung.ViewModels;
+using WebTuyenDung.ViewModels.HomePage;
 
 namespace WebTuyenDung.Controllers
 {
     public class HomeController : Controller
     {
         private readonly RecruimentDbContext dbContext;
+        private readonly FileService fileService;
 
-        public HomeController(RecruimentDbContext dbContext)
+        public HomeController(RecruimentDbContext dbContext, FileService fileService)
         {
             this.dbContext = dbContext;
+            this.fileService = fileService;
         }
 
         public IActionResult Index()
@@ -48,7 +51,7 @@ namespace WebTuyenDung.Controllers
                                     Id = e.Employer.Id,
                                     Name = e.Employer.Name,
                                     Site = e.Employer.Address,
-                                    AvatarUrl = e.Employer.Avatar!
+                                    AvatarUrl = fileService.GetStaticFileUrlForFile(e.Employer.Avatar!, FilePath.Avatar)
                                 }
                             })
                             .ToList();
@@ -64,7 +67,7 @@ namespace WebTuyenDung.Controllers
                             .Select(e => new PostViewModel
                             {
                                 Id = e.Id,
-                                Image = e.Image,
+                                Image = fileService.GetStaticFileUrlForFile(e.Image, FilePath.Post),
                                 PostedBy = e.Author.Name
                             })
                             .ToList();

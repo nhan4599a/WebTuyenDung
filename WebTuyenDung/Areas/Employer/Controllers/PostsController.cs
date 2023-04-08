@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Constants;
 using WebTuyenDung.Data;
+using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
+using WebTuyenDung.Services;
 using WebTuyenDung.ViewModels;
 
 namespace WebTuyenDung.Areas.Employer.Controllers
@@ -14,10 +16,12 @@ namespace WebTuyenDung.Areas.Employer.Controllers
     public class PostsController : BaseEmployerController
     {
         private readonly RecruimentDbContext dbContext;
+        private readonly FileService fileService;
 
-        public PostsController(RecruimentDbContext dbContext)
+        public PostsController(RecruimentDbContext dbContext, FileService fileService)
         {
             this.dbContext = dbContext;
+            this.fileService = fileService;
         }
 
         public IActionResult Index()
@@ -63,7 +67,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                                 Title = e.Title,
                                 Author = e.Author.Name,
                                 CreatedAt = e.CreatedAt.GetApplicationTimeRepresentation(),
-                                Image = e.Image,
+                                Image = fileService.GetStaticFileUrlForFile(e.Image, FilePath.Post),
                                 View = e.View,
                                 Status = e.IsApproved ? "Đã duyệt" : "Chưa được duyệt"
                             });

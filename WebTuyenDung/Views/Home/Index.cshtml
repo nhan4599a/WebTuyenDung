@@ -1,4 +1,5 @@
-﻿@using WebTuyenDung.ViewModels
+﻿@using WebTuyenDung.Constants;
+@using WebTuyenDung.ViewModels
 @model HomePageViewModel
 
 @{
@@ -187,14 +188,23 @@
         let uploadButton = document.querySelector(".upload-button");
         let fileFlag = 0;
         let uploadForm = document.querySelector('#upload-cv-form');
+        const ALLOWED_FILE_EXTENSIONS = ['doc', 'docx', 'pdf', 'png', 'jpg', 'jpeg']
+        const ERROR_MESSAGE_TEMPLATE = `<span class="material-icons-outlined">error</span> {0}
+                                        <span class="material-icons-outlined cancel-alert-button">cancel</span>`;
 
         fileInput.addEventListener("click", () => {
             fileInput.value = '';
-            console.log(fileInput.value);
         });
 
         fileInput.addEventListener("change", e => {
-            console.log(" > " + fileInput.value)
+            const fileExtension = getFileExtension(fileInput.files[0].name)
+            cannotUploadMessage.style.cssText = "display: none";
+            if (!ALLOWED_FILE_EXTENSIONS.includes(fileExtension)) {
+                fileInput.files.length = 0
+                $(cannotUploadMessage).html(ERROR_MESSAGE_TEMPLATE.replace('{0}', `.${fileExtension} file is not allowed`))
+                cannotUploadMessage.style.cssText = "display: flex; animation: fadeIn linear 1.5s;";
+                return
+            }
             uploadIcon.innerHTML = 'check_circle';
             dragDropText.innerHTML = 'File Dropped Successfully!';
             document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" name="CV" class="default-file-input" /> <span class="browse-files-text" style="top: 0; left: 10px"> browse file</span></span>`;
@@ -213,6 +223,7 @@
                     fileFlag = 1;
                 }
             } else {
+                $(cannotUploadMessage).html(ERROR_MESSAGE_TEMPLATE.replace('{0}', 'Please select a file first'))
                 cannotUploadMessage.style.cssText = "display: flex; animation: fadeIn linear 1.5s;";
             }
         });
@@ -274,6 +285,11 @@
             formData.append('name', tempData[1].value);
             formData.append('cv', fileInput.files[0]);
 
+            if (!tempData[1].value) {
+                $('#upload-form-error').text('You must input name for cv')
+                return
+            }
+
             $.ajax({
                 url: '/cv/upload',
                 method: 'POST',
@@ -286,6 +302,14 @@
                 }
             })
         })
+
+        function getFileExtension(fileName) {
+            const lastIndexOfDotCharacter = fileName.lastIndexOf('.')
+            if (lastIndexOfDotCharacter === -1) {
+                return ''
+            }
+            return fileName.substring(lastIndexOfDotCharacter + 1)
+        }
     </script>
 
     <script>
@@ -337,7 +361,7 @@
                     <div class="cv__item--description">
                         <h2>Sử dụng CV sẵn có</h2>
                         <h3>Nếu bạn đã có CV của riêng mình, hãy tải lên cho nhà tuyển dụng nhìn thấy</h3>
-                        @if (User.Identity!.IsAuthenticated)
+                        @if (User.Identity!.IsAuthenticated && User.IsInRole(AuthorizationConstants.CANDIDATE_ROLE))
                         {
                             <a href="javascript:void(0)" class="cv__item--link button--link" id="upload-cv">
                                 <span><i class="fas fa-upload"></i></span>
@@ -515,7 +539,7 @@
         </div>
     </div>
 </div>
-@if (User.Identity!.IsAuthenticated)
+@if (User.Identity!.IsAuthenticated && User.IsInRole(AuthorizationConstants.CANDIDATE_ROLE))
 {
     <div class="main__upload">
         <form class="main__upload--post" id="upload-cv-form">
@@ -524,6 +548,7 @@
                 <h4>Upload CV của bạn</h4>
                 <div class="upload--close"></div>
             </div>
+            <span id="upload-form-error" class="text-danger"></span>
             @*#                        _oo0oo_
         #                       o8888888o
         #                       88" . "88
