@@ -10,27 +10,25 @@ using WebTuyenDung.ViewModels;
 
 namespace WebTuyenDung.Controllers
 {
-    public class PostsController : Controller
+    public class PostsController : BaseController
     {
-        private readonly RecruimentDbContext dbContext;
-        private readonly CreatePostService createPostService;
+        private readonly CreatePostService _createPostService;
 
-        public PostsController(RecruimentDbContext dbContext, CreatePostService createPostService)
+        public PostsController(RecruimentDbContext dbContext, CreatePostService createPostService) : base(dbContext)
         {
-            this.dbContext = dbContext;
-            this.createPostService = createPostService;
+            _createPostService = createPostService;
         }
 
         [Authorize(Policy = AuthorizationConstants.AUTHORIZED_PERSON_POLICY)]
         [HttpPost]
         public Task<IActionResult> Create(CreatePostViewModel createPostViewModel)
         {
-            return createPostService.CreatePostAsync(this, createPostViewModel);
+            return _createPostService.CreatePostAsync(this, createPostViewModel);
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            var post = await dbContext.Posts.FirstOrDefaultAsync(e => e.Id == id);
+            var post = await DbContext.Posts.FirstOrDefaultAsync(e => e.Id == id);
 
             if (post == null)
             {
@@ -44,7 +42,7 @@ namespace WebTuyenDung.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var deletedCount = await dbContext
+            var deletedCount = await DbContext
                                         .Posts
                                         .Where(e => e.Id == id)
                                         .UpdateFromQueryAsync(e => new Models.Post { IsDeleted = true });

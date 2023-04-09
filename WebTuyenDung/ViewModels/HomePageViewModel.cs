@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using WebTuyenDung.ViewModels.HomePage;
+using WebTuyenDung.ViewModels.Candidate;
 
 namespace WebTuyenDung.ViewModels
 {
     public class HomePageViewModel
     {
-        public List<HomePageRecruimentNewsViewModel> TopRecruimentNews { get; set; } = default!;
+        public List<MinimalRecruimentNewsViewModel> TopRecruimentNews { get; set; } = default!;
 
         public List<PostViewModel> TopPosts { get; set; } = default!;
     }

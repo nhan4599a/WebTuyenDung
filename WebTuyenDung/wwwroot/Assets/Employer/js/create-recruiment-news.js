@@ -5,11 +5,11 @@
         const to = $('#salary-to').val();
 
         if (from !== '' && to !== '') {
-            $('input[name=salary]').val(`${from} tới ${to}`);
+            $('input[name=salary]').val(`${from} - ${to} triệu`);
         } else if (from !== '' && to === '') {
-            $('input[name=salary]').val(`Từ ${from}`);
+            $('input[name=salary]').val(`Trên ${from}`);
         } else if (from === '' && to !== '') {
-            $('input[name=salary]').val(`Upto ${to}`);
+            $('input[name=salary]').val(`Dưới ${to}`);
         }
     }
 

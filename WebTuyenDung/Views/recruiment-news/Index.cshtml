@@ -1,40 +1,14 @@
 ﻿@using WebTuyenDung.Constants;
 @using WebTuyenDung.Helper;
-@using WebTuyenDung.ViewModels.RecruimentNews
+@using WebTuyenDung.ViewModels.Candidate
 @model DetailRecruimentNewsViewModel
 
 @{
-    ViewBag.Title = Model.JobTitle + " - " + Model.Employer.Name;
-    //var listCV = new List<HoSoXinViecVm>();
-    //if (ViewBag.ListCV != null)
-    //{
-    //  listCV = (List<HoSoXinViecVm>)ViewBag.ListCV;
-    //}
+    ViewBag.Title = Model.JobName + " - " + Model.Employer.Name;
 }
 
-<script>
-    function show1() {
-        document.getElementById('div1').style.display = 'block';
-        document.getElementById('div2').style.display = 'none';
-    }
-    function show2() {
-        document.getElementById('div1').style.display = 'none';
-        document.getElementById('div2').style.display = 'block';
-    }
-
-
-    $(document).on('click', function () {
-        var index = $(this).index();
-        $('#div1 input:radio').eq(index).prop('checked', true);
-    })
-</script>
-
 <style>
-    .hide {
-        display: none;
-    }
-
-    textarea{
+    textarea {
         resize: none
     }
 </style>
@@ -72,10 +46,10 @@
     <div class="main__employer--wrapper grid wide">
         <div class="main__employer--info">
             <div class="employer__info--img">
-                <img src="@Model.Employer.AvatarUrl" alt="" class="full_width">
+                <img src="@Model.Employer.Avatar" alt="" class="full_width">
             </div>
             <div class="employer__info--recruitment c-flex">
-                <h1>@Model.JobTitle</h1>
+                <h1>@Model.JobName</h1>
                 <div class="employer__info--link">
                     <a href="#">
                         <i class="far fa-building"></i>
@@ -84,11 +58,11 @@
                 </div>
                 <div class="employer__info--deadline">
                     <i class="fa-regular fa-clock"></i>
-                    Hạn nộp: @Model.Deadline
+                    Hạn nộp: @Model.Deadline.GetApplicationTimeRepresentation()
                 </div>
             </div>
             <div class="employer__info--apply">
-                @if (Model.Deadline == "" || (Model.Deadline != "" && DateOnly.ParseExact(Model.Deadline, DateTimeFormatConstants.DATE_ONLY_FORMAT, null) > DateTimeHelper.Today))
+                @if (!Model.Deadline.HasValue || Model.Deadline.Value > DateTimeHelper.Today)
                 {
                     <div class="employer__apply--cv">
                         @if (User.IsInRole(AuthorizationConstants.CANDIDATE_ROLE))
@@ -125,7 +99,7 @@
                         </button>
                     </form>
                 }
-                else if (Model.Deadline != "")
+                else
                 {
                     <div class="employer__apply--cv">
                         Hết hạn ứng tuyển
@@ -204,44 +178,43 @@
     <form action="/recruiment-news/apply/@Model.Id" method="post" class="main__apply--post" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
         <div class="main__apply--title">
-            <h4>Ứng tuyển <span>@Model.JobTitle</span></h4>
+            <h4>Ứng tuyển <span>@Model.JobName</span></h4>
             <div class="apply--close"></div>
         </div>
         <div class="main__apply--content">
             @*<div class=" row g-3">
-                <div class="col-md-12">
-                    <input type="radio" class="form-check-input" id="cvonline" name="ungtuyen" value="cvonline" onclick="show1();" />
-                    <label for="cvonline" class="form-label">Sử dụng CV online</label>
-                    <div id="div1" class="hide">
-                        <input type="radio" name="cvitems" value="1"> CV 1 <br>
-                        <input type="radio" name="cvitems" value="2"> CV 2  <br>
-                        <input type="radio" name="cvitems" value="3"> CV 3
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <input type="radio" class="form-check-input" id="taicv" name="ungtuyen" value="taicv" onclick="show2();" />
-                    <label for="taicv" class="form-label">Tải CV từ máy tính</label>
-                    <div id="div2" class="hide">
-                        <hr><p>Choose file</p>
-                        <input type=file>
-                    </div>
-                </div>
+            <div class="col-md-12">
+            <input type="radio" class="form-check-input" id="cvonline" name="ungtuyen" value="cvonline" onclick="show1();" />
+            <label for="cvonline" class="form-label">Sử dụng CV online</label>
+            <div id="div1" class="hide">
+            <input type="radio" name="cvitems" value="1"> CV 1 <br>
+            <input type="radio" name="cvitems" value="2"> CV 2  <br>
+            <input type="radio" name="cvitems" value="3"> CV 3
+            </div>
+            </div>
+            <div class="col-md-12">
+            <input type="radio" class="form-check-input" id="taicv" name="ungtuyen" value="taicv" onclick="show2();" />
+            <label for="taicv" class="form-label">Tải CV từ máy tính</label>
+            <div id="div2" class="hide">
+            <hr><p>Choose file</p>
+            <input type=file>
+            </div>
+            </div>
             </div>*@
             <div class="col-md-12">
-                <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" onclick="show1();">
-                <label for="your-name" class="form-label">Sử dụng CV online</label>
-
+                <input type="radio" class="form-check-input" id="cv-type-radio-online" name="cv-type" value="online">
+                <label for="cv-type-radio-online" class="form-label">Sử dụng CV online</label>
             </div>
 
-            <div id="div1" class="hide">
+            <div id="cv-type-radio-online-content" style="display: none">
                 <input type="radio" name="items" value="1" checked> CV 1 <br>
                 <input type="radio" name="items" value="2"> CV 2  <br>
                 <input type="radio" name="items" value="3"> CV 3
             </div>
             <div class="col-md-12">
-                <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" onclick="show2();">
-                <label for="your-name" class="form-label">Tải CV từ máy tính</label>
-                <div id="div2" class="hide">
+                <input type="radio" class="form-check-input" id="cv-type-radio-upload" name="cv-type" value="upload">
+                <label for="cv-type-radio-upload" class="form-label">Tải CV từ máy tính</label>
+                <div id="cv-type-radio-upload-content" style="display: none">
                     <hr><p>Choose file</p>
                     <input type=file>
                 </div>

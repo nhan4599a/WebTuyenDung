@@ -1,11 +1,7 @@
 ﻿namespace WebTuyenDung.Requests
 {
-    public class SearchRequest
+    public class SearchRequest : PaginationRequest
     {
         public string Keyword { get; set; } = default!;
-
-        public int PageIndex { get; set; }
-
-        public int PageSize { get; set; }
     }
 }

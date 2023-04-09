@@ -1,4 +1,6 @@
-﻿namespace WebTuyenDung.ViewModels
+﻿using Mapster;
+
+namespace WebTuyenDung.ViewModels
 {
     public class CurriculumVitaeViewModel
     {
@@ -7,5 +9,12 @@
         public string Name { get; set; } = default!;
 
         public string Url { get; set; } = default!;
+
+        public CurriculumVitaeViewModel(CurriculumVitaeViewModel source)
+        {
+            source.Adapt(this);
+        }
+
+        public CurriculumVitaeViewModel() { }
     }
 }

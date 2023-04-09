@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Constants;
 using WebTuyenDung.Data;
-using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
 using WebTuyenDung.Services;
 using WebTuyenDung.ViewModels;
+using WebTuyenDung.ViewModels.Admin;
 
 namespace WebTuyenDung.Areas.Employer.Controllers
 {
@@ -58,19 +58,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                 query = query.Where(e => e.Title.Contains(searchRequest.Keyword.Trim()));
             }
 
-            return query.PaginateAsync(
-                            searchRequest.PageIndex,
-                            searchRequest.PageSize,
-                            e => new ViewModels.Admin.PostViewModel
-                            {
-                                Id = e.Id,
-                                Title = e.Title,
-                                Author = e.Author.Name,
-                                CreatedAt = e.CreatedAt.GetApplicationTimeRepresentation(),
-                                Image = fileService.GetStaticFileUrlForFile(e.Image, FilePath.Post),
-                                View = e.View,
-                                Status = e.IsApproved ? "Đã duyệt" : "Chưa được duyệt"
-                            });
+            return query.PaginateAsync<Post, PostViewModel>(searchRequest);
         }
     }
 }

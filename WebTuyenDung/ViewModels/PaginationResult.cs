@@ -10,9 +10,9 @@ namespace WebTuyenDung.ViewModels
 
         public List<TResult> Data { get; set; } = default!;
 
-        public PaginationResult(int totalPage, int totalRecords, List<TResult> data)
+        public PaginationResult(int totalPages, int totalRecords, List<TResult> data)
         {
-            TotalPages = totalPage;
+            TotalPages = totalPages;
             TotalRecords = totalRecords;
             Data = data;
         } 

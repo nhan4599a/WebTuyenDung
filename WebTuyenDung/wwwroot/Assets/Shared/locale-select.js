@@ -38,7 +38,7 @@
 
 function getLocales(localeParent, complete) {
     $.ajax({
-        url: localeParent ? `/locales/${localeParent}` : '/locales',
+        url: localeParent ? `/api/locales/${localeParent}` : '/api/locales',
         success: complete
     })
 }

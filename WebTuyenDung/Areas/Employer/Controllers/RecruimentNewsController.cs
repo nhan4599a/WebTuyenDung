@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
 using WebTuyenDung.Data;
@@ -12,7 +14,7 @@ using WebTuyenDung.ViewModels.Employer;
 
 namespace WebTuyenDung.Areas.Employer.Controllers
 {
-    [Route("{area}/recruiment-news/{action=Index}/{id?}")]
+    [ControllerName("recruiment-news")]
     public class RecruimentNewsController : BaseEmployerController
     {
         private readonly RecruimentDbContext dbContext;
@@ -37,19 +39,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                 query = query.Where(e => e.JobName.Contains(searchRequest.Keyword.Trim()));
             }
 
-            return query.PaginateAsync(
-                            searchRequest.PageIndex,
-                            searchRequest.PageSize,
-                            e => new RecruimentNewsViewModel
-                            {
-                                Id = e.Id,
-                                Title = e.JobName,
-                                NumberOfCandidates = e.NumberOfCandidates,
-                                CreatedAt = e.CreatedAt.GetApplicationTimeRepresentation(),
-                                View = e.View,
-                                Status = e.IsApproved ? "Đã duyệt" : "Chưa được duyệt",
-                                Deadline = e.Deadline.GetApplicationTimeRepresentation()
-                            });
+            return query.PaginateAsync<RecruimentNews, RecruimentNewsViewModel>(searchRequest);
         }
 
         public IActionResult Create()
@@ -62,23 +52,12 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> Create(CreateRecruimentNewsViewModel createRecruimentNewsViewModel)
         {
-            var recruimentNews = new RecruimentNews
-            {
-                JobName = createRecruimentNewsViewModel.JobTitle,
-                Position = createRecruimentNewsViewModel.Position,
-                PositionDetail = createRecruimentNewsViewModel.PositionDetail,
-                JobDescription = createRecruimentNewsViewModel.JobDescription,
-                JobRequirements = createRecruimentNewsViewModel.JobRequirements,
-                EmployeeGender = createRecruimentNewsViewModel.Gender,
-                JobType = createRecruimentNewsViewModel.JobType,
-                RelativeSkills = createRecruimentNewsViewModel.RelativeSkills,
-                Salary = createRecruimentNewsViewModel.Salary,
-                NumberOfCandidates = createRecruimentNewsViewModel.NumberOfCandidates,
-                WorkingAddress = createRecruimentNewsViewModel.WorkingAddress,
-                CityId = createRecruimentNewsViewModel.City,
-                EmployerId = User.GetUserId(),
-                IsApproved = false
-            };
+            var (MinimumSalary, MaximumSalary) = SalaryHelper.ParseSalary(createRecruimentNewsViewModel.Salary);
+
+            var recruimentNews = createRecruimentNewsViewModel.Adapt<RecruimentNews>();
+            recruimentNews.MinimumSalary = MinimumSalary;
+            recruimentNews.MaximumSalary = MaximumSalary;
+            recruimentNews.EmployerId = User.GetUserId();
 
             dbContext.RecruimentNews.Add(recruimentNews);
 

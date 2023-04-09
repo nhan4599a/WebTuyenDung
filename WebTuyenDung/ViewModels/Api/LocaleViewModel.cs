@@ -1,4 +1,4 @@
-﻿namespace WebTuyenDung.ViewModels
+﻿namespace WebTuyenDung.ViewModels.Api
 {
     public class LocaleViewModel
     {

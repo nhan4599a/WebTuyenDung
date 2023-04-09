@@ -5,7 +5,7 @@ using WebTuyenDung.Constants;
 namespace WebTuyenDung.Areas.Employer.Controllers
 {
     [Area("employer")]
-    [Authorize(Roles = AuthorizationConstants.EMPLOYER_ROLE)]
+    [Authorize(Policy = AuthorizationConstants.EMPLOYER_ONLY_POLICY)]
     public class BaseEmployerController : Controller
     {
     }

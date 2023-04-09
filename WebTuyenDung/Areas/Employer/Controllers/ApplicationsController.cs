@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WebTuyenDung.Controllers;
 using WebTuyenDung.Data;
 using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
@@ -36,19 +34,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                             .JobApplications
                             .AsNoTracking();
 
-            return query.PaginateAsync(
-                            request.PageIndex,
-                            request.PageSize,
-                            e => new JobApplicationViewModel
-                            {
-                                Id = e.Id,
-                                RecruimentNewsId = e.RecruimentNewsId,
-                                JobTitle = e.JobTitle,
-                                CandidateName = e.CandidateName,
-                                CVId = e.CVId,
-                                CreatedAt = e.CreatedAt.GetApplicationTimeRepresentation(),
-                                Status = e.Status.GetRepresentation()
-                            });
+            return query.PaginateAsync<JobApplication, JobApplicationViewModel>(request);
         }
 
         public async Task<IActionResult> Edit(int id)

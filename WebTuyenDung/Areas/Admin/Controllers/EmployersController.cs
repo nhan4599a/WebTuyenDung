@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Data;
 using WebTuyenDung.Helper;
+using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
 using WebTuyenDung.ViewModels;
+using WebTuyenDung.ViewModels.Admin;
 using AdminViewModels = WebTuyenDung.ViewModels.Admin;
 
 namespace WebTuyenDung.Areas.Admin.Controllers
@@ -34,18 +36,7 @@ namespace WebTuyenDung.Areas.Admin.Controllers
                 query = query.Where(e => e.Username.Contains(searchRequest.Keyword.Trim()));
             }
 
-            return query.PaginateAsync(
-                            searchRequest.PageIndex,
-                            searchRequest.PageSize,
-                            e => new AdminViewModels.EmployerViewModel
-                            {
-                                Id = e.Id,
-                                Name = e.Name,
-                                Size = e.Size,
-                                Address = e.Address,
-                                PhoneNumber = e.PhoneNumber,
-                                Website = e.Website
-                            });
+            return query.PaginateAsync<Models.Employer, EmployerViewModel>(searchRequest);
         }
     }
 }

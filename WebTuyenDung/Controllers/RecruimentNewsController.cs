@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using WebTuyenDung.Attributes;
 using WebTuyenDung.Constants;
 using WebTuyenDung.Data;
 using WebTuyenDung.Enums;
@@ -10,70 +12,50 @@ using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
 using WebTuyenDung.Services;
-using WebTuyenDung.ViewModels;
-using WebTuyenDung.ViewModels.RecruimentNews;
+using WebTuyenDung.ViewModels.Candidate;
 
 namespace WebTuyenDung.Controllers
 {
-    [Route("recruiment-news")]
-    public class RecruimentNewsController : Controller
+    [ControllerName("recruiment-news")]
+    public class RecruimentNewsController : BaseController
     {
-        private readonly RecruimentDbContext dbContext;
-        private readonly FileService fileService;
+        private readonly FileService _fileService;
 
-        public RecruimentNewsController(RecruimentDbContext dbContext, FileService fileService)
+        public RecruimentNewsController(RecruimentDbContext dbContext, FileService fileService) : base(dbContext)
         {
-            this.dbContext = dbContext;
-            this.fileService = fileService;
+            _fileService = fileService;
         }
 
-        [Route("{id}")]
+        [HttpGet("{controller}/{id}")]
         public async Task<IActionResult> Index(int id)
         {
-            var recruimentNews = await dbContext
-                                        .RecruimentNews
-                                        .Select(e => new DetailRecruimentNewsViewModel
-                                        {
-                                            Id = e.Id,
-                                            Salary = e.Salary,
-                                            Gender = e.EmployeeGender.GetRepresentation(),
-                                            JobType = e.JobType.GetRepresentation(),
-                                            JobTitle = e.JobName,
-                                            RelativeSkills = e.RelativeSkills,
-                                            Description = e.JobDescription,
-                                            Employer = new EmployerViewModel
-                                            {
-                                                Id = e.Employer.Id,
-                                                Name = e.Employer.Name,
-                                                Address = e.WorkingAddress,
-                                                AvatarUrl = fileService.GetStaticFileUrlForFile(e.Employer.Avatar!, FilePath.Avatar),
-                                                Description = e.Employer.Description,
-                                                Size = e.Employer.Size
-                                            },
-                                            Deadline = e.Deadline.GetApplicationTimeRepresentation()
-                                        })
-                                        .FirstOrDefaultAsync(e => e.Id == id);
+            var recruimentNews = await DbContext.RecruimentNews
+                                                .ProjectToType<DetailRecruimentNewsViewModel>()
+                                                .FirstOrDefaultAsync(e => e.Id == id);
 
             if (recruimentNews == null)
             {
                 return NotFound();
             }
 
+            recruimentNews.Employer.Avatar = _fileService.GetStaticFileUrlForFile(
+                                                                recruimentNews.Employer.Avatar, FilePath.Avatar);
+
             return View(recruimentNews);
         }
 
         [Authorize(Policy = AuthorizationConstants.CANDIDATE_ONLY_POLICY)]
-        [HttpPost("apply/{id}")]
+        [ActionName("apply")]
         public async Task<IActionResult> Apply(int id, [FromForm] ApplyJobRequest request)
         {
             var candidateName = User.GetName();
-            var jobTitle = await dbContext.RecruimentNews.Where(e => e.Id == id).Select(e => e.JobName).FirstOrDefaultAsync();
+            var jobTitle = await DbContext.RecruimentNews.Where(e => e.Id == id).Select(e => e.JobName).FirstOrDefaultAsync();
 
             if (request.CV != null)
             {
-                var cvFilePath = await fileService.SaveAsync(request.CV, FilePath.CurriculumTitae);
+                var cvFilePath = await _fileService.SaveAsync(request.CV, FilePath.CurriculumTitae);
 
-                var transaction = await dbContext.Database.BeginTransactionAsync();
+                var transaction = await DbContext.Database.BeginTransactionAsync();
 
                 var savedCV = new CurriculumVitae
                 {
@@ -83,11 +65,11 @@ namespace WebTuyenDung.Controllers
                     IsUploadDirectlyByUser = false
                 };
 
-                dbContext.CVs.Add(savedCV);
+                DbContext.CVs.Add(savedCV);
 
-                await dbContext.SaveChangesAsync();
+                await DbContext.SaveChangesAsync();
 
-                dbContext
+                DbContext
                     .JobApplications
                     .Add(new JobApplication
                     {
@@ -99,13 +81,13 @@ namespace WebTuyenDung.Controllers
                         JobTitle = jobTitle!
                     });
 
-                await dbContext.SaveChangesAsync();
+                await DbContext.SaveChangesAsync();
 
                 await transaction.CommitAsync();
             }
             else
             {
-                dbContext
+                DbContext
                     .JobApplications
                     .Add(new JobApplication
                     {
@@ -117,7 +99,7 @@ namespace WebTuyenDung.Controllers
                         JobTitle = jobTitle!
                     });
 
-                await dbContext.SaveChangesAsync();
+                await DbContext.SaveChangesAsync();
             }
 
             return Redirect($"/recruiment-news/{id}");

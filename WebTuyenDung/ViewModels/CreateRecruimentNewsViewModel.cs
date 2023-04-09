@@ -13,7 +13,7 @@ namespace WebTuyenDung.ViewModels
 
         public JobType JobType { get; set; }
 
-        public string Salary { get; set;} = default!;
+        public string Salary { get; set; } = default!;
 
         public int City { get; set; } = default!;
 

@@ -1,76 +1,52 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 using WebTuyenDung.Data;
 using WebTuyenDung.Enums;
+using WebTuyenDung.Helper;
 using WebTuyenDung.Services;
 using WebTuyenDung.ViewModels;
-using WebTuyenDung.ViewModels.HomePage;
+using WebTuyenDung.ViewModels.Candidate;
+using Z.EntityFramework.Plus;
 
 namespace WebTuyenDung.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly RecruimentDbContext dbContext;
-        private readonly FileService fileService;
+        private readonly FileService _fileService;
 
-        public HomeController(RecruimentDbContext dbContext, FileService fileService)
+        public HomeController(RecruimentDbContext dbContext, FileService fileService) : base(dbContext)
         {
-            this.dbContext = dbContext;
-            this.fileService = fileService;
+            _fileService = fileService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var topRecruimentNews = GetTopRecruimentNews();
-            var topPosts = GetTopPosts();
+            var homePageViewModel = await GetHomePageDataAsync();
 
-            var model = new HomePageViewModel
+            return View(homePageViewModel);
+        }
+
+        private async Task<HomePageViewModel> GetHomePageDataAsync()
+        {
+            var recruimentNewsQuery = DbContext.RecruimentNews
+                                                .QueryTopItems<MinimalRecruimentNewsViewModel>(9)
+                                                .Select(e => new MinimalRecruimentNewsViewModel(e)
+                                                {
+                                                    Employer = new MinimalEmployerViewModel(e.Employer)
+                                                    {
+                                                        Avatar = _fileService.GetStaticFileUrlForFile(e.Employer.Avatar, FilePath.Avatar)
+                                                    }
+                                                }).Future();
+
+            var postsQuery = DbContext.Posts.QueryTopItems(3, _fileService).Future();
+
+            return new HomePageViewModel
             {
-                TopRecruimentNews = topRecruimentNews,
-                TopPosts = topPosts
+                TopRecruimentNews = await recruimentNewsQuery.ToListAsync(),
+                TopPosts = await postsQuery.ToListAsync()
             };
-
-            return View(model);
-        }
-
-        [NonAction]
-        private List<HomePageRecruimentNewsViewModel> GetTopRecruimentNews()
-        {
-            return dbContext.RecruimentNews
-                            .OrderByDescending(e => e.CreatedAt)
-                            .Take(9)
-                            .Select(e =>  new HomePageRecruimentNewsViewModel
-                            {
-                                Id = e.Id,
-                                JobTitle = e.JobName,
-                                JobType = e.JobType.GetRepresentation(),
-                                Salary = e.Salary,
-                                Employer = new EmployerViewModel
-                                {
-                                    Id = e.Employer.Id,
-                                    Name = e.Employer.Name,
-                                    Site = e.Employer.Address,
-                                    AvatarUrl = fileService.GetStaticFileUrlForFile(e.Employer.Avatar!, FilePath.Avatar)
-                                }
-                            })
-                            .ToList();
-        }
-
-        [NonAction]
-        private List<PostViewModel> GetTopPosts()
-        {
-            return dbContext.Posts
-                            .Where(e => e.IsApproved)
-                            .OrderByDescending(e => e.CreatedAt)
-                            .Take(3)
-                            .Select(e => new PostViewModel
-                            {
-                                Id = e.Id,
-                                Image = fileService.GetStaticFileUrlForFile(e.Image, FilePath.Post),
-                                PostedBy = e.Author.Name
-                            })
-                            .ToList();
         }
     }
 }

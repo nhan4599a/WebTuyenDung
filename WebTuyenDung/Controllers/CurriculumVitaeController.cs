@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
@@ -16,35 +16,33 @@ using WebTuyenDung.ViewModels;
 
 namespace WebTuyenDung.Controllers
 {
-    [Route("cv")]
+    [ControllerName("cv")]
     [Authorize(Policy = AuthorizationConstants.CANDIDATE_ONLY_POLICY)]
     public class CurriculumVitaeController : BaseController
     {
-        private readonly RecruimentDbContext dbContext;
-        private readonly FileService fileService;
+        private readonly FileService _fileService;
 
-        public CurriculumVitaeController(RecruimentDbContext dbContext, FileService fileService)
+        public CurriculumVitaeController(RecruimentDbContext dbContext, FileService fileService) : base(dbContext)
         {
-            this.dbContext = dbContext;
-            this.fileService = fileService;
+            _fileService = fileService;
         }
 
-        public IAsyncEnumerable<CurriculumVitaeViewModel> Index()
+        public IActionResult Index()
         {
             var userId = User.GetUserId();
 
-            return dbContext.CVs
-                            .Where(e => e.CandidateId == userId && e.IsUploadDirectlyByUser)
-                            .Select(e => new CurriculumVitaeViewModel
-                            {
-                                Id = e.Id,
-                                Name = e.Name,
-                                Url = fileService.GetStaticFileUrlForFile(e.FilePath, FilePath.CurriculumTitae)
-                            })
-                            .AsAsyncEnumerable();
+            var listCvs = DbContext.CVs
+                                    .Where(e => e.CandidateId == userId)
+                                    .ProjectToType<CurriculumVitaeViewModel>()
+                                    .Select(e => new CurriculumVitaeViewModel(e)
+                                    {
+                                        Url = _fileService.GetStaticFileUrlForFile(e.Url, FilePath.CurriculumTitae)
+                                    })
+                                    .AsAsyncEnumerable();
+
+            return View();
         }
 
-        [Route("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> Index(int id)
         {
@@ -53,7 +51,7 @@ namespace WebTuyenDung.Controllers
                 return Unauthorized();
             }
 
-            var queryResult = await dbContext.CVs
+            var queryResult = await DbContext.CVs
                                         .Where(e => e.Id == id)
                                         .Select(e => new { e.FilePath, e.CandidateId })
                                         .FirstOrDefaultAsync();
@@ -68,7 +66,7 @@ namespace WebTuyenDung.Controllers
                 return Unauthorized();
             }
 
-            var actualCvPath = fileService.GetStaticFileUrlForFile(queryResult.FilePath, FilePath.CurriculumTitae);
+            var actualCvPath = _fileService.GetStaticFileUrlForFile(queryResult.FilePath, FilePath.CurriculumTitae);
 
             return RedirectPermanent(actualCvPath);
         }
@@ -78,9 +76,9 @@ namespace WebTuyenDung.Controllers
         [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> Upload(UploadCurricilumVitaeRequest request)
         {
-            var cvPath = await fileService.SaveAsync(request.CV, FilePath.CurriculumTitae);
+            var cvPath = await _fileService.SaveAsync(request.CV, FilePath.CurriculumTitae);
 
-            dbContext
+            DbContext
                 .CVs
                 .Add(new CurriculumVitae
                 {
@@ -90,7 +88,7 @@ namespace WebTuyenDung.Controllers
                     IsUploadDirectlyByUser = true
                 });
 
-            await dbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
 
             return Ok();
         }

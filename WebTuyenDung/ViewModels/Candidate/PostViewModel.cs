@@ -1,4 +1,6 @@
-﻿namespace WebTuyenDung.ViewModels
+﻿using Mapster;
+
+namespace WebTuyenDung.ViewModels.Candidate
 {
     public class PostViewModel
     {
@@ -9,5 +11,12 @@
         public string Title { get; set; } = default!;
 
         public string PostedBy { get; set; } = default!;
+
+        public PostViewModel(PostViewModel source)
+        {
+            source.Adapt(this);
+        }
+
+        public PostViewModel() { }
     }
 }

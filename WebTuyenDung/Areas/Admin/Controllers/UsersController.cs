@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Data;
-using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
 using WebTuyenDung.ViewModels;
+using WebTuyenDung.ViewModels.Admin;
 
 namespace WebTuyenDung.Areas.Admin.Controllers
 {
@@ -35,16 +35,7 @@ namespace WebTuyenDung.Areas.Admin.Controllers
                 query = query.Where(e => e.Username.Contains(searchRequest.Keyword.Trim()));
             }
 
-            return query.PaginateAsync(
-                            searchRequest.PageIndex,
-                            searchRequest.PageSize,
-                            e => new UserViewModel
-                            {
-                                Username = e.Username,
-                                CreatedAt = e.CreatedAt.GetApplicationTimeRepresentation(),
-                                Role = e.Role.GetRepresentation(),
-                                Status = "Đang hoạt động"
-                            });
+            return query.PaginateAsync<User, UserViewModel>(searchRequest);
         }
 
         public IActionResult Create()

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using WebTuyenDung.Attributes;
 using WebTuyenDung.Data;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
@@ -11,7 +12,7 @@ using WebTuyenDung.ViewModels.Admin;
 
 namespace WebTuyenDung.Areas.Admin.Controllers
 {
-    [Route("{area}/recruiment-news/{action=Index}/{id?}")]
+    [ControllerName("recruiment-news")]
     public class RecruimentNewsController : BaseAdminController
     {
         private readonly RecruimentDbContext dbContext;
@@ -36,20 +37,7 @@ namespace WebTuyenDung.Areas.Admin.Controllers
                 query = query.Where(e => e.JobName.Contains(searchRequest.Keyword.Trim()));
             }
 
-            return query.PaginateAsync(
-                            searchRequest.PageIndex,
-                            searchRequest.PageSize,
-                            e => new RecruimentNewsViewModel
-                            {
-                                Id = e.Id,
-                                JobName = e.JobName,
-                                NumberOfCandidates = e.NumberOfCandidates,
-                                CreatedAt = e.CreatedAt.GetApplicationTimeRepresentation(),
-                                Deadline = e.Deadline.GetApplicationTimeRepresentation(),
-                                EmployerName = e.Employer.Name,
-                                View = e.View,
-                                Status = e.IsApproved ? "Đã phê duyệt" : "Chờ phê duyệt"                                
-                            });
+            return query.PaginateAsync<RecruimentNews, RecruimentNewsViewModel>(searchRequest);
         }
 
         [ActionName("Approve")]

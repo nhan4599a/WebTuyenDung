@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
 using WebTuyenDung.Constants;
@@ -16,11 +14,8 @@ namespace WebTuyenDung.Controllers
 {
     public class AuthenticationController : BaseController
     {
-        private readonly RecruimentDbContext dbContext;
-
-        public AuthenticationController(RecruimentDbContext dbContext)
+        public AuthenticationController(RecruimentDbContext dbContext) : base(dbContext)
         {
-            this.dbContext = dbContext;
         }
 
         [HttpGet("/authentication/sign-in")]
@@ -34,7 +29,7 @@ namespace WebTuyenDung.Controllers
         [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> SignIn([FromBody][FromForm] SignInRequest signInRequest)
         {
-            var user = await dbContext.Users.FirstOrDefaultAsync(e => e.Username == signInRequest.Username);
+            var user = await DbContext.Users.FirstOrDefaultAsync(e => e.Username == signInRequest.Username);
 
             if (user == null || user.PasswordHashed != signInRequest.Password.Sha256())
             {
@@ -52,14 +47,14 @@ namespace WebTuyenDung.Controllers
         [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> SignUp([FromBody] SignUpRequest signUpRequest)
         {
-            var isUserExisted = await dbContext.Users.AnyAsync(e => e.Username == signUpRequest.Username);
+            var isUserExisted = await DbContext.Users.AnyAsync(e => e.Username == signUpRequest.Username);
 
             if (isUserExisted)
             {
                 return BadRequest("Tên đăng nhập đã được sử dụng");
             }
 
-            dbContext.Users.Add(new User
+            DbContext.Users.Add(new User
             {
                 Username = signUpRequest.Username,
                 PasswordHashed = signUpRequest.Password.Sha256(),
@@ -67,7 +62,7 @@ namespace WebTuyenDung.Controllers
                 Role = UserRole.Candidate
             });
 
-            await dbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
 
             return Ok();
         }
