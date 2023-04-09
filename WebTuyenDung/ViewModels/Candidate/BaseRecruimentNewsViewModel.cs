@@ -9,5 +9,7 @@
         public string Salary { get; set; } = default!;
 
         public string JobType { get; set; } = default!;
+
+        public string WorkingSite { get; set; } = default!;
     }
 }

@@ -10,8 +10,6 @@ namespace WebTuyenDung.ViewModels.Candidate
 
         public string Name { get; set; } = default!;
 
-        public string Site { get; set; } = default!;
-
         public MinimalEmployerViewModel(MinimalEmployerViewModel source)
         {
             source.Adapt(this);

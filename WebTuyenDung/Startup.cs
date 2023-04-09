@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebTuyenDung.Configurations;
 using WebTuyenDung.Constants;
 using WebTuyenDung.Conventions;
 using WebTuyenDung.Data;
@@ -70,6 +71,7 @@ namespace WebTuyenDung
             services.AddSingleton<FileService>();
             services.AddSingleton<IAuthorizationMiddlewareResultHandler, AppAuthorizationResultHandler>();
             services.AddScoped<CreatePostService>();
+            MappingConfigurations.ConfigMappings();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

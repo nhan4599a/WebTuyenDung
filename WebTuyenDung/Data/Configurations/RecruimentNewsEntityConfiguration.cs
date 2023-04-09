@@ -12,7 +12,7 @@ namespace WebTuyenDung.Data.Configurations
 
             builder
                 .HasOne(e => e.Employer)
-                .WithMany()
+                .WithMany(e => e.RecruimentNews)
                 .HasForeignKey(e => e.EmployerId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);

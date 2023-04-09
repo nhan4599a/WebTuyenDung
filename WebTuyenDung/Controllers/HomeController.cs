@@ -6,8 +6,8 @@ using WebTuyenDung.Data;
 using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Services;
-using WebTuyenDung.ViewModels;
 using WebTuyenDung.ViewModels.Candidate;
+using WebTuyenDung.ViewModels.Page;
 using Z.EntityFramework.Plus;
 
 namespace WebTuyenDung.Controllers

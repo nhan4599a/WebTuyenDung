@@ -1,4 +1,6 @@
-﻿namespace WebTuyenDung.Models
+﻿using System.Collections.Generic;
+
+namespace WebTuyenDung.Models
 {
     public class Employer : User
     {
@@ -15,5 +17,7 @@
         public string PhoneNumber { get; set; } = default!;
 
         public Locale City { get; set; } = default!;
+
+        public ICollection<RecruimentNews> RecruimentNews { get; set; } = default!;
     }
 }

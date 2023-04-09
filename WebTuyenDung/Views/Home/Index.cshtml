@@ -1,5 +1,5 @@
 ﻿@using WebTuyenDung.Constants;
-@using WebTuyenDung.ViewModels
+@using WebTuyenDung.ViewModels.Page;
 @model HomePageViewModel
 
 @{
@@ -397,7 +397,7 @@
                     <div class="recruitment__item--wrapper">
                         <div class="recruitment__item--img">
                             <img class="full_width" src="@item.Employer.Avatar" alt="Logo nhà tuyển dụng">
-                            <div class="recruitment__item--time">@item.Employer.Site</div>
+                            <div class="recruitment__item--time">@item.WorkingSite</div>
                         </div>
                         <div class="recruitment__item--name">
                             <h2 class="recruitment__name--title">
@@ -406,7 +406,7 @@
                                 </a>
                             </h2>
                             <div class="recruitment__name--employer">
-                                <a href="/cong-ty/@item.Employer.Name-@item.Employer.Id" class="recruitment__employer--link text-line-1">
+                                <a href="/employers/@item.Employer.Id" class="recruitment__employer--link text-line-1">
                                     <span class="recruitment__icon"><i class="far fa-building"></i></span>
                                     <span class="">@item.Employer.Name</span>
                                 </a>

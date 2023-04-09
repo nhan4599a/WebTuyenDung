@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using WebTuyenDung.ViewModels.Candidate;
 
-namespace WebTuyenDung.ViewModels
+namespace WebTuyenDung.ViewModels.Page
 {
     public class JobsPageViewModel
     {
