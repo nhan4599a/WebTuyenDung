@@ -2,128 +2,127 @@
 @using WebTuyenDung.Helper;
 
 @{
-  int waitForApprovalRecruimentNews = (int)ViewData[ViewConstants.WAIT_FOR_APPROVAL_RECRUIMENT_NEWS]!;
-  int waitForApprovalPosts = (int)ViewData[ViewConstants.WAIT_FOR_APPROVAL_POSTS]!;
+    int waitForApprovalRecruimentNews = (int)ViewData[ViewConstants.WAIT_FOR_APPROVAL_RECRUIMENT_NEWS]!;
+    int waitForApprovalPosts = (int)ViewData[ViewConstants.WAIT_FOR_APPROVAL_POSTS]!;
 }
 
 <div id="sidebar-menu">
 
-  <ul class="metismenu" id="side-menu">
+    <ul class="metismenu" id="side-menu">
 
-    <li class="menu-title">Nhà tuyển dụng</li>
+        <li class="menu-title">Nhà tuyển dụng</li>
 
-    <li>
-      <a href="@Url.Action("Index","Home")" class="waves-effect">
-        <i class="remixicon-dashboard-line"></i>
-        <!-- <span class="badge badge-pink badge-pill float-right">2</span> -->
-        <span> Bảng tin </span>
-        <span class="menu-arrow"></span>
-      </a>
-    </li>
+        <li>
+            <a href="/employer" class="waves-effect">
+                <i class="remixicon-dashboard-line"></i>
+                <!-- <span class="badge badge-pink badge-pill float-right">2</span> -->
+                <span> Bảng tin </span>
+            </a>
+        </li>
 
-    <li>
-      <a href="javascript: void(0);" class="waves-effect active">
-        <i class="remixicon-stack-line"></i>
-        <span> Tin tuyển dụng </span>
-        @if (waitForApprovalRecruimentNews > 0)
-        {
-          <span class="badge badge-pink badge-pill float-right">@waitForApprovalRecruimentNews</span>
-        }
-        else
-        {
-          <span class="menu-arrow"></span>
-        }
-      </a>
-      <ul class="nav-second-level" aria-expanded="false">
         <li>
-          <a href="/employer/recruiment-news">Đang hiển thị</a>
+            <a href="javascript: void(0);" class="waves-effect active">
+                <i class="remixicon-stack-line"></i>
+                <span> Tin tuyển dụng </span>
+                @if (waitForApprovalRecruimentNews > 0)
+                {
+                    <span class="badge badge-pink badge-pill float-right">@waitForApprovalRecruimentNews</span>
+                }
+                else
+                {
+                    <span class="menu-arrow"></span>
+                }
+            </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    <a href="/employer/recruiment-news">Đang hiển thị</a>
+                </li>
+                <li>
+                    <a href="/employer/recruiment-news?mode=1">
+                        @if (waitForApprovalRecruimentNews > 0)
+                        {
+                            <span class="badge badge-pink badge-pill float-right">@waitForApprovalRecruimentNews</span>
+                        }
+                        <span>Đang xét duyệt</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/employer/recruiment-news?mode=2">Hết hạn ứng tuyển</a>
+                </li>
+                <li>
+                    <a href="/employer/recruiment-news/create">Đăng tin mới</a>
+                </li>
+            </ul>
         </li>
-        <li>
-          <a href="/employer/recruiment-news?mode=1">
-            @if (waitForApprovalRecruimentNews > 0)
-            {
-              <span class="badge badge-pink badge-pill float-right">@waitForApprovalRecruimentNews</span>
-            }
-            <span>Đang xét duyệt</span>
-          </a>
-        </li>
-        <li>
-          <a href="/employer/recruiment-news?mode=2">Hết hạn ứng tuyển</a>
-        </li>
-        <li>
-          <a href="/employer/recruiment-news/create">Đăng tin mới</a>
-        </li>
-      </ul>
-    </li>
 
-    <li>
-      <a href="javascript: void(0);" class="waves-effect">
-        <i class="remixicon-layout-line"></i>
-        <span> Danh sách ứng tuyển </span>
-        <span class="menu-arrow"></span>
-      </a>
-      <ul class="nav-second-level" aria-expanded="false">
         <li>
-          <a href="/employer/applications">Tất cả</a>
+            <a href="javascript: void(0);" class="waves-effect">
+                <i class="remixicon-layout-line"></i>
+                <span> Danh sách ứng tuyển </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    <a href="/employer/applications">Tất cả</a>
+                </li>
+            </ul>
         </li>
-      </ul>
-    </li>
 
-    <li>
-      <a href="javascript: void(0);" class="waves-effect">
-        <i class="remixicon-mail-open-line"></i>
-        <span> Bài viết </span>
-        @if (waitForApprovalPosts > 0)
-        {
-          <span class="badge badge-pink badge-pill float-right">@waitForApprovalPosts</span>
-        }
-        else
-        {
-          <span class="menu-arrow"></span>
-        }
-      </a>
-      <ul class="nav-second-level" aria-expanded="false">
         <li>
-          <a href="/employer/posts">Bài viết của bạn</a>
+            <a href="javascript: void(0);" class="waves-effect">
+                <i class="remixicon-mail-open-line"></i>
+                <span> Bài viết </span>
+                @if (waitForApprovalPosts > 0)
+                {
+                    <span class="badge badge-pink badge-pill float-right">@waitForApprovalPosts</span>
+                }
+                else
+                {
+                    <span class="menu-arrow"></span>
+                }
+            </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    <a href="/employer/posts">Bài viết của bạn</a>
+                </li>
+                <li>
+                    <a href="/employer/posts?isApproved=0" class="waves-effect">
+                        @if (waitForApprovalPosts > 0)
+                        {
+                            <span class="badge badge-pink badge-pill float-right">@waitForApprovalPosts</span>
+                        }
+                        <span> Bài viết chờ duyệt </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/employer/posts/create">Đăng bài viết</a>
+                </li>
+            </ul>
         </li>
-        <li>
-          <a href="/employer/posts?isApproved=0" class="waves-effect">
-            @if (waitForApprovalPosts > 0)
-            {
-              <span class="badge badge-pink badge-pill float-right">@waitForApprovalPosts</span>
-            }
-            <span> Bài viết chờ duyệt </span>
-          </a>
-        </li>
-        <li>
-          <a href="/employer/posts/create">Đăng bài viết</a>
-        </li>
-      </ul>
-    </li>
 
-    <li>
-      <a href="javascript: void(0);" class="waves-effect">
-        <i class="remixicon-pages-line"></i>
-        <span> Ứng viên </span>
-        <span class="menu-arrow"></span>
-      </a>
-      <ul class="nav-second-level" aria-expanded="false">
         <li>
-          <a href="@Url.Action("TimUngVien", "UngTuyen")">Tìm ứng viên</a>
+            <a href="javascript: void(0);" class="waves-effect">
+                <i class="remixicon-pages-line"></i>
+                <span> Ứng viên </span>
+                <span class="menu-arrow"></span>
+            </a>
+            <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                    <a href="#">Tìm ứng viên</a>
+                </li>
+                <li>
+                    <a href="#">Đề xuất ứng viên phù hợp</a>
+                </li>
+            </ul>
         </li>
-        <li>
-          <a href="@Url.Action("DeXuat","UngTuyen")">Đề xuất ứng viên phù hợp</a>
-        </li>
-      </ul>
-    </li>
 
-    <li>
-      <a href="/cong-ty/@User.GetUserId()" target="_blank" class="waves-effect">
-        <i class="remixicon-pages-line"></i>
-        <span> Xem trang thông tin </span>
-        <span class="menu-arrow"></span>
-      </a>
-    </li>
-  </ul>
+        <li>
+            <a href="/employers/@User.GetUserId()" target="_blank" class="waves-effect">
+                <i class="remixicon-pages-line"></i>
+                <span> Xem trang thông tin </span>
+                <span class="menu-arrow"></span>
+            </a>
+        </li>
+    </ul>
 
 </div>

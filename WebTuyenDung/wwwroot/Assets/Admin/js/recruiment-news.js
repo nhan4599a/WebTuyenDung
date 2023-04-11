@@ -77,7 +77,7 @@ $('body').on('click', '#datatablesSimple a.btn.btn-success', function (e) {
 
     if (confirm(`Bạn có muốn duyệt tin tuyển dụng có Mã = ${recruimentNewsId} này không?`)) {
         $.ajax({
-            url: `/admin/recruiment-news/approve/${recruimentNewsId}`,
+            url: `/api/recruiment-news/approve/${recruimentNewsId}`,
             type: 'PUT',
             success: () => {
                 location.reload();
