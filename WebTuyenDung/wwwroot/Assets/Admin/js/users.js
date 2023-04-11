@@ -21,8 +21,8 @@
                 str += "<td>" + value.username + "</td>";
                 str += "<td>" + value.role + "</td>";
                 str += "<td>" + value.createdAt + "</td>";
-                str += "<td>" + value.status + "</td>";
-                str += '<td class="d-flex justify-content-around"><a class="btn btn-warning" href="/Admin/User/Edit/' + value.Id + '">Cập nhật</a>';
+                str += "<td>Hoạt động</td>";
+                str += '<td class="d-flex justify-content-around"><a class="btn btn-warning" href="/admin/users/edit/' + value.Id + '">Cập nhật</a>';
                 str += '<a class="btn btn-danger" href="#" data-user=' + value.Id + '>Xóa</a>';
                 str += '<a class="btn btn-success" href="/Admin/User/RoleAssign/' + value.Id + '">Phân quyền</a></td>'
                 str += "</tr>";
@@ -60,11 +60,9 @@ $("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
     var user_delete = $(this).attr('data-user');
     if (confirm("Bạn có muốn xóa tài khoản có id = " + user_delete + " này không?")) {
         $.ajax({
-            url: "/Admin/User/Delete",
-            type: "POST",
-            data: { userId: user_delete },
-            dataType: "json",
-            success: (result) => {
+            url: "/api/admin/users/" + user_delete,
+            type: "DELETE",
+            success: () => {
                 location.reload();
             }
         });

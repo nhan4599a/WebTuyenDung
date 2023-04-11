@@ -1,4 +1,6 @@
-﻿namespace WebTuyenDung.ViewModels.Admin
+﻿using System;
+
+namespace WebTuyenDung.ViewModels.Admin
 {
     public class UserViewModel
     {
@@ -6,8 +8,6 @@
 
         public string Role { get; set; } = default!;
 
-        public string CreatedAt { get; set; } = default!;
-
-        public string Status { get; set; } = default!;
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }

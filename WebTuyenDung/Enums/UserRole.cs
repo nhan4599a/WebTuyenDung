@@ -2,7 +2,7 @@
 
 namespace WebTuyenDung.Enums
 {
-    public enum UserRole
+    public enum UserRole : byte
     {
         Candidate,
         Employer,

@@ -7,7 +7,7 @@
     const isApproved = isApprovedRawString.toLowerCase() === '1';
 
     $.ajax({
-        url: "/admin/posts/search",
+        url: "/api/posts/management",
         data: {
             keyWord: keyWord,
             pageIndex: pageIndex,
@@ -33,9 +33,9 @@
                 if (isApproved) {
                     str += "<td>" + value.view + "</td>";
                 }
-                str += "<td><span class='badge badge-success'>" + value.status + "</span></td>";
-                str += '<td class="d-flex"><a class="btn btn-warning" href="/Admin/BaiViet/Edit/' + value.id + '">Cập nhật</a>';
-                if (value.status === 'Đã duyệt') {
+                str += "<td><span class='badge badge-success'>" + (isApproved ? 'Đã duyệt' : 'Chưa được duyệt') + "</span></td>";
+                str += '<td class="d-flex"><a class="btn btn-warning" href="/admin/posts/edit/' + value.id + '">Cập nhật</a>';
+                if (isApproved) {
                     str += `<a class="btn btn-danger ml-1" href="#" data-user="${value.id}" data-action="delete">Xóa</a>`;
                 } else {
                     str += `<a style="min-width: 95px;" class="btn btn-success mt-1" href="#" data-user="${value.id}" data-action="approve">Duyệt bài</a>`;

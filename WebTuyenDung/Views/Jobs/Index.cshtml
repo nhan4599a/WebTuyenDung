@@ -1,9 +1,12 @@
-﻿@using WebTuyenDung.ViewModels;
+﻿@using Microsoft.Extensions.Primitives;
+@using WebTuyenDung.Enums;
+@using WebTuyenDung.ViewModels;
 @using WebTuyenDung.ViewModels.Page;
 @model JobsPageViewModel
 
 @{
     ViewBag.Title = "Tìm kiếm công việc";
+    var currentPage = Context.Request.Query["pageIndex"] != StringValues.Empty ? int.Parse(Context.Request.Query["pageIndex"]!) : 1;
 }
 
 @section css_Main {
@@ -13,7 +16,7 @@
 @section scripts_Main {
     <script src="~/Assets/Client/js/style.js"></script>
     <script src="~/Assets/Client/js/searchkey.js"></script>
-    <script src="~/Assets/Client/js/searchResult.js"></script>
+    @*<script src="~/Assets/Client/js/searchResult.js"></script>*@
 
     <script>
         load("/Home/GetPaging", $('#keyword').val(), 1, $('#CapBac').val(), $('#DiaChi').val(), null, null, null);
@@ -104,14 +107,106 @@
         </div>
         <div class="main__result--total">
             <p class="result__total--content">
-
+                @if (Model.SearchResult.TotalRecords == 0)
+                {
+                    <div>Không tìm được tin tuyển dụng phù hợp</div>
+                }
+                else
+                {
+                    @: Tìm được <span>@Model.SearchResult.TotalRecords</span> công việc phù hợp với yêu cầu của bạn
+                }
             </p>
             <div class="main__result--content row">
                 <div class="main__result--description col l-8">
                     <div class="grid row result__list--search">
+                        @foreach (var job in Model.SearchResult.Data)
+                        {
+                            <div class="col result__item l-12 m-6 c-12">
+                                <div class="result__item--wrapper">
+                                    <div class="result__item--img">
+                                        <img class="full_width" src="@job.Employer.Avatar" />
+                                        <div class="result__item--time">@job.WorkingSite</div>
+                                    </div>
+                                    <div class="result__item--name">
+                                        <h2 class="result__name--title">
+                                            <a class="result__name--link text-line-1" href="/recruiment-news/@job.Id">
+                                                @job.JobName
+                                            </a>
+                                            <span class="result__name--save">
+                                                <a href="#" title="Lưu tin tuyển dụng">
+                                                    <i class='fa-solid fa-heart'></i>
+                                                </a>
+                                            </span>
+                                        </h2>
+                                        <div class="result__name--employer mb-5">
+                                            <a href="/employers/@job.Employer.Id" class="result__employer--link text-line-1">
+                                                <span class="result__icon">
+                                                    <i class="far fa-building"></i>
+                                                </span>
+                                                <span>
+                                                    @job.Employer.Name
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <p class="result__salary mb-5">
+                                            <span class="result__icon">
+                                                <i class="fas fa-money-check-alt"></i>
+                                            </span>
+                                            Lương: <span>@job.Salary</span>
+                                        </p>
+                                        <div class="result__date mb-5">
+                                            <p class="result__date--start mb-0">
+                                                <span class="result__icon">
+                                                    <i class="fa-regular fa-calendar-check"></i>
+                                                </span>
+                                                Ngày đăng: <span>@job.CreatedAt.GetApplicationTimeRepresentation()</span>
+                                            </p>
+                                            <p class="result__date--end mb-0">
+                                                Hết hạn: <span>@(job.Deadline.HasValue ? job.Deadline.Value.GetApplicationTimeRepresentation(): "không giới hạn")</span>
+                                            </p>
+                                        </div>
+                                        <p class="result__address mb-0">
+                                            <span class="result__icon">
+                                                <i class="fas fa-map-marked"></i>
+                                            </span>
+                                            <span>
+                                                @job.JobType.GetRepresentation()
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="main__result--paging">
                         <ul class="result__paging--list">
+                            @if (currentPage > 1)
+                            {
+                                <li class="previous">
+                                    <a href="#" data-page="@(currentPage - 1)">‹</a>
+                                </li>
+                            }
+                            @for (int i = 1; i <= Model.SearchResult.TotalPages; i++)
+                            {
+                                if (i == currentPage)
+                                {
+                                    <li class="active">
+                                        <a href="#" data-page="@i">@i</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="#" data-page="@i">@i</a>
+                                    </li>
+                                }
+                            }
+                            @if (currentPage < Model.SearchResult.TotalPages)
+                            {
+                                <li class="next">
+                                    <a href="#" data-page="@(currentPage + 1)">›</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -129,12 +224,12 @@
                                             </div>
                                             <div class="result__item--name">
                                                 <h2 class="result__name--title">
-                                                    <a href="/tin-tuyen-dung/@item.Id" class="result__name--link text-line-1">
+                                                    <a href="/recruiment-news/@item.Id" class="result__name--link text-line-1">
                                                         @item.JobName
                                                     </a>
                                                 </h2>
                                                 <div class="result__name--employer mb-5">
-                                                    <a href="/cong-ty/@item.Employer.Id" class="result__employer--link text-line-1">
+                                                    <a href="/employers/@item.Employer.Id" class="result__employer--link text-line-1">
                                                         <span class="result__icon"><i class="far fa-building"></i></span>
                                                         <span class="">@item.Employer.Name</span>
                                                     </a>
@@ -146,7 +241,7 @@
                                                 <div class="result__date mb-5">
                                                     <p class="result__date--end mb-0">
                                                         <span class="result__icon"><i class="fa-regular fa-clock"></i></span>
-                                                        <span>@(item.DeadLine.HasValue ? item.DeadLine.Value.GetApplicationTimeRepresentation() : "Không giới giạn")</span>
+                                                        <span>@(item.Deadline.HasValue ? item.Deadline.Value.GetApplicationTimeRepresentation() : "Không giới giạn")</span>
                                                     </p>
                                                 </div>
                                             </div>

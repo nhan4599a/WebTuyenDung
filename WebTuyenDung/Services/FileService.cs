@@ -28,7 +28,7 @@ namespace WebTuyenDung.Services
             return fileName;
         }
 
-        public string GetActualFilePath(string fileName, FilePath filePath)
+        private string GetActualFilePath(string fileName, FilePath filePath)
         {
             return _basePath + filePath.GetContentDirectory() + fileName;
         }

@@ -2,7 +2,7 @@
 
 namespace WebTuyenDung.Enums
 {
-    public enum Gender
+    public enum Gender : byte
     {
         Male,
         Female

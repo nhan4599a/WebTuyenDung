@@ -2,7 +2,7 @@
 
 namespace WebTuyenDung.Enums
 {
-    public enum FilePath
+    public enum FilePath : byte
     {
         Post,
         CurriculumTitae,

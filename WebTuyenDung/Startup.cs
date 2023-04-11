@@ -6,11 +6,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using WebTuyenDung.Configurations;
 using WebTuyenDung.Constants;
 using WebTuyenDung.Conventions;
 using WebTuyenDung.Data;
 using WebTuyenDung.Handlers;
+using WebTuyenDung.JsonConverters;
 using WebTuyenDung.Services;
 
 namespace WebTuyenDung
@@ -30,6 +34,14 @@ namespace WebTuyenDung
             services.AddControllersWithViews(mvc =>
             {
                 mvc.Conventions.Add(new ControllerNameConvention());
+            }).AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new DateTimeOffsetJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new GenderJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new JobTypeJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new UserRoleJsonConverter());
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             });
 
             var connectionString = Configuration.GetConnectionString("Default");

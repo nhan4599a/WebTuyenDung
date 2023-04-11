@@ -12,7 +12,7 @@ using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
 using WebTuyenDung.Services;
-using WebTuyenDung.ViewModels.Candidate;
+using WebTuyenDung.ViewModels.User;
 
 namespace WebTuyenDung.Controllers
 {
@@ -30,7 +30,7 @@ namespace WebTuyenDung.Controllers
         public async Task<IActionResult> Index(int id)
         {
             var recruimentNews = await DbContext.RecruimentNews
-                                                .ProjectToType<DetailRecruimentNewsViewModel>()
+                                                .ProjectToType<FullDetailRecruimentNewsViewModel>()
                                                 .FirstOrDefaultAsync(e => e.Id == id);
 
             if (recruimentNews == null)

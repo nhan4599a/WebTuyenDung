@@ -1,6 +1,6 @@
 ﻿namespace WebTuyenDung.Enums
 {
-    public enum JobPosition
+    public enum JobPosition : byte
     {
         BA,
         BrSE,

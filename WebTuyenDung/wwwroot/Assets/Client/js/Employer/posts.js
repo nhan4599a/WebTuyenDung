@@ -1,9 +1,11 @@
 ﻿var load = function (keyWord, pageIndex, pageSize) {
 
     const isApproved = getQueryParams().isApproved ?? 0;
+    
+    const userId = $('#user-id').val()
 
     $.ajax({
-        url: "/employer/posts/search",
+        url: `/api/posts/management/${userId}`,
         data: {
             keyWord: keyWord,
             pageIndex: pageIndex,

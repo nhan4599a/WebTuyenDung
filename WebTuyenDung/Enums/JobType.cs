@@ -2,7 +2,7 @@
 
 namespace WebTuyenDung.Enums
 {
-    public enum JobType
+    public enum JobType : byte
     {
         PartTime,
         FullTime,

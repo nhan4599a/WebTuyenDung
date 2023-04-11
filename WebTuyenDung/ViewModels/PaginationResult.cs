@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
+using WebTuyenDung.ViewModels.Abstraction;
 
 namespace WebTuyenDung.ViewModels
 {
-    public class PaginationResult<TResult>
+    public class PaginationResult<TResult> : IPaginationResult<TResult>
     {
-        public int TotalPages { get; set; }
+        public int TotalPages { get; }
 
-        public int TotalRecords { get; set; }
+        public int TotalRecords { get; }
 
-        public List<TResult> Data { get; set; } = default!;
+        public IEnumerable<TResult> Data { get; }
 
-        public PaginationResult(int totalPages, int totalRecords, List<TResult> data)
+        public PaginationResult(int totalPages, int totalRecords, IEnumerable<TResult> data)
         {
             TotalPages = totalPages;
             TotalRecords = totalRecords;
             Data = data;
-        } 
+        }
     }
 }

@@ -10,6 +10,7 @@ using WebTuyenDung.ViewModels.Page;
 
 namespace WebTuyenDung.Controllers
 {
+    [Route("{controller}/{id}")]
     public class EmployersController : BaseController
     {
         private readonly FileService _fileService;
@@ -26,9 +27,15 @@ namespace WebTuyenDung.Controllers
                                             .ProjectToType<DetailEmployerPageViewModel>()
                                             .Select(e => new DetailEmployerPageViewModel(e)
                                             {
-                                                Avatar = _fileService.GetStaticFileUrlForFile(e.Avatar, FilePath.Avatar)
+                                                Avatar = _fileService.GetStaticFileUrlForFile(e.Avatar, FilePath.Avatar),
+                                                CoverImage = _fileService.GetStaticFileUrlForFile(e.CoverImage, FilePath.Avatar)
                                             })
                                             .FirstOrDefaultAsync();
+
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
 
             return View(viewModel);
         }

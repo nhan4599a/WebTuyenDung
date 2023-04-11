@@ -7,7 +7,7 @@ using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
-using WebTuyenDung.ViewModels;
+using WebTuyenDung.ViewModels.Abstraction;
 using WebTuyenDung.ViewModels.Employer;
 using Z.EntityFramework.Plus;
 
@@ -28,7 +28,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         }
 
         [HttpGet]
-        public Task<PaginationResult<JobApplicationViewModel>> Search(SearchRequest request)
+        public Task<IPaginationResult<JobApplicationViewModel>> Search(SearchRequest request)
         {
             var query = dbContext
                             .JobApplications

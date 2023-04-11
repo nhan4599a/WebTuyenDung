@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
-using WebTuyenDung.ViewModels.Candidate;
+using WebTuyenDung.ViewModels.Abstraction;
+using WebTuyenDung.ViewModels.User;
 
 namespace WebTuyenDung.ViewModels.Page
 {
     public class JobsPageViewModel
     {
-        public PaginationResult<RecruimentNewsViewModel> SearchResult { get; set; } = default!;
+        public IPaginationResult<DetailRecruimentNewsViewModel> SearchResult { get; set; } = default!;
 
-        public List<RecruimentNewsViewModel> TopRecruimentNews { get; set; } = default!;
+        public List<TopJobsViewModel> TopRecruimentNews { get; set; } = default!;
     }
 }

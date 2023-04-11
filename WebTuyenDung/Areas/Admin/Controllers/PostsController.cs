@@ -8,7 +8,7 @@ using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
 using WebTuyenDung.Services;
-using WebTuyenDung.ViewModels;
+using WebTuyenDung.ViewModels.Abstraction;
 using AdminViewModels = WebTuyenDung.ViewModels.Admin;
 
 namespace WebTuyenDung.Areas.Admin.Controllers
@@ -27,48 +27,6 @@ namespace WebTuyenDung.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-        [HttpGet]
-        public Task<PaginationResult<AdminViewModels.PostViewModel>> Search(SearchPostsRequest searchRequest)
-        {
-            IQueryable<Post> query = dbContext.Posts.AsNoTracking().Where(e => e.IsApproved == searchRequest.IsApproved);
-
-            if (!string.IsNullOrWhiteSpace(searchRequest.Keyword))
-            {
-                query = query.Where(e => e.Title.Contains(searchRequest.Keyword.Trim()));
-            }
-
-            return query.PaginateAsync<Post, AdminViewModels.PostViewModel>(searchRequest);
-        }
-
-        [ActionName("Approve")]
-        [HttpPut]
-        public async Task<IActionResult> ApprovePost(int id)
-        {
-            var approvedCount = await dbContext
-                                        .Posts
-                                        .Where(e => e.Id == id && !e.IsApproved)
-                                        .UpdateFromQueryAsync(e => new Post
-                                        {
-                                            IsApproved = true
-                                        });
-
-            return approvedCount == 1 ? Ok() : BadRequest();
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> DeletePost(int id)
-        {
-            var deletedCount = await dbContext
-                                        .Posts
-                                        .Where(e => e.Id == id)
-                                        .UpdateFromQueryAsync(e => new Post
-                                        {
-                                            IsDeleted = true
-                                        });
-
-            return deletedCount == 1 ? Ok() : BadRequest();
         }
 
         public IActionResult Create()

@@ -1,4 +1,7 @@
-﻿namespace WebTuyenDung.ViewModels.Admin
+﻿using System;
+using WebTuyenDung.Enums;
+
+namespace WebTuyenDung.ViewModels.Admin
 {
     public class CandidateViewModel
     {
@@ -8,9 +11,9 @@
 
         public string PhoneNumber { get; set; } = default!;
 
-        public string Gender { get; set; } = default!;
+        public Gender Gender { get; set; }
 
-        public string BirthDay { get; set; } = default!;
+        public DateOnly BirthDay { get; set; }
 
         public string Address { get; set; } = default!;
     }

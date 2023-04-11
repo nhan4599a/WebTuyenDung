@@ -1,19 +1,13 @@
 ﻿using Mapster;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using WebTuyenDung.ViewModels.Candidate;
+using WebTuyenDung.ViewModels.User;
 
 namespace WebTuyenDung.ViewModels.Page
 {
     public class DetailEmployerPageViewModel : DetailEmployerViewModel
     {
-        public List<RecruimentNewsViewModel> RecruimentNews { get; set; } = default!;
+        public string? Website { get; set; }
 
-        public class RecruimentNewsViewModel : BaseRecruimentNewsViewModel
-        {
-            public DateOnly? Deadline { get; set; }
-        }
+        public string CoverImage { get; set; } = default!;
 
         public DetailEmployerPageViewModel(DetailEmployerPageViewModel source)
         {

@@ -7,8 +7,9 @@ using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
 using WebTuyenDung.Services;
-using WebTuyenDung.ViewModels.Candidate;
+using WebTuyenDung.ViewModels.Abstraction;
 using WebTuyenDung.ViewModels.Page;
+using WebTuyenDung.ViewModels.User;
 using Z.EntityFramework.Plus;
 
 namespace WebTuyenDung.Controllers
@@ -31,17 +32,24 @@ namespace WebTuyenDung.Controllers
                 jobsQuery = jobsQuery.Where(e => e.JobType == request.JobType);
             }
 
-            var hotJobsQuery = jobsQuery.QueryTopItems<RecruimentNewsViewModel>(5)
-                                        .Select(e => new RecruimentNewsViewModel(e)
+            var hotJobsQuery = jobsQuery.QueryTopItems<TopJobsViewModel>(5)
+                                        .Select(e => new TopJobsViewModel(e)
                                         {
-                                            Employer = new MinimalEmployerViewModel(e.Employer)
+                                            Employer = new BaseEmployerViewModel(e.Employer)
                                             {
                                                 Avatar = _fileService.GetStaticFileUrlForFile(e.Employer.Avatar, FilePath.Avatar)
                                             }
                                         })
                                         .Future();
 
-            var jobs = await jobsQuery.PaginateAsync<RecruimentNews, RecruimentNewsViewModel>(request);
+            var jobs = await jobsQuery.PaginateAsync<RecruimentNews, DetailRecruimentNewsViewModel>(request)
+                                      .Select(e => new DetailRecruimentNewsViewModel(e)
+                                      {
+                                          Employer = new BaseEmployerViewModel(e.Employer)
+                                          {
+                                              Avatar = _fileService.GetStaticFileUrlForFile(e.Employer.Avatar, FilePath.Avatar)
+                                          }
+                                      });
 
             return View(new JobsPageViewModel
             {

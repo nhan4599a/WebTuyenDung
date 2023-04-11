@@ -2,6 +2,6 @@
 {
     public class SearchRequest : PaginationRequest
     {
-        public string Keyword { get; set; } = default!;
+        public string? Keyword { get; set; }
     }
 }

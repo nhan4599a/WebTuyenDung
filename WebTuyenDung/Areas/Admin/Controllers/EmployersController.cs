@@ -6,7 +6,7 @@ using WebTuyenDung.Data;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
-using WebTuyenDung.ViewModels;
+using WebTuyenDung.ViewModels.Abstraction;
 using WebTuyenDung.ViewModels.Admin;
 using AdminViewModels = WebTuyenDung.ViewModels.Admin;
 
@@ -27,7 +27,7 @@ namespace WebTuyenDung.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public Task<PaginationResult<AdminViewModels.EmployerViewModel>> Search(SearchRequest searchRequest)
+        public Task<IPaginationResult<AdminViewModels.EmployerViewModel>> Search(SearchRequest searchRequest)
         {
             IQueryable<Models.Employer> query = dbContext.Employers.AsNoTracking();
 

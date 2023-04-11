@@ -1,7 +1,8 @@
 ﻿@using WebTuyenDung.Constants;
+@using WebTuyenDung.Enums;
 @using WebTuyenDung.Helper;
-@using WebTuyenDung.ViewModels.Candidate
-@model DetailRecruimentNewsViewModel
+@using WebTuyenDung.ViewModels.User;
+@model FullDetailRecruimentNewsViewModel
 
 @{
     ViewBag.Title = Model.JobName + " - " + Model.Employer.Name;
@@ -56,7 +57,7 @@
             <div class="employer__info--recruitment c-flex">
                 <h1>@Model.JobName</h1>
                 <div class="employer__info--link">
-                    <a href="#">
+                    <a href="/employers/@Model.Employer.Id">
                         <i class="far fa-building"></i>
                         @Model.Employer.Name
                     </a>
@@ -141,24 +142,23 @@
                     <h3 class="content__info--title">1. Thông tin tuyển dụng</h3>
                     <ul class="content__info--list">
                         <li>Mức lương: @Model.Salary</li>
-                        <li>Hình thức làm việc: @Model.JobType</li>
-                        <li>Giới tính: @Model.Gender</li>
+                        <li>Hình thức làm việc: @Model.JobType.GetRepresentation()</li>
+                        <li>Giới tính: @Model.Gender.GetRepresentation()</li>
                         <li>Số lượng tuyển: @Model.NumberOfCandidates</li>
-                        <li>Cấp bậc: Lập trình viên</li>
                         <li>
                             Địa điểm làm việc:
                             <p>- Khu vực: @Model.WorkingSite</p>
-                            <p>- @Model.Employer.Address</p>
+                            <p>- @Model.WorkingAddress</p>
                         </li>
                     </ul>
                     <h3 class="content__info--title">2. Mô tả công việc</h3>
                     <div style="padding-left: 20px">
-                        <p>@Html.Raw(Model.Description)</p>
+                        <p>@Html.Raw(Model.JobDescription)</p>
                     </div>
                     <h3 class="content__info--title">3. Yêu cầu ứng viên</h3>
                     <div style="padding-left: 20px">
                         <p>
-                            @Html.Raw(Model.Requirements)
+                            @Html.Raw(Model.JobRequirements)
                         </p>
                     </div>
                     <h3 class="content__info--title">4. Kỹ năng liên quan</h3>
@@ -192,14 +192,7 @@
                 <label for="cv-type-radio-online" class="form-label">Sử dụng CV online</label>
             </div>
             <div class="col-md-10">
-                <div id="cv-type-radio-online-content">
-                    <input type="radio" name="items" value="1" checked>
-                    <a href="">CV 1 </a><br>
-                    <input type="radio" name="items" value="2">
-                    <a href="">CV 2</a><br>
-                    <input type="radio" name="items" value="3">
-                    <a href""> CV 3</a>
-                </div>
+                <div id="cv-type-radio-online-content"></div>
             </div>
             <div class="col-md-12">
                 <input type="radio" class="form-check-input" id="cv-type-radio-upload" name="cv-type" value="upload">

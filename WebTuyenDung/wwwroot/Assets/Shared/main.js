@@ -1,11 +1,4 @@
-﻿// Show login form
-__('#btn-login, .login--close, .main__login').forEach((item) => {
-    item.addEventListener('click', () => {
-        _('.main__login').classList.toggle('show');
-    })
-})
-
-__('.register--close, .main__register').forEach((item) => {
+﻿__('.register--close, .main__register').forEach((item) => {
     item.addEventListener('click', () => {
         _('.main__register').classList.toggle('show');
     })

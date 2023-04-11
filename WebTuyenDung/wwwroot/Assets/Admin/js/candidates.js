@@ -24,7 +24,7 @@
                 str += "<td>" + value.gender + "</td>";
                 str += "<td>" + value.birthDay + "</td>";
                 str += "<td>" + value.address + "</td>";
-                str += '<td style="display: inline-grid;"><a style="min-width: 90px" class="btn btn-success" href="/Admin/UngVien/Detail/' + value.id + '">Xem thông tin</a>';
+                str += '<td style="display: inline-grid;"><a style="min-width: 90px" class="btn btn-success" href="/admin/candidates/' + value.id + '">Xem thông tin</a>';
                 str += '<a class="btn btn-danger mt-1" href="#" data-user=' + value.id + '>Xóa</a>';
                 str += "</tr>";
                  
@@ -58,14 +58,12 @@
 //click delete button
 $("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
     event.preventDefault();
-    var member_delete = $(this).attr('data-user');
-    if (confirm("Bạn có muốn xóa ứng viên có Mã = " + member_delete + " này không?")) {
+    var userId = $(this).attr('data-user');
+    if (confirm("Bạn có muốn xóa ứng viên có Mã = " + userId + " này không?")) {
         $.ajax({
-            url: "/Admin/UngVien/Delete",
-            type: "POST",
-            data: { maUngVien: member_delete },
-            dataType: "json",
-            success: (result) => {
+            url: "/admin/candidates" + userId,
+            type: "DELETE",
+            success: () => {
                 location.reload();
             }
         });

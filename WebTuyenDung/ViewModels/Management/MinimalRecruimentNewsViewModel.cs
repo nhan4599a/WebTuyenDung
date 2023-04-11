@@ -1,10 +1,18 @@
 ﻿using Mapster;
+using System;
+using WebTuyenDung.ViewModels.Abstraction;
 
-namespace WebTuyenDung.ViewModels.Candidate
+namespace WebTuyenDung.ViewModels.Management
 {
     public class MinimalRecruimentNewsViewModel : BaseRecruimentNewsViewModel
     {
-        public MinimalEmployerViewModel Employer { get; set; } = default!;
+        public int NumberOfCandidates { get; set; }
+
+        public DateTimeOffset CreatedAt { get; set; }
+
+        public DateOnly? Deadline { get; set; }
+
+        public int View { get; set; }
 
         public MinimalRecruimentNewsViewModel(MinimalRecruimentNewsViewModel source)
         {

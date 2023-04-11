@@ -2,7 +2,7 @@
 
 namespace WebTuyenDung.Enums
 {
-    public enum JobApplicationStatus
+    public enum JobApplicationStatus : byte
     {
         Received,
         Seen,

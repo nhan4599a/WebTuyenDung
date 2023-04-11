@@ -1,4 +1,5 @@
-﻿using WebTuyenDung.Models;
+﻿using System;
+using WebTuyenDung.Models;
 
 namespace WebTuyenDung.ViewModels.Employer
 {
@@ -8,14 +9,12 @@ namespace WebTuyenDung.ViewModels.Employer
 
         public int RecruimentNewsId { get; set; }
 
-        public string JobTitle { get; set; } = default!;
+        public string JobName { get; set; } = default!;
 
         public string CandidateName { get; set; } = default!;
 
         public int CVId { get; set; }
 
-        public string CreatedAt { get; set; } = default!;
-
-        public string Status { get; set; } = default!;
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }

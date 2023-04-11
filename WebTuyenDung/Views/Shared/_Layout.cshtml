@@ -52,7 +52,7 @@
                         </ul>
                     </li>
                     <li class="header__navbar--item">
-                        <a href="#">Tìm việc làm</a>
+                        <a href="/jobs">Tìm việc làm</a>
                     </li>
                 </ul>
 
@@ -88,10 +88,10 @@
                 {
                     <div class="header__navbar--login">
                         <div class="header__login--item">
-                            <a id="btn-login" href="/authentication/sign-in">ỨNG VIÊN</a>
+                            <a id="btn-login">ỨNG VIÊN</a>
                         </div>
                         <div class="header__login--item employer">
-                            <a href="/employer/home">NHÀ TUYỂN DỤNG</a>
+                            <a href="/employer">NHÀ TUYỂN DỤNG</a>
                         </div>
                     </div>
                 }
@@ -216,5 +216,16 @@
     @RenderSection("scripts_Main", required: false)
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js" integrity="sha512-DedNBWPF0hLGUPNbCYfj8qjlEnNE92Fqn7xd3Sscfu7ipy7Zu33unHdugqRD3c4Vj7/yLv+slqZhMls/4Oc7Zg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/Assets/Shared/sign-out.js"></script>
+    <script>
+        $('#btn-login').click(e => {
+            const url = location.pathname
+
+            const returnUrl = encodeURIComponent(url)
+
+            e.preventDefault();
+
+            location.href = `/authentication/sign-in?ReturnUrl=${returnUrl}`
+        })
+    </script>
 </body>
 </html>

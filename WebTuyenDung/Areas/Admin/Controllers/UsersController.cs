@@ -6,7 +6,7 @@ using WebTuyenDung.Data;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
-using WebTuyenDung.ViewModels;
+using WebTuyenDung.ViewModels.Abstraction;
 using WebTuyenDung.ViewModels.Admin;
 
 namespace WebTuyenDung.Areas.Admin.Controllers
@@ -26,7 +26,7 @@ namespace WebTuyenDung.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public Task<PaginationResult<UserViewModel>> Search(SearchRequest searchRequest)
+        public Task<IPaginationResult<UserViewModel>> Search(SearchRequest searchRequest)
         {
             IQueryable<User> query = dbContext.Users.AsNoTracking();
 

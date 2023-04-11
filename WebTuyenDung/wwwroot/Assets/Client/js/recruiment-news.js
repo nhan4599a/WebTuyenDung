@@ -38,8 +38,6 @@ _('.main__apply--post').addEventListener('click', (e) => {
 $('input[name=cv-type]').change(function () {
     const selectedValue = $(this).val();
 
-    console.log(selectedValue)
-
     if (selectedValue === 'online') {
         $('#cv-type-radio-online-content').css({
             display: 'block'
@@ -62,27 +60,20 @@ $('input[name=cv-type]').change(function () {
 })
 
 function fetchCVs() {
-    const listCVsContainer = $('.apply__online--content');
+    const listCVsContainer = $('#cv-type-radio-online-content');
 
     if (listCVsContainer.html() === '') {
         $.ajax({
             url: '/api/cv',
             success: data => {
                 if (data.length === 0) {
-                    listCVsContainer.html(`<div>
-                                                <strong>Bạn chưa có hồ sơ xin việc</strong>
-                                            </div>
-                                            <div>
-                                                <a class="btn btn-success" href="/cv/create">Tạo hồ sơ mới</a>
-                                            </div>`);
+                    listCVsContainer.html('<p class="text-danger">Hiện tại bạn chưa có CV nào, vui lòng sử dụng lựa chọn tải lên CV bên dưới</p>');
                 } else {
                     let cvsHtml = ''
 
                     for (let cvItem of data) {
-                        cvsHtml += `<div class="apply__content--cv">
-                                            <input type="radio" name="HoSo" value="${cvItem.id}">
-                                            <a href="${cvItem.url}" target="_blank">${cvItem.name}</a>
-                                        </div>`;
+                        cvsHtml += `<input type="radio" name="items" value="${cvItem.id}" />
+                                        <a href="${cvItem.url}" target="_blank">${cvItem.id}</a><br>`;
                     }
 
                     listCVsContainer.html(cvsHtml)

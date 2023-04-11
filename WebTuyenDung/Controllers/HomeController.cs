@@ -1,12 +1,11 @@
-﻿using Mapster;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Data;
 using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Services;
-using WebTuyenDung.ViewModels.Candidate;
+using WebTuyenDung.ViewModels.Abstraction;
 using WebTuyenDung.ViewModels.Page;
 using Z.EntityFramework.Plus;
 
@@ -31,10 +30,10 @@ namespace WebTuyenDung.Controllers
         private async Task<HomePageViewModel> GetHomePageDataAsync()
         {
             var recruimentNewsQuery = DbContext.RecruimentNews
-                                                .QueryTopItems<MinimalRecruimentNewsViewModel>(9)
-                                                .Select(e => new MinimalRecruimentNewsViewModel(e)
+                                                .QueryTopItems<ViewModels.User.StandardRecruimentNewsViewModel>(9)
+                                                .Select(e => new ViewModels.User.StandardRecruimentNewsViewModel(e)
                                                 {
-                                                    Employer = new MinimalEmployerViewModel(e.Employer)
+                                                    Employer = new BaseEmployerViewModel(e.Employer)
                                                     {
                                                         Avatar = _fileService.GetStaticFileUrlForFile(e.Employer.Avatar, FilePath.Avatar)
                                                     }

@@ -23,7 +23,7 @@
                 str += "<td>" + value.size + "</td>";
                 str += "<td>" + value.address + "</td>";
                 str += "<td>" + value.website + "</td>";
-                str += '<td class="display: inline-grid;"><a style="min-width: 90px" class="btn btn-success" href="/Admin/NhaTuyenDung/Detail/' + value.id + '">Xem thông tin</a>';
+                str += '<td class="display: inline-grid;"><a style="min-width: 90px" class="btn btn-success" href="/admin/employers/' + value.id + '">Xem thông tin</a>';
                 str += '<a class="btn btn-danger mt-1" href="#" data-user=' + value.id + '>Xóa</a>';
                 str += "</tr>";
 
@@ -57,14 +57,12 @@
 //click delete button
 $("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
     event.preventDefault();
-    var member_delete = $(this).attr('data-user');
-    if (confirm("Bạn có muốn xóa nhà tuyển dụng có Mã = " + member_delete + " này không?")) {
+    var userId = $(this).attr('data-user');
+    if (confirm("Bạn có muốn xóa nhà tuyển dụng có Mã = " + userId + " này không?")) {
         $.ajax({
-            url: "/Admin/NhaTuyenDung/Delete",
-            type: "POST",
-            data: { maNTD: member_delete },
-            dataType: "json",
-            success: (result) => {
+            url: "/api/users/" + userId,
+            type: "DELETE",
+            success: () => {
                 location.reload();
             }
         });

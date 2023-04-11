@@ -10,7 +10,7 @@
     console.log(isApproved)
 
     $.ajax({
-        url: "/admin/recruiment-news/search",
+        url: "/api/recruiment-news/management",
         data: {
             keyWord: keyWord,
             pageIndex: pageIndex,
@@ -35,7 +35,7 @@
                 str += "<td>" + value.createdAt + "</td>";
                 str += "<td>" + value.deadline + "</td>";
                 str += "<td>" + value.view + "</td>";
-                str += "<td><span class='badge badge-success'>" + value.status + "</span></td>";
+                str += "<td><span class='badge badge-success'>" + (isApproved ? 'Đã phê duyệt' : 'Chờ phê duyệt') + "</span></td>";
                 if (!isApproved) {
                     str += `<td>
                                 <a class="btn btn-success mt-1" href="#" data-id="${value.id}">Duyệt bài</a>

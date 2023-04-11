@@ -8,11 +8,11 @@ namespace WebTuyenDung.Models
 
         public int CityId { get; set; }
 
-        public string Size { get; set; } = default!;
+        public string? Size { get; set; }
 
-        public string Website { get; set; } = default!;
+        public string? Website { get; set; }
 
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; }
 
         public string PhoneNumber { get; set; } = default!;
 

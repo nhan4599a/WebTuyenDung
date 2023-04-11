@@ -10,7 +10,8 @@ using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
 using WebTuyenDung.ViewModels;
-using WebTuyenDung.ViewModels.Employer;
+using WebTuyenDung.ViewModels.Abstraction;
+using WebTuyenDung.ViewModels.Management;
 
 namespace WebTuyenDung.Areas.Employer.Controllers
 {
@@ -30,7 +31,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         }
 
         [HttpGet]
-        public Task<PaginationResult<RecruimentNewsViewModel>> Search(SearchRecruimentNewsRequest searchRequest)
+        public Task<IPaginationResult<MinimalRecruimentNewsViewModel>> Search(SearchRecruimentNewsRequest searchRequest)
         {
             IQueryable<RecruimentNews> query = dbContext.RecruimentNews.AsNoTracking().FilterRecruimentNewsByMode(searchRequest.Mode);
 
@@ -39,7 +40,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                 query = query.Where(e => e.JobName.Contains(searchRequest.Keyword.Trim()));
             }
 
-            return query.PaginateAsync<RecruimentNews, RecruimentNewsViewModel>(searchRequest);
+            return query.PaginateAsync<RecruimentNews, MinimalRecruimentNewsViewModel>(searchRequest);
         }
 
         public IActionResult Create()
