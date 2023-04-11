@@ -30,7 +30,11 @@
                 str += "<td>" + value.createdAt + "</td>";
                 str += "<td>" + (value.deadline ?? 'Vô thời hạn') + "</td>";
                 str += "<td>" + value.view + "</td>";
-                str += "<td><span class='badge badge-success'>" + (value.isApproved ? 'Đã phê duyệt' : 'Chờ phê duyệt') + "</span></td>";
+                if (value.isApproved) {
+                    str += "<td><span class='badge badge-success'>" + 'Đã phê duyệt' + "</span></td>";
+                } else {
+                    str += "<td><span class='badge badge-warning'>" + 'Chờ phê duyệt' + "</span></td>";
+                } 
                 if (mode == 0 || mode == 1) {
                     str += `<td class="d-flex"><a class="btn btn-warning" href="/employer/recruiment-news/edit/${value.id}">Sửa</a>`;
                     str += `<a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a>`;
