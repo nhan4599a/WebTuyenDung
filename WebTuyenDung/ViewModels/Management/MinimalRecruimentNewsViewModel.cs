@@ -14,6 +14,8 @@ namespace WebTuyenDung.ViewModels.Management
 
         public int View { get; set; }
 
+        public bool IsApproved { get; set; }
+
         public MinimalRecruimentNewsViewModel(MinimalRecruimentNewsViewModel source)
         {
             source.Adapt(this);

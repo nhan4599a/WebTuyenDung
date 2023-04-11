@@ -24,6 +24,12 @@ namespace WebTuyenDung.Configurations
                     dest => dest.Author,
                     source => source.Author.Name);
 
+            TypeAdapterConfig<Post, User.PostViewModel>
+                .NewConfig()
+                .Map(
+                    dest => dest.Author,
+                    source => source.Author.Name);
+
             TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
         }
     }

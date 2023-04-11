@@ -5,7 +5,7 @@ namespace WebTuyenDung.ViewModels
 {
     public class CreateRecruimentNewsViewModel
     {
-        public string JobTitle { get; set; } = default!;
+        public string JobName { get; set; } = default!;
 
         public JobPosition Position { get; set; }
 
@@ -15,7 +15,7 @@ namespace WebTuyenDung.ViewModels
 
         public string Salary { get; set; } = default!;
 
-        public int City { get; set; } = default!;
+        public int CityId { get; set; } = default!;
 
         public string WorkingAddress { get; set;} = default!;
 

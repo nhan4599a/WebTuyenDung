@@ -162,7 +162,7 @@
                                                 Ngày đăng: <span>@job.CreatedAt.GetApplicationTimeRepresentation()</span>
                                             </p>
                                             <p class="result__date--end mb-0">
-                                                Hết hạn: <span>@(job.Deadline.HasValue ? job.Deadline.Value.GetApplicationTimeRepresentation(): "không giới hạn")</span>
+                                                Hết hạn: <span>@(job.Deadline.HasValue ? job.Deadline.Value.GetApplicationTimeRepresentation(): "Vô thời hạn")</span>
                                             </p>
                                         </div>
                                         <p class="result__address mb-0">
@@ -241,7 +241,7 @@
                                                 <div class="result__date mb-5">
                                                     <p class="result__date--end mb-0">
                                                         <span class="result__icon"><i class="fa-regular fa-clock"></i></span>
-                                                        <span>@(item.Deadline.HasValue ? item.Deadline.Value.GetApplicationTimeRepresentation() : "Không giới giạn")</span>
+                                                        <span>@(item.Deadline.HasValue ? item.Deadline.Value.GetApplicationTimeRepresentation() : "Vô thời hạn")</span>
                                                     </p>
                                                 </div>
                                             </div>

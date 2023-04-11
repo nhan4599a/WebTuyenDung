@@ -2,8 +2,10 @@
 
     const mode = getQueryParams().mode ?? 0;
 
+    const userId = $('#user-id').val();
+
     $.ajax({
-        url: "/employer/recruiment-news/search",
+        url: `/api/recruiment-news/management/${userId}`,
         data: {
             keyWord: keyWord,
             pageIndex: pageIndex,
@@ -23,12 +25,12 @@
             $.each(response.data, function (index, value) {
                 str += "<tr>";
                 str += "<td>" + (startSTT + index) + "</td>";
-                str += `<td><a target="_blank" href="/recruiment-news/${value.id}">${value.title}</td>`;
+                str += `<td><a target="_blank" href="/recruiment-news/${value.id}">${value.jobName}</td>`;
                 str += "<td>" + value.numberOfCandidates + "</td>";
                 str += "<td>" + value.createdAt + "</td>";
-                str += "<td>" + value.deadline + "</td>";
+                str += "<td>" + (value.deadline ?? 'Vô thời hạn') + "</td>";
                 str += "<td>" + value.view + "</td>";
-                str += "<td><span class='badge badge-success'>" + value.status + "</span></td>";
+                str += "<td><span class='badge badge-success'>" + (value.isApproved ? 'Đã phê duyệt' : 'Chờ phê duyệt') + "</span></td>";
                 if (mode == 0 || mode == 1) {
                     str += `<td class="d-flex"><a class="btn btn-warning" href="/employer/recruiment-news/edit/${value.id}">Sửa</a>`;
                     str += `<a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a>`;
