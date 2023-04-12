@@ -19,14 +19,5 @@ namespace WebTuyenDung.Enums
                 _ => throw new NotImplementedException()
             };
         }
-
-        public static string GetRepresentation(this Gender? gender)
-        {
-            if (!gender.HasValue)
-            {
-                return "Không yêu cầu";
-            }
-            return gender.Value.GetRepresentation();
-        }
     }
 }

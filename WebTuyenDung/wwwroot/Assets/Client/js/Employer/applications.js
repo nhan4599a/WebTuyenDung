@@ -1,10 +1,13 @@
 ﻿var load = function (status, month, keyWord, pageIndex, pageSize) {
+
+    const userId = $('#user-id').val();
+
     $.ajax({
-        url: "/employer/applications/search",
+        url: `/api/applications/${userId}`,
         data: {
-            status: status,
-            month: month,
-            keyWord: keyWord,
+            //status: status,
+            //month: month,
+            //keyWord: keyWord,
             pageIndex: pageIndex,
             pageSize: pageSize
         },
@@ -22,10 +25,10 @@
             $.each(response.data, function (index, value) {
                 str += "<tr>";
                 str += "<td>" + (startSTT + index) + "</td>";
-                str += `<td><a target="_blank" href="/recruiment-news/${value.recruimentNewsId}">${value.jobTitle}</td>`;
+                str += `<td><a target="_blank" href="/recruiment-news/${value.recruimentNewsId}">${value.jobName}</td>`;
                 str += "<td>" + value.candidateName + "</td>";
                 str += "<td>" + value.createdAt + "</td>";
-                str += "<td><span class='badge badge-warning'>" + value.status + "</span></td>";
+                str += "<td><span class='badge badge-warning'>" + parseApplicationsStatus(value.status) + "</span></td>";
                 str += `<td><a href='/employer/applications/view/${value.id}' target='_blank' class='btn btn-success'>Xem hồ sơ</a>`;
                 str += `<br /><a href='/employer/applications/edit/${value.id}' class='btn btn-warning mt-1'>Cập nhật trạng thái</a></td>`;
                 str += "</tr>";

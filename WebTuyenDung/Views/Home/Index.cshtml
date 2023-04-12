@@ -193,29 +193,9 @@
         const ERROR_MESSAGE_TEMPLATE = `<span class="material-icons-outlined">error</span> {0}
                                         <span class="material-icons-outlined cancel-alert-button">cancel</span>`;
 
-        fileInput.addEventListener("click", () => {
-            fileInput.value = '';
-        });
+        fileInput.addEventListener("click", onClick);
 
-        fileInput.addEventListener("change", e => {
-            const fileExtension = getFileExtension(fileInput.files[0].name)
-            cannotUploadMessage.style.cssText = "display: none";
-            if (!ALLOWED_FILE_EXTENSIONS.includes(fileExtension)) {
-                fileInput.files.length = 0
-                $(cannotUploadMessage).html(ERROR_MESSAGE_TEMPLATE.replace('{0}', `.${fileExtension} file is not allowed`))
-                cannotUploadMessage.style.cssText = "display: flex; animation: fadeIn linear 1.5s;";
-                return
-            }
-            uploadIcon.innerHTML = 'check_circle';
-            dragDropText.innerHTML = 'File Dropped Successfully!';
-            document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" name="CV" class="default-file-input" /> <span class="browse-files-text" style="top: 0; left: 10px"> browse file</span></span>`;
-            uploadButton.innerHTML = `Upload`;
-            fileName.innerHTML = fileInput.files[0].name;
-            fileSize.innerHTML = (fileInput.files[0].size / 1024).toFixed(1) + " KB";
-            uploadedFile.style.cssText = "display: flex;";
-            progressBar.style.width = 0;
-            fileFlag = 0;
-        });
+        fileInput.addEventListener("change", onFileChange);
 
         uploadButton.addEventListener("click", () => {
             let isFileUploaded = fileInput.value;
@@ -253,18 +233,19 @@
             draggableFileArea.addEventListener("drop", e => {
                 uploadIcon.innerHTML = 'check_circle';
                 dragDropText.innerHTML = 'File Dropped Successfully!';
-                document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" class="default-file-input" style=""/> <span class="browse-files-text" style="top: -23px; left: -20px;"> browse file</span> </span>`;
+                document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" class="default-file-input" /> <span class="browse-files-text" style="top: -23px; left: -20px;"> browse file</span> </span>`;
                 uploadButton.innerHTML = `Upload`;
 
                 let files = e.dataTransfer.files;
+
                 fileInput.files = files;
-                console.log(files[0].name + " " + files[0].size);
-                console.log(document.querySelector(".default-file-input").value);
                 fileName.innerHTML = files[0].name;
                 fileSize.innerHTML = (files[0].size / 1024).toFixed(1) + " KB";
                 uploadedFile.style.cssText = "display: flex;";
                 progressBar.style.width = 0;
                 fileFlag = 0;
+
+                document.querySelector(".default-file-input").addEventListener('change', onFileChange)
             });
         }
 
@@ -274,6 +255,7 @@
             uploadIcon.innerHTML = 'file_upload';
             dragDropText.innerHTML = 'Drag & drop any file here';
             document.querySelector(".label").innerHTML = `or <span class="browse-files"> <input type="file" class="default-file-input" name="CV" /> <span class="browse-files-text">browse file</span> <span>from device</span> </span>`;
+            document.querySelector(".default-file-input").addEventListener('change', onFileChange)
             uploadButton.innerHTML = `Upload`;
         });
 
@@ -281,15 +263,20 @@
             e.preventDefault();
 
             let tempData = $(uploadForm).serializeArray();
-            let formData = new FormData();
-            formData.append('__RequestVerificationToken', tempData[0].value)
-            formData.append('name', tempData[1].value);
-            formData.append('cv', fileInput.files[0]);
 
             if (!tempData[1].value) {
                 $('#upload-form-error').text('You must input name for cv')
                 return
             }
+            if (fileInput.files.length === 0) {
+                $(cannotUploadMessage).html(ERROR_MESSAGE_TEMPLATE.replace('{0}', 'Please select a file first'))
+                return
+            }
+
+            let formData = new FormData();
+            formData.append('__RequestVerificationToken', tempData[0].value)
+            formData.append('name', tempData[1].value);
+            formData.append('cv', fileInput.files[0]);
 
             $.ajax({
                 url: '/cv/upload',
@@ -300,6 +287,9 @@
                 success: () => {
                     _('.main__upload').classList.toggle('show');
                     alert('Upload cv thành công')
+                },
+                error: (response) => {
+                    $('#upload-form-error').text(JSON.parse(response.responseText)['Name'][0])
                 }
             })
         })
@@ -310,6 +300,34 @@
                 return ''
             }
             return fileName.substring(lastIndexOfDotCharacter + 1)
+        }
+
+        function onFileChange() {
+            const fileExtension = getFileExtension(this.files[0].name)
+            cannotUploadMessage.style.cssText = "display: none";
+            if (!ALLOWED_FILE_EXTENSIONS.includes(fileExtension)) {
+                this.files.length = 0
+                this.value = ''
+                $(cannotUploadMessage).html(ERROR_MESSAGE_TEMPLATE.replace('{0}', `.${fileExtension} file is not allowed`))
+                cannotUploadMessage.style.cssText = "display: flex; animation: fadeIn linear 1.5s;";
+                return
+            }
+            uploadIcon.innerHTML = 'check_circle';
+            dragDropText.innerHTML = 'File Dropped Successfully!';
+            document.querySelector(".label").innerHTML = `drag & drop or <span class="browse-files"> <input type="file" name="CV" class="default-file-input" /> <span class="browse-files-text" style="top: 0; left: 10px"> browse file</span></span>`;
+            document.querySelector(".default-file-input").addEventListener('change', onFileChange)
+            uploadButton.innerHTML = `Upload`;
+            fileName.innerHTML = this.files[0].name;
+            fileSize.innerHTML = (this.files[0].size / 1024).toFixed(1) + " KB";
+            uploadedFile.style.cssText = "display: flex;";
+            progressBar.style.width = 0;
+            fileFlag = 0;
+            fileInput = this;
+        }
+
+        function onClick() {
+            this.value = '';
+            this.files.length = 0
         }
     </script>
 

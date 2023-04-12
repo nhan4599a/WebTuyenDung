@@ -33,9 +33,13 @@
                 str += "<td>" + value.employerName + "</td>";
                 str += "<td>" + value.numberOfCandidates + "</td>";
                 str += "<td>" + value.createdAt + "</td>";
-                str += "<td>" + value.deadline + "</td>";
+                str += "<td>" + (value.deadline ?? 'Vô thời hạn') + "</td>";
                 str += "<td>" + value.view + "</td>";
-                str += "<td><span class='badge badge-success'>" + (isApproved ? 'Đã phê duyệt' : 'Chờ phê duyệt') + "</span></td>";
+                if (isApproved) {
+                    str += "<td><span class='badge badge-success'>Đã phê duyệt</span></td>";
+                } else {
+                    str += "<td><span class='badge badge-warning'>Chờ phê duyệt</span></td>";
+                }
                 if (!isApproved) {
                     str += `<td>
                                 <a class="btn btn-success mt-1" href="#" data-id="${value.id}">Duyệt bài</a>

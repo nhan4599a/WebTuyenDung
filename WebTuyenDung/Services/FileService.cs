@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using FastEnumUtility;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using WebTuyenDung.Enums;
@@ -12,11 +14,14 @@ namespace WebTuyenDung.Services
     {
         private readonly string _basePath;
 
+        private readonly HashSet<FilePath> _isFolderInitialized;
+
         private const string STATIC_FILES_DIRECTORY = "/Files/";
 
         public FileService(IWebHostEnvironment webHostEnvironment)
         {
             _basePath = webHostEnvironment.WebRootPath + STATIC_FILES_DIRECTORY;
+            _isFolderInitialized = new HashSet<FilePath>(FastEnum.GetValues<FilePath>().Count);
         }
 
         public async Task<string> SaveAsync(IFormFile file, FilePath filePath)
@@ -30,7 +35,13 @@ namespace WebTuyenDung.Services
 
         private string GetActualFilePath(string fileName, FilePath filePath)
         {
-            return _basePath + filePath.GetContentDirectory() + fileName;
+            var directory = _basePath + filePath.GetContentDirectory();
+            if (!_isFolderInitialized.Contains(filePath) && !Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+                _isFolderInitialized.Add(filePath);
+            }
+            return directory + fileName;
         }
 
         public string GetStaticFileUrlForFile(string fileName, FilePath filePath)

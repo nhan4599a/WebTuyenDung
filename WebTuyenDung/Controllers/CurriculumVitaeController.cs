@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor.Internal;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +28,8 @@ namespace WebTuyenDung.Controllers
             _fileService = fileService;
         }
 
-        public IActionResult Index()
+        [Route("my-cv")]
+        public IActionResult Management()
         {
             var userId = User.GetUserId();
 
@@ -43,6 +45,7 @@ namespace WebTuyenDung.Controllers
             return View();
         }
 
+        [HttpGet("cv/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> Index(int id)
         {
@@ -76,13 +79,24 @@ namespace WebTuyenDung.Controllers
         [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> Upload(UploadCurricilumVitaeRequest request)
         {
+            var userId = User.GetUserId();
+
+            var isNameExisted = await DbContext.CVs
+                                               .AnyAsync(e => e.Name == request.Name && e.CandidateId == userId);
+
+            if (isNameExisted)
+            {
+                ModelState.AddModelError("Name", "Name is already existed");
+                return BadRequest(ModelState);
+            }
+
             var cvPath = await _fileService.SaveAsync(request.CV, FilePath.CurriculumTitae);
 
             DbContext
                 .CVs
                 .Add(new CurriculumVitae
                 {
-                    CandidateId = User.GetUserId(),
+                    CandidateId = userId,
                     Name = request.Name,
                     FilePath = cvPath,
                     IsUploadDirectlyByUser = true

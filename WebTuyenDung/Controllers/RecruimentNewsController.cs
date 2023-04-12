@@ -49,7 +49,7 @@ namespace WebTuyenDung.Controllers
         public async Task<IActionResult> Apply(int id, [FromForm] ApplyJobRequest request)
         {
             var candidateName = User.GetName();
-            var jobTitle = await DbContext.RecruimentNews.Where(e => e.Id == id).Select(e => e.JobName).FirstOrDefaultAsync();
+            var jobName = await DbContext.RecruimentNews.Where(e => e.Id == id).Select(e => e.JobName).FirstOrDefaultAsync();
 
             if (request.CV != null)
             {
@@ -78,7 +78,7 @@ namespace WebTuyenDung.Controllers
                         CandidateId = User.GetUserId(),
                         Status = JobApplicationStatus.Received,
                         CandidateName = candidateName,
-                        JobTitle = jobTitle!
+                        JobName = jobName!
                     });
 
                 await DbContext.SaveChangesAsync();
@@ -96,11 +96,13 @@ namespace WebTuyenDung.Controllers
                         CandidateId = User.GetUserId(),
                         Status = JobApplicationStatus.Received,
                         CandidateName = candidateName,
-                        JobTitle = jobTitle!
+                        JobName = jobName!
                     });
 
                 await DbContext.SaveChangesAsync();
             }
+
+            TempData["alert"] = "Ứng tuyển thành công";
 
             return Redirect($"/recruiment-news/{id}");
         }

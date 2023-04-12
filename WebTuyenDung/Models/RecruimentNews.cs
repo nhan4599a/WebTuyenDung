@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using WebTuyenDung.Data.Configurations;
+using System.Collections.Generic;
 
 namespace WebTuyenDung.Models
 {
@@ -43,5 +44,7 @@ namespace WebTuyenDung.Models
         public Employer Employer { get; set; } = default!;
 
         public Locale City { get; set; } = default!;
+
+        public ICollection<JobApplication> JobApplications { get; set; } = default!;
     }
 }

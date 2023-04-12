@@ -64,6 +64,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
             return updatedCount == 0 ? BadRequest() : RedirectToAction(nameof(Index));
         }
 
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> View(int id)
         {
             var jobApplication = await TryGetAndUpdateJobApplication(id);
@@ -73,7 +74,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                 return NotFound();
             }
 
-            return RedirectPermanent($"/cv/{jobApplication.CVId}");
+            return Redirect($"/cv/{jobApplication.CVId}");
         }
 
         private async Task<JobApplication?> TryGetAndUpdateJobApplication(int id)
@@ -83,6 +84,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
             if (jobApplication != null && jobApplication.Status == JobApplicationStatus.Received)
             {
                 jobApplication.Status = JobApplicationStatus.Seen;
+                dbContext.Entry(jobApplication).State = EntityState.Modified;
                 await dbContext.SaveChangesAsync();
             }
 

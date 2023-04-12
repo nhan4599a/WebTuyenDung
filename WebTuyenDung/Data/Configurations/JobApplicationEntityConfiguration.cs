@@ -24,7 +24,7 @@ namespace WebTuyenDung.Data.Configurations
 
             builder
                 .HasOne<RecruimentNews>()
-                .WithMany()
+                .WithMany(e => e.JobApplications)
                 .HasForeignKey(e => e.RecruimentNewsId)
                 .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
         }

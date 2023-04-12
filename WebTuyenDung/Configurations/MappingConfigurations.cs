@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using System.Reflection;
 using WebTuyenDung.Models;
+using WebTuyenDung.ViewModels;
 using WebTuyenDung.ViewModels.Management;
 using User = WebTuyenDung.ViewModels.User;
 
@@ -29,6 +30,10 @@ namespace WebTuyenDung.Configurations
                 .Map(
                     dest => dest.Author,
                     source => source.Author.Name);
+
+            TypeAdapterConfig<CurriculumVitae, CurriculumVitaeViewModel>
+                .NewConfig()
+                .Map(dest => dest.Url, source => source.FilePath);
 
             TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
         }

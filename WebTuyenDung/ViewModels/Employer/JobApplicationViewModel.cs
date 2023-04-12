@@ -1,5 +1,5 @@
 ﻿using System;
-using WebTuyenDung.Models;
+using WebTuyenDung.Enums;
 
 namespace WebTuyenDung.ViewModels.Employer
 {
@@ -16,5 +16,7 @@ namespace WebTuyenDung.ViewModels.Employer
         public int CVId { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }
+
+        public JobApplicationStatus Status { get; set; }
     }
 }

@@ -22,9 +22,9 @@
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                             <div class="form-group align-items-center row">
-                                @Html.LabelFor(model => model.JobTitle, "Tên công việc", new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.JobName, "Tên công việc", new { @class = "control-label col-md-2" })
                                 <div class="col-md-6">
-                                    @Html.DisplayFor(model => model.JobTitle,  new { @class = "form-control", @readonly = "true" })
+                                    @Html.DisplayFor(model => model.JobName,  new { @class = "form-control", @readonly = "true" })
                                 </div>
                             </div>
 
@@ -92,7 +92,7 @@
 
                             <div class="form-group align-items-center row mt-3">
                                 <div class="col-md-2">
-                                    <a class="btn btn-light" action="/employer/applications">Trở về</a>
+                                    <a class="btn btn-light" href="/employer/applications">Trở về</a>
                                 </div>
 
                                 <div class="col-md-6">

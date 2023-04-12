@@ -78,19 +78,5 @@ namespace WebTuyenDung.Areas.Employer.Controllers
 
             return View(recruimentNews);
         }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var deleletedItemsCount = await dbContext
-                                               .RecruimentNews
-                                               .Where(e => e.Id == id)
-                                               .UpdateFromQueryAsync(e => new RecruimentNews
-                                               {
-                                                   IsDeleted = true
-                                               });
-
-            return deleletedItemsCount == 1 ? Ok() : BadRequest();
-        }
     }
 }

@@ -61,5 +61,19 @@ namespace WebTuyenDung.ApiControllers
 
             return approvedCount == 1 ? Ok() : BadRequest();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleletedItemsCount = await DbContext
+                                               .RecruimentNews
+                                               .Where(e => e.Id == id)
+                                               .UpdateFromQueryAsync(e => new RecruimentNews
+                                               {
+                                                   IsDeleted = true
+                                               });
+
+            return deleletedItemsCount == 1 ? Ok() : BadRequest();
+        }
     }
 }

@@ -38,6 +38,11 @@
     </script>
 }
 
+@if (TempData.ContainsKey("alert"))
+{
+    <script>alert(@TempData["alert"])</script>
+}
+
 <div class="main__fixed bg-img"></div>
 <div class="main__search">
     <div class="main__search--wrapper grid wide">
@@ -64,7 +69,7 @@
                 </div>
                 <div class="employer__info--deadline">
                     <i class="fa-regular fa-clock"></i>
-                    Hạn nộp: @Model.Deadline.GetApplicationTimeRepresentation()
+                    Hạn nộp: @(Model.Deadline?.GetApplicationTimeRepresentation() ?? "Vô thời hạn")
                 </div>
             </div>
             <div class="employer__info--apply">
@@ -143,7 +148,7 @@
                     <ul class="content__info--list">
                         <li>Mức lương: @Model.Salary</li>
                         <li>Hình thức làm việc: @Model.JobType.GetRepresentation()</li>
-                        <li>Giới tính: @Model.Gender.GetRepresentation()</li>
+                        <li>Giới tính: @(Model.Gender?.GetRepresentation() ?? "Không yêu cầu")</li>
                         <li>Số lượng tuyển: @Model.NumberOfCandidates</li>
                         <li>
                             Địa điểm làm việc:
@@ -199,7 +204,7 @@
                 <label for="cv-type-radio-upload" class="form-label">Tải CV từ máy tính</label>
                 <div id="cv-type-radio-upload-content" style="display: none">
                     <p>Choose file</p>
-                    <input type=file>
+                    <input type="file" name="CV" />
                 </div>
             </div>
             <div class="col-md-12">
@@ -211,7 +216,7 @@
             <div class="col-md-12">
                 <div class="main__apply--button">
                     <button class="apply__button--cancel">Bỏ qua</button>
-                    <button class="apply__button--submit">Nộp CV</button>
+                    <button class="apply__button--submit" type="submit">Nộp CV</button>
                 </div>
             </div>
         </div>

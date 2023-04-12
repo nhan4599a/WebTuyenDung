@@ -17,7 +17,7 @@ namespace WebTuyenDung.Models
 
         public string CandidateName { get; set; } = default!;
 
-        public string JobTitle { get; set; } = default!;
+        public string JobName { get; set; } = default!;
 
         public string? CandidateNote { get; set; }
     }

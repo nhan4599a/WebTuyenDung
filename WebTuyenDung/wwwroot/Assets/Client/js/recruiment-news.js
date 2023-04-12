@@ -72,8 +72,8 @@ function fetchCVs() {
                     let cvsHtml = ''
 
                     for (let cvItem of data) {
-                        cvsHtml += `<input type="radio" name="items" value="${cvItem.id}" />
-                                        <a href="${cvItem.url}" target="_blank">${cvItem.id}</a><br>`;
+                        cvsHtml += `<input type="radio" name="CVId" value="${cvItem.id}" />
+                                        <a href="${cvItem.url}" target="_blank">${cvItem.name}</a><br>`;
                     }
 
                     listCVsContainer.html(cvsHtml)
@@ -89,9 +89,12 @@ $('#cv_type-upload').change(() => {
     }
 })
 
-$('.apply__button--submit').click((e) => {
-    if (!$('#cv_type-online').is(":checked") && !$('#cv_type-upload').is(":checked")) {
-        alert("Bạn chưa chọn hồ sơ ứng tuyển");
-        e.preventDefault();
+$('.main__apply--post').off('submit').submit((e) => {
+    const selectedOnlineCvInput = $('#cv-type-radio-online-content > input[name=CVId]:checked');
+    const uploadedCvInput = $('#cv-type-radio-upload-content > input[type=file]');
+
+    if (selectedOnlineCvInput.length === 0 && uploadedCvInput.val() === '') {
+        alert('Bạn chưa chọn hồ sơ ứng tuyển')
+        return false
     }
 })

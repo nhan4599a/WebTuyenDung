@@ -31,10 +31,10 @@
                 str += "<td>" + (value.deadline ?? 'Vô thời hạn') + "</td>";
                 str += "<td>" + value.view + "</td>";
                 if (value.isApproved) {
-                    str += "<td><span class='badge badge-success'>" + 'Đã phê duyệt' + "</span></td>";
+                    str += "<td><span class='badge badge-success'>Đã phê duyệt</span></td>";
                 } else {
-                    str += "<td><span class='badge badge-warning'>" + 'Chờ phê duyệt' + "</span></td>";
-                } 
+                    str += "<td><span class='badge badge-warning'>Chờ phê duyệt</span></td>";
+                }
                 if (mode == 0 || mode == 1) {
                     str += `<td class="d-flex"><a class="btn btn-warning" href="/employer/recruiment-news/edit/${value.id}">Sửa</a>`;
                     str += `<a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a>`;
@@ -75,7 +75,7 @@ $("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
     var member_delete = $(this).attr('data-user');
     if (confirm("Bạn có muốn xóa tin tuyển dụng có Mã = " + member_delete + " này không?")) {
         $.ajax({
-            url: `/employer/recruiment-news/delete/${member_delete}`,
+            url: `/api/recruiment-news/${member_delete}`,
             type: "DELETE",
             success: () => {
                 location.reload();
