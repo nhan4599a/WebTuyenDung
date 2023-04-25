@@ -13,6 +13,14 @@ namespace WebTuyenDung.Constants
 
         public const string USER_FORMAL_NAME_KEY = ClaimTypes.Name;
 
+        public const string CANDIDATE_BIRTH_DAY_KEY = ClaimTypes.DateOfBirth;
+
+        public const string CANDIDATE_PHONE_NUMBER_KEY = ClaimTypes.MobilePhone;
+
+        public const string CANDIDATE_ADDRESS_KEY = ClaimTypes.StreetAddress;
+
+        public const string CANDIDATE_GENDER_KEY = ClaimTypes.Gender;
+
         public const string RETURN_URL = "ReturnUrl";
     }
 }

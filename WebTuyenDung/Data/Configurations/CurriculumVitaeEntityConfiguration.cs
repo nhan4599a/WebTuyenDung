@@ -15,6 +15,12 @@ namespace WebTuyenDung.Data.Configurations
                 .HasDefaultValueSql("GETDATE()");
 
             builder
+                .HasOne(e => e.Detail)
+                .WithOne()
+                .HasForeignKey<CurriculumVitaeDetail>(e => e.CVId)
+                .IsRequired(false);
+
+            builder
                 .HasIndex(e => e.CandidateId);
 
             builder

@@ -27,8 +27,8 @@ namespace WebTuyenDung.Controllers
                                             .ProjectToType<DetailEmployerPageViewModel>()
                                             .Select(e => new DetailEmployerPageViewModel(e)
                                             {
-                                                Avatar = _fileService.GetStaticFileUrlForFile(e.Avatar, FilePath.Avatar),
-                                                CoverImage = _fileService.GetStaticFileUrlForFile(e.CoverImage, FilePath.Avatar)
+                                                Avatar = _fileService.GetStaticFileUrlForFile(e.Avatar, FilePath.Avatar)!,
+                                                CoverImage = _fileService.GetStaticFileUrlForFile(e.CoverImage, FilePath.Avatar)!
                                             })
                                             .FirstOrDefaultAsync();
 

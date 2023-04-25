@@ -35,6 +35,42 @@
             const signInUrl = `/authentication/sign-in?ReturnUrl=${encodedPath}`
             location.href = signInUrl
         })
+
+        function getFormData(form) {
+            const data = form.serializeArray()
+
+            const formData = new FormData()
+
+            for (const keyValue of data) {
+                formData.append(keyValue.name, keyValue.value)
+            }
+
+            return formData
+        }
+
+        $('.employer__apply--save').submit(function() {
+
+            const form = $(this)
+
+            const formData = getFormData(form)
+
+            $.ajax({
+                url: form.attr('action'),
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: () => {
+                    const isSaveAction = formData.get('IsSaveAction') === 'true'
+
+                    $('.apply__save--button.button--link > span').text(isSaveAction ? 'Bỏ lưu' : 'Lưu tin')
+
+                    form.children('input[name=IsSaveAction]').val(!isSaveAction)
+                }
+            })
+
+            return false
+        })
     </script>
 }
 
@@ -85,30 +121,40 @@
                             <button class="apply__cv--button button--link" id="not-logged-in-apply-button">Ứng tuyển</button>
                         }
                     </div>
-                    <form class="employer__apply--save" action="/Recruitment/Save" method="post">
-                        @Html.Hidden("MaTTD", Model.Id)
-                        <button class="apply__save--button button--link">
-                            @if (ViewBag.Status != null)
+
+                    @if (User.Identity!.IsAuthenticated)
+                    {
+                        <form class="employer__apply--save" action="/api/recruiment-news/save/@Model.Id" method="post">
+                            <input type="hidden" value="@Model.Employer.Id" name="EmployerId" />
+                            <input type="hidden" value="@Model.Employer.Name" name="EmployerName" />
+                            <input type="hidden" value="@Model.Employer.Avatar" name="EmployerAvatar" />
+                            @Html.HiddenFor(e => e.JobName)
+                            @Html.HiddenFor(e => e.Salary)
+                            @Html.HiddenFor(e => e.JobType)
+                            @Html.HiddenFor(e => e.WorkingSite)
+
+                            @if (Model.IsSaved)
                             {
-                                if ((int)ViewBag.Status > 0)
+                                <input type="hidden" value="false" name="IsSaveAction" />
+                            }
+                            else
+                            {
+                                <input type="hidden" value="true" name="IsSaveAction" />
+                            }
+
+                            <button class="apply__save--button button--link">
+                                <i class="fa-solid fa-heart"></i>
+                                @if (Model.IsSaved)
                                 {
-                                    <i class="fa-solid fa-heart"></i>
                                     <span>Bỏ lưu</span>
                                 }
                                 else
                                 {
-                                    <i class="fa-solid fa-heart"></i>
                                     <span>Lưu tin</span>
                                 }
-                            }
-                            else
-                            {
-                                <i class="fa-solid fa-heart"></i>
-                                <span>Lưu tin</span>
-                            }
-
-                        </button>
-                    </form>
+                            </button>
+                        </form>
+                    }
                 }
                 else
                 {

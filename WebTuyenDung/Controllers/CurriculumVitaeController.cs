@@ -1,7 +1,6 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Razor.Internal;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +13,7 @@ using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
 using WebTuyenDung.Services;
 using WebTuyenDung.ViewModels;
+using WebTuyenDung.ViewModels.User;
 
 namespace WebTuyenDung.Controllers
 {
@@ -28,7 +28,7 @@ namespace WebTuyenDung.Controllers
             _fileService = fileService;
         }
 
-        [Route("my-cv")]
+        [ActionName("my-cv")]
         public IActionResult Management()
         {
             var userId = User.GetUserId();
@@ -42,10 +42,10 @@ namespace WebTuyenDung.Controllers
                                     })
                                     .AsAsyncEnumerable();
 
-            return View();
+            return View(listCvs);
         }
 
-        [HttpGet("cv/{id}")]
+        [HttpGet("cv/{id:int}")]
         [AllowAnonymous]
         public async Task<IActionResult> Index(int id)
         {
@@ -69,9 +69,16 @@ namespace WebTuyenDung.Controllers
                 return Unauthorized();
             }
 
-            var actualCvPath = _fileService.GetStaticFileUrlForFile(queryResult.FilePath, FilePath.CurriculumTitae);
+            if (queryResult.FilePath == null)
+            {
+                return View("View");
+            }
+            else
+            {
+                var actualCvPath = _fileService.GetStaticFileUrlForFile(queryResult.FilePath, FilePath.CurriculumTitae)!;
+                return RedirectPermanent(actualCvPath);
+            }
 
-            return RedirectPermanent(actualCvPath);
         }
 
         [HttpPost]
@@ -99,12 +106,82 @@ namespace WebTuyenDung.Controllers
                     CandidateId = userId,
                     Name = request.Name,
                     FilePath = cvPath,
-                    IsUploadDirectlyByUser = true
+                    IsUploadDirectlyByUser = true,
+                    Type = CVType.File
                 });
 
             await DbContext.SaveChangesAsync();
 
             return Ok();
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AutoShortCircuitValidationFailedRequest]
+        public async Task<IActionResult> Create(CreateCVViewModel viewModel)
+        {
+            var cv = new CurriculumVitae
+            {
+                Name = viewModel.Name,
+                CandidateId = User.GetUserId(),
+                Type = CVType.DirectInput,
+                IsUploadDirectlyByUser = true,
+                Detail = viewModel.Adapt<CurriculumVitaeDetail>()
+            };
+
+            DbContext.CVs.Add(cv);
+
+            await DbContext.SaveChangesAsync();
+
+            return RedirectToAction("my-cv");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var cvItem = await DbContext.CVs
+                                        .Where(e => e.Id == id && e.Type == CVType.DirectInput)
+                                        .ProjectToType<CurriculumVitaeDetailViewModel>()
+                                        .FirstOrDefaultAsync();
+
+            if (cvItem == null)
+            {
+                return NotFound();
+            }
+
+            cvItem.Id = id;
+
+            return View(cvItem);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, CurriculumVitaeDetailViewModel viewModel)
+        {
+            var transaction = await DbContext.Database.BeginTransactionAsync();
+
+            await DbContext.CVs.Where(e => e.Id == id).UpdateFromQueryAsync(e => new CurriculumVitae { Name = viewModel.Name });
+
+            await DbContext.CVDetails.Where(e => e.CVId == id).UpdateFromQueryAsync(e => new CurriculumVitaeDetail
+            {
+                ExpectedPosition = viewModel.ExpectedPosition,
+                Email = viewModel.Email,
+                SourceVersionControlUrl = viewModel.SourceVersionControlUrl,
+                Objective = viewModel.Objective,
+                Experience = viewModel.Experience,
+                Skills = viewModel.Skills,
+                Education = viewModel.Education,
+                SoftSkills = viewModel.SoftSkills,
+                Rewards = viewModel.Rewards
+            });
+
+            await transaction.CommitAsync();
+
+            return RedirectToAction("my-cv");
         }
     }
 }

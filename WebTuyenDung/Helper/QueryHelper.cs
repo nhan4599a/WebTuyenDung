@@ -69,7 +69,7 @@ namespace WebTuyenDung.Helper
                         .ProjectToType<UserViewModels.PostViewModel>()
                         .Select(e => new UserViewModels.PostViewModel(e)
                         {
-                            Image = fileService.GetStaticFileUrlForFile(e.Image, FilePath.Post)
+                            Image = fileService.GetStaticFileUrlForFile(e.Image, FilePath.Post)!
                         });
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -60,6 +61,33 @@ namespace WebTuyenDung.ApiControllers
                                         });
 
             return approvedCount == 1 ? Ok() : BadRequest();
+        }
+
+        [HttpPost("save/{id}")]
+        public async Task<IActionResult> Save(int id, [FromForm] SaveRecruimentNewsRequest saveRecruimentNewsRequest)
+        {
+            var candidateId = User.GetUserId();
+
+            if (!saveRecruimentNewsRequest.IsSaveAction)
+            {
+                await DbContext.SavedRecruimentNews.Where(e => e.RecruimentNewsId == id && e.CandidateId == candidateId).DeleteFromQueryAsync();
+            }
+            else
+            {
+                var entity = new SavedRecruimentNews
+                {
+                    RecruimentNewsId = id,
+                    CandidateId = candidateId
+                };
+                
+                saveRecruimentNewsRequest.Adapt(entity);
+
+                DbContext.SavedRecruimentNews.Add(entity);
+
+                await DbContext.SaveChangesAsync();
+            }
+
+            return Ok();
         }
 
         [HttpDelete("{id}")]

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
+using WebTuyenDung.Constants;
 using WebTuyenDung.Data;
 
 namespace WebTuyenDung.Controllers
@@ -16,8 +18,16 @@ namespace WebTuyenDung.Controllers
             DbContext = dbContext;
         }
 
-        public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            var isSharedAction = context.ActionDescriptor.EndpointMetadata.OfType<SharedActionAttribute>().Any();
+
+            if (User.Identity!.IsAuthenticated && !User.IsInRole(AuthorizationConstants.CANDIDATE_ROLE) && !isSharedAction)
+            {
+                await HttpContext.SignOutAsync();
+                HttpContext.Response.Redirect(HttpContext.Request.Path);
+            }
+
             var shouldAutoReturnBadRequest = context
                                                 .ActionDescriptor
                                                 .EndpointMetadata
@@ -29,7 +39,7 @@ namespace WebTuyenDung.Controllers
                 context.Result = BadRequest(ModelState);
             }
 
-            return base.OnActionExecutionAsync(context, next);
+            await base.OnActionExecutionAsync(context, next);
         }
     }
 }

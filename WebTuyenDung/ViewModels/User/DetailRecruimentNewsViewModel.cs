@@ -9,6 +9,8 @@ namespace WebTuyenDung.ViewModels.User
 
         public DateOnly? Deadline { get; set; }
 
+        public bool IsSaved { get; set; }
+
         public DetailRecruimentNewsViewModel(DetailRecruimentNewsViewModel source)
         {
             source.Adapt(this);

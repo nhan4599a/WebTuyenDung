@@ -1,0 +1,172 @@
+﻿@model IAsyncEnumerable<WebTuyenDung.ViewModels.CurriculumVitaeViewModel>
+
+@{
+    ViewBag.Title = "Hồ sơ xin việc";
+}
+
+@section css_Main {
+    <link rel="stylesheet" href="~/Assets/Admin/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Assets/Client/css/hoso.css" />
+    <link rel="stylesheet" href="~/Assets/Shared/upload-file/upload-file.css" />
+}
+
+@section scripts_Main {
+    <script src="/Assets/Shared/upload-file/upload-file.js"></script>
+    <script>
+        $('.main__upload--post').click(e => {
+            e.stopPropagation()
+        })
+    </script>
+    <script>
+        $('.btn-default.edit-by-upload').click(function() {
+            const cvId = $(this).data('id')
+
+            $('.main__upload').toggleClass('show')
+        })
+
+        $('.btn-default.delete-cv').click(function() {
+
+            const deleteButton = $(this)
+
+            const cvId = deleteButton.data('id')
+
+            $.ajax({
+                url: `/api/cv/${cvId}`,
+                method: 'DELETE',
+                success: () => {
+                    deleteButton.parent().parent().parent().remove()
+                }
+            })
+        })
+    </script>
+}
+
+<div class="main__fixed bg-img"></div>
+
+<div class="main__content">
+    <div class="main__content--wrapper grid wide">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-header py-2">
+                            <h4 class="header-title mb-0">Danh sách hồ sơ xin việc của bạn</h4>
+                        </div>
+                        <div class="py-2">
+                            <a href="/cv/create" class="btn btn-success">
+                                <i class="fa-solid fa-circle-plus mr-1"></i>Tạo mới
+                            </a>
+                        </div>
+                        <div class="collapse show">
+                            <div class="col-md-12 p-0">
+                                @await foreach (var item in Model)
+                                {
+                                    <div class="result__item--wrapper my-2">
+                                        <div class="result__item--img p-3">
+                                            <img class="full_width" src="~/Assets/Client/img/create_cv.png" alt="Ảnh CV">
+                                        </div>
+                                        <div class="result__item--name">
+                                            <h3 class="result__name--title">
+                                                <span class="text-line-1">
+                                                    @item.Name
+                                                </span>
+                                                <span class="result__name--view">
+                                                    <a class="btn btn-success" target="_blank" href="@(item.Url ?? $"/cv/{item.Id}")">
+                                                        Xem hồ sơ
+                                                    </a>
+                                                </span>
+                                            </h3>
+                                            <p class="result__salary">
+                                                <span class="result__icon"><i class="fas fa-money-check-alt"></i></span>
+                                                Mã số: <span>@item.Id</span>
+                                            </p>
+                                            <div class="hoso_button mt-2 d-flex justify-content-end">
+                                                @if (item.Url == null)
+                                                {
+                                                    <a href="/cv/edit/@item.Id" class="btn-default mx-2 p-1">
+                                                        <i class="fa-solid fa-pen-to-square mr-1"></i>Sửa
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="#" class="btn-default mx-2 p-1 edit-by-upload" data-id="@item.Id">
+                                                        <i class="fa-solid fa-pen-to-square mr-1"></i>Sửa
+                                                    </a>
+                                                }
+                                                <a class="btn-default mx-2 p-1 mdi-cursor-pointer delete-cv" data-id="@item.Id">
+                                                    <i class="fa-solid fa-trash-can mr-1"></i>Xóa
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main__upload">
+    <form class="main__upload--post" id="upload-cv-form">
+        @Html.AntiForgeryToken()
+        <div class="main__upload--title">
+            <h4>Upload CV của bạn</h4>
+            <div class="upload--close"></div>
+        </div>
+        <span id="upload-form-error" class="text-danger"></span>
+        @*#                        _oo0oo_
+        #                       o8888888o
+        #                       88" . "88
+        #                       (| -_- |)
+        #                       0\  =  /0
+        #                     ___/`---'\___
+        #                   .' \|     |// '.
+        #                  / \|||  :  |||// \
+        #                 / _||||| -:- |||||- \
+        #                |   | \\  -  /// |   |
+        #                | \_|  ''\---/''  |_/ |
+        #                \  .-\__  '-'  ___/-. /
+        #              ___'. .'  /--.--\  `. .'___
+        #           ."" '<  `.___\_<|>_/___.' >' "".
+        #          | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+        #          \  \ `_.   \_ __\ /__ _/   .-` /  /
+        #      =====`-.____`.___ \_____/___.-`___.-'=====
+        #                        `=---='*@
+
+        <form class="form-container">
+            <input type="text" class="form-control form-control-sm"
+                   placeholder="Nhập tên CV của bạn" aria-controls="selection-datatable"
+                   id="cvName"
+                   name="Name" />
+            <div class="drag-file-area">
+                <span class="material-icons-outlined upload-icon"> file_upload </span>
+                <h3 class="dynamic-message"> Drag & drop any file here </h3>
+                <label class="label">
+                    or
+                    <span class="browse-files">
+                        <input type="file" name="CV" class="default-file-input" />
+                        <span class="browse-files-text">browse file</span>
+                        <span>from device</span>
+                    </span>
+                </label>
+            </div>
+            <span class="cannot-upload-message">
+                <span class="material-icons-outlined">error</span> Please select a file first
+                <span class="material-icons-outlined cancel-alert-button">cancel</span>
+            </span>
+            <div class="file-block">
+                <div class="file-info">
+                    <span class="material-icons-outlined file-icon">description</span>
+                    <span class="file-name"> </span> |
+                    <span class="file-size">  </span>
+                </div>
+                <span class="material-icons remove-file-icon">delete</span>
+                <div class="progress-bar"> </div>
+            </div>
+            <button type="submit" class="upload-button"> Upload </button>
+        </form>
+    </form>
+
+</div>

@@ -37,7 +37,7 @@ namespace WebTuyenDung.Controllers
                                         {
                                             Employer = new BaseEmployerViewModel(e.Employer)
                                             {
-                                                Avatar = _fileService.GetStaticFileUrlForFile(e.Employer.Avatar, FilePath.Avatar)
+                                                Avatar = _fileService.GetStaticFileUrlForFile(e.Employer.Avatar, FilePath.Avatar)!
                                             }
                                         })
                                         .Future();
@@ -47,7 +47,7 @@ namespace WebTuyenDung.Controllers
                                       {
                                           Employer = new BaseEmployerViewModel(e.Employer)
                                           {
-                                              Avatar = _fileService.GetStaticFileUrlForFile(e.Employer.Avatar, FilePath.Avatar)
+                                              Avatar = _fileService.GetStaticFileUrlForFile(e.Employer.Avatar, FilePath.Avatar)!
                                           }
                                       });
 

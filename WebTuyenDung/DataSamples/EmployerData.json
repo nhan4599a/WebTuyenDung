@@ -13,6 +13,7 @@
         "address": "Thành phố Hồ Chí Minh",
         "description": "Công ty NCD Việt Nam",
         "phoneNumber": "0123456789",
+        "isApproved": true,
         "cityId": 279
     }
 ]

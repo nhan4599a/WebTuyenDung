@@ -1,0 +1,60 @@
+﻿@model IAsyncEnumerable<WebTuyenDung.ViewModels.Api.LocaleViewModel>
+
+@{
+    Layout = "_AuthenticationLayout";
+}
+<div class="card-header">
+    <h3 class="text-center font-weight-light my-4">Đăng ký</h3>
+</div>
+<div class="card-body">
+    <form id="sign-in__form" action="/authentication/sign-up-employer">
+        <p id="sign-in-error" class="error text-danger"></p>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" autocomplete="false" name="username" id="username" />
+            <label for="username" class="control-label">Tên đăng nhập</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" autocomplete="false" name="password" id="password" />
+            <label for="password" class="control-label">Mật khẩu</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" autocomplete="false" name="name" id="name" />
+            <label for="name" class="control-label">Tên công ty</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="url" class="form-control" autocomplete="false" name="website" id="website" />
+            <label for="website" class="control-label">Website công ty</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="tel" class="form-control" autocomplete="false" name="phoneNumber" id="phoneNumber" />
+            <label for="phoneNumber" class="control-label">Số điện thoại liên hệ</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" autocomplete="false" name="size" id="size" />
+            <label for="size" class="control-label">Quy mô công ty</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" autocomplete="false" name="address" id="address" />
+            <label for="address" class="control-label">Địa chỉ công ty</label>
+        </div>
+        <div class="form-floating mb-3">
+            <select class="form-control text-box single-line selectpicker"
+                    data-live-search="true" data-val="true"
+                    name="cityId">
+                @await foreach (var city in Model)
+                {
+                    <option value="@city.Id">@city.Name</option>
+                }
+            </select>
+            <label for="cityId" class="control-label">Thành phố</label>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" rows="4" cols="50" style="resize: none" name="description" id="description"></textarea>
+            <label for="description" class="control-label">Giới thiệu công ty</label>
+        </div>
+        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+            <a class="small me-3" href="/authentication/sign-in?ReturnUrl=%2Femployer%2F">Đã có tài khoản?</a>
+            <button class="btn btn-primary">Đăng ký</button>
+        </div>
+    </form>
+</div>

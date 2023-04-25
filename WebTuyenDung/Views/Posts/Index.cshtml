@@ -1,0 +1,43 @@
+﻿@model WebTuyenDung.ViewModels.User.FullDetailPostViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+@section css_Main {
+    <link rel="stylesheet" href="~/Assets/Client/css/baiViet.css">
+}
+
+<div class="main__fixed bg-img"></div>
+
+<div class="main__blogs">
+    <div class="grid wide">
+        <div class="main__blogs--content row">
+            <div class="col l-12">
+                <h1 class="main__blogs--title main__item--title">
+                    @Model.Title
+                </h1>
+                <div class="blogs__header">
+                    <div>
+                        Tác giả: <strong class="mr-2">@Model.Author</strong>
+                    </div>
+                    <div>
+                        Ngày đăng: <i>@Model.CreatedAt.GetApplicationTimeRepresentation()</i>
+                    </div>
+                </div>
+                <div style="text-align: right">
+                    <i>Lượt xem: @Model.View</i>
+                </div>
+                <div class="blogs_img-main">
+                    <img src="@Model.Image" />
+                </div>
+                <div>
+                    @Html.Raw(Model.Content)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

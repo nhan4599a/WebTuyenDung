@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
@@ -13,6 +14,7 @@ using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
 using WebTuyenDung.Services;
 using WebTuyenDung.ViewModels.User;
+using Z.EntityFramework.Plus;
 
 namespace WebTuyenDung.Controllers
 {
@@ -29,17 +31,27 @@ namespace WebTuyenDung.Controllers
         [HttpGet("{controller}/{id}")]
         public async Task<IActionResult> Index(int id)
         {
-            var recruimentNews = await DbContext.RecruimentNews
+            var recruimentNewsQuery = DbContext.RecruimentNews
                                                 .ProjectToType<FullDetailRecruimentNewsViewModel>()
-                                                .FirstOrDefaultAsync(e => e.Id == id);
+                                                .DeferredFirstOrDefault(e => e.Id == id)
+                                                .FutureValue();
+
+            var candidateId = User.GetUserId();
+            var isJobSaved = await DbContext
+                                        .SavedRecruimentNews
+                                        .DeferredAny(e => e.RecruimentNewsId == id && e.CandidateId == candidateId)
+                                        .FutureValue()
+                                        .ValueAsync();
+
+            var recruimentNews = await recruimentNewsQuery.ValueAsync();
 
             if (recruimentNews == null)
             {
                 return NotFound();
             }
 
-            recruimentNews.Employer.Avatar = _fileService.GetStaticFileUrlForFile(
-                                                                recruimentNews.Employer.Avatar, FilePath.Avatar);
+            recruimentNews.Employer.Avatar = _fileService.GetStaticFileUrlForFile(recruimentNews.Employer.Avatar, FilePath.Avatar)!;
+            recruimentNews.IsSaved = isJobSaved;
 
             return View(recruimentNews);
         }
@@ -59,10 +71,11 @@ namespace WebTuyenDung.Controllers
 
                 var savedCV = new CurriculumVitae
                 {
-                    Name = cvFilePath[..cvFilePath.IndexOf('.')],
+                    Name = $"{candidateName} - {jobName} - {DateTime.Now:dd/MM/yyyy}",
                     FilePath = cvFilePath,
                     CandidateId = User.GetUserId(),
-                    IsUploadDirectlyByUser = false
+                    IsUploadDirectlyByUser = false,
+                    Type = CVType.File
                 };
 
                 DbContext.CVs.Add(savedCV);

@@ -78,7 +78,7 @@ $("body").on("click", "#datatablesSimple a.btn", function (event) {
 
     if (confirm(question)) {
         $.ajax({
-            url: "/admin/posts/" + (action === 'approve' ? 'approve/' : '') + `${postId}`,
+            url: "/api/posts/" + (action === 'approve' ? 'approve/' : '') + `${postId}`,
             type: action === 'approve' ? "PUT" : 'DELETE',
             success: () => {
                 location.reload();

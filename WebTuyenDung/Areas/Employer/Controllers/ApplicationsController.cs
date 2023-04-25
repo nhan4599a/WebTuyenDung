@@ -30,8 +30,11 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         [HttpGet]
         public Task<IPaginationResult<JobApplicationViewModel>> Search(SearchRequest request)
         {
+            var userId = User.GetUserId();
+
             var query = dbContext
                             .JobApplications
+                            .Where(e => e.RecruimentNews.EmployerId == userId)
                             .AsNoTracking();
 
             return query.PaginateAsync<JobApplication, JobApplicationViewModel>(request);

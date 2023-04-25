@@ -44,8 +44,13 @@ namespace WebTuyenDung.Services
             return directory + fileName;
         }
 
-        public string GetStaticFileUrlForFile(string fileName, FilePath filePath)
+        public string? GetStaticFileUrlForFile(string? fileName, FilePath filePath)
         {
+            if (fileName == null)
+            {
+                return null;
+            }
+
             return STATIC_FILES_DIRECTORY + filePath.GetContentDirectory() + fileName;
         }
     }

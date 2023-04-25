@@ -1,7 +1,8 @@
-﻿@model WebTuyenDung.ViewModels.CreatePostViewModel
+﻿@using WebTuyenDung.Constants;
+@model WebTuyenDung.ViewModels.CreatePostViewModel
 
 @{
-  var areaName = TempData["area"];
+  var areaName = TempData.Peek(ViewConstants.VIEW_AREA);
   var backToPreviousPageUrl = areaName + "/posts";
 }
 

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Đăng nhập - Administrator</title>
+    <link href="~/Assets/Admin/css/styles.css" rel="stylesheet" />
+</head>
+<body class="bg-primary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content" style="background: linear-gradient(45deg, #af7878, transparent);">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5">
+                            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Assets/Shared/jquery/jquery-3.4.1.min.js"></script>
+    <script src="~/Assets/Shared/boostrap/bootstrap.min.js"></script>
+    <script src="~/Assets/Admin/js/common.js"></script>
+    <script src="~/Assets/Shared/sign-in-screen.js"></script>
+
+    <script>
+        setTimeout(() => {
+            $('#msgAlert').fadeOut("slow");
+        }, 2000);
+    </script>
+</body>
+</html>

@@ -1,10 +1,7 @@
-﻿@*@using TuyenDungCNTT.Models.ViewModels.User;
-@using TuyenDungCNTT.Common;
-
-@{
-  var userLogin = (UserLogin)Session[CommonConstants.USER_SESSION];
+﻿@{
+    var avatar = User.GetAvatar();
 }
-*@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -48,7 +45,7 @@
                         </a>
                         <ul class="header__subnav">
                             <li><a href="/cv/my-cv">Quản lý CV</a></li>
-                            <li><a href="#">Tạo CV</a></li>
+                            <li><a href="/cv/create">Tạo CV</a></li>
                         </ul>
                     </li>
                     <li class="header__navbar--item">
@@ -60,9 +57,9 @@
                 {
                     <div class="header__user--info">
                         <div class="user__info--content">
-                            @if (TempData["AnhDaiDien"] != null)
+                            @if (avatar != null)
                             {
-                                <div class="user__info--img bg-img" style="background-image: url(@TempData["AnhDaiDien"]);"></div>
+                                <div class="user__info--img bg-img" style="background-image: url(@avatar);"></div>
                             }
                             else
                             {
@@ -72,10 +69,10 @@
                             <div class="user__info--name"><span>@User.Identity!.Name</span></div>
                         </div>
                         <ul class="user__groups">
-                            <li><a href="#">Thông tin cá nhân</a></li>
-                            <li><a href="#">Đổi mật khẩu</a></li>
-                            <li><a href="#">Tin tuyển dụng đã lưu</a></li>
-                            <li><a href="#">Lịch sử ứng tuyển</a></li>
+                            <li><a href="/user/info">Thông tin cá nhân</a></li>
+                            <li><a href="/user/change-password">Đổi mật khẩu</a></li>
+                            <li><a href="/saved-jobs">Tin tuyển dụng đã lưu</a></li>
+                            <li><a href="/job-application-histories">Lịch sử ứng tuyển</a></li>
                             <li><a href="#">Việc làm phù hợp</a></li>
                             <li><a href="#" id="sign-out">Đăng xuất</a></li>
                             <form action="/authentication/sign-out" method="post" style="display: none" id="sign-out-form">

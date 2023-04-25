@@ -1,0 +1,70 @@
+﻿@model IAsyncEnumerable<WebTuyenDung.Models.SavedRecruimentNews>
+
+@{
+    ViewBag.Title = "Tin tuyển dụng đã lưu";
+}
+
+@section css_Main {
+    <link rel="stylesheet" href="~/Assets/Admin/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Assets/Client/css/home.css">
+}
+
+<div class="main__content">
+    <div class="main__content--wrapper grid wide">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-header py-2">
+                            <h4 class="header-title mb-0">Danh sách tin tuyển đã lưu</h4>
+                        </div>
+                        <div class="collapse show">
+                            <div class="col-md-12 p-0">
+                                <div class="main__recruitment--content row my-2">
+                                    @await foreach (var item in Model)
+                                    {
+                                        <div class="recruitment__item col l-6 m-6 c-12">
+                                            <div class="recruitment__item--wrapper">
+                                                <div class="recruitment__item--img">
+                                                    <img class="full_width" src="@item.EmployerAvatar" alt="Logo nhà tuyển dụng">
+                                                    <div class="recruitment__item--time">@item.WorkingSite</div>
+                                                </div>
+                                                <div class="recruitment__item--name">
+                                                    <h2 class="recruitment__name--title">
+                                                        <a href="/recruiment-news/@item.RecruimentNewsId" class="recruitment__name--link text-line-1">
+                                                            @item.JobName
+                                                        </a>
+                                                    </h2>
+                                                    <div class="recruitment__name--employer">
+                                                        <a href="/employer/@item.EmployerId" class="recruitment__employer--link text-line-1">
+                                                            <span class="recruitment__icon"><i class="far fa-building"></i></span>
+                                                            <span class="">@item.EmployerName</span>
+                                                        </a>
+                                                    </div>
+                                                    <p class="recruitment__salary">
+                                                        <span class="recruitment__icon"><i class="fas fa-money-check-alt"></i></span>
+                                                        <span>@item.Salary</span>
+                                                    </p>
+                                                    <p class="recruitment__address">
+                                                        <span class="recruitment__icon"><i class="fas fa-map-marked"></i></span>
+                                                        <span>@item.JobType</span>
+                                                    </p>
+                                                </div>
+                                                <form action="/api/recruiment-news/save/@item.RecruimentNewsId" method="post">
+                                                    <button class="btn btn-bordered-info">
+                                                        <i class="fa-solid fa-heart"></i>
+                                                        <span>Bỏ lưu</span>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

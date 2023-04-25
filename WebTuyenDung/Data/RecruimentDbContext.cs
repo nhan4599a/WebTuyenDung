@@ -27,6 +27,10 @@ namespace WebTuyenDung.Data
 
         public DbSet<JobApplication> JobApplications { get; set; }
 
+        public DbSet<SavedRecruimentNews> SavedRecruimentNews { get; set; }
+
+        public DbSet<CurriculumVitaeDetail> CVDetails { get; set; }
+
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
             base.ConfigureConventions(configurationBuilder);

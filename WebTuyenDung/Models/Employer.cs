@@ -18,6 +18,8 @@ namespace WebTuyenDung.Models
 
         public Locale City { get; set; } = default!;
 
+        public bool IsApproved { get; set; }
+
         public ICollection<RecruimentNews> RecruimentNews { get; set; } = default!;
     }
 }

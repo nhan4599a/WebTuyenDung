@@ -13,5 +13,7 @@
         public string Address { get; set; } = default!;
 
         public string Website { get; set; } = default!;
+
+        public bool IsApproved { get; set; }
     }
 }

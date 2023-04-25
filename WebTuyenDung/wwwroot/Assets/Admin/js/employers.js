@@ -1,6 +1,6 @@
 ﻿var load = function (keyWord, pageIndex, pageSize) {
     $.ajax({
-        url: "/admin/employers/search",
+        url: "/api/employers",
         data: {
             keyWord: keyWord,
             pageIndex: pageIndex,
@@ -23,8 +23,14 @@
                 str += "<td>" + value.size + "</td>";
                 str += "<td>" + value.address + "</td>";
                 str += "<td>" + value.website + "</td>";
-                str += '<td class="display: inline-grid;"><a style="min-width: 90px" class="btn btn-success" href="/admin/employers/' + value.id + '">Xem thông tin</a>';
-                str += '<a class="btn btn-danger mt-1" href="#" data-user=' + value.id + '>Xóa</a>';
+                if (value.isApproved) {
+                    str += '<td class="display: inline-grid;"><a style="min-width: 90px" class="btn btn-success" href="/admin/employers/' + value.id + '">Xem thông tin</a>';
+                    str += '<a class="btn btn-danger mt-1" href="#" data-user=' + value.id + ' data-action="delete">Xóa</a>';
+                } else {
+                    str += `<td class="display: inline-grid">
+                                <a style="min-width: 90px" class="btn btn-success" href="#" data-user="${value.id}" data-action="approve">Duyệt</a>
+                            </td>`
+                }
                 str += "</tr>";
 
                 //create pagination
@@ -55,13 +61,17 @@
 }
 
 //click delete button
-$("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
+$("body").on("click", "#datatablesSimple a.btn", function (event) {
     event.preventDefault();
-    var userId = $(this).attr('data-user');
-    if (confirm("Bạn có muốn xóa nhà tuyển dụng có Mã = " + userId + " này không?")) {
+    const userId = $(this).data('user');
+    const action = $(this).data('action');
+    var message = `Bạn có muốn ${action === 'approve' ? 'duyệt' : 'xóa'} nhà tuyển dụng có Mã = \"${userId}\" này không?`
+
+    if (confirm(message)) {
+
         $.ajax({
-            url: "/api/users/" + userId,
-            type: "DELETE",
+            url: "/api/users/" + (action === 'approve' ? 'approve/' : '') + userId,
+            type: action === 'approve' ? "PATCH" : "DELETE",
             success: () => {
                 location.reload();
             }

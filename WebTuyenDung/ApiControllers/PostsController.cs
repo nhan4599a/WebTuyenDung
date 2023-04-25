@@ -39,7 +39,7 @@ namespace WebTuyenDung.ApiControllers
                                   .PaginateAsync<Post, ManagementViewModels.MinimalPostViewModel>(searchRequest)
                                   .Select(e => new ManagementViewModels.MinimalPostViewModel(e)
                                   {
-                                      Image = _fileService.GetStaticFileUrlForFile(e.Image, FilePath.Post)
+                                      Image = _fileService.GetStaticFileUrlForFile(e.Image, FilePath.Post)!
                                   });
             }
             else
@@ -47,7 +47,7 @@ namespace WebTuyenDung.ApiControllers
                 var temp = await query.PaginateAsync<Post, ManagementViewModels.PostViewModel>(searchRequest)
                                   .Select(e => new ManagementViewModels.PostViewModel(e)
                                   {
-                                      Image = _fileService.GetStaticFileUrlForFile(e.Image, FilePath.Post)
+                                      Image = _fileService.GetStaticFileUrlForFile(e.Image, FilePath.Post)!
                                   });
                 return temp;
             }

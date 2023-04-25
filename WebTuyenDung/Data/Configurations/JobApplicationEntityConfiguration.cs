@@ -23,7 +23,7 @@ namespace WebTuyenDung.Data.Configurations
                 .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
 
             builder
-                .HasOne<RecruimentNews>()
+                .HasOne(e => e.RecruimentNews)
                 .WithMany(e => e.JobApplications)
                 .HasForeignKey(e => e.RecruimentNewsId)
                 .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);

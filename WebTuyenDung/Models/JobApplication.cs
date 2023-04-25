@@ -20,5 +20,7 @@ namespace WebTuyenDung.Models
         public string JobName { get; set; } = default!;
 
         public string? CandidateNote { get; set; }
+
+        public RecruimentNews RecruimentNews { get; set; } = default!;
     }
 }
