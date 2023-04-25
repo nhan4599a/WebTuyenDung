@@ -39,6 +39,34 @@
             e.stopPropagation();
         })
     </script>
+    <script>
+        $('.main__upload--post').click(e => {
+            e.stopPropagation()
+        })
+    </script>
+
+    <script>
+        $('.btn-default.edit-by-upload').click(function () {
+            const cvId = $(this).data('id')
+
+            $('.main__upload').toggleClass('show')
+        })
+
+        $('.btn-default.delete-cv').click(function () {
+
+            const deleteButton = $(this)
+
+            const cvId = deleteButton.data('id')
+
+            $.ajax({
+                url: `/api/cv/${cvId}`,
+                method: 'DELETE',
+                success: () => {
+                    deleteButton.parent().parent().parent().remove()
+                }
+            })
+        })
+    </script>
 }
 
 <div class="main__fixed bg-img"></div>

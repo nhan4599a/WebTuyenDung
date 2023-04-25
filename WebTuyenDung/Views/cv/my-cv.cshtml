@@ -8,15 +8,48 @@
     <link rel="stylesheet" href="~/Assets/Admin/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Assets/Client/css/hoso.css" />
     <link rel="stylesheet" href="~/Assets/Shared/upload-file/upload-file.css" />
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        .upload--close::after{
+            content: 'x';
+            cursor: pointer;
+            padding: 0 10px;
+            color: #999;
+        }
+    </style>
 }
 
 @section scripts_Main {
-    <script src="/Assets/Shared/upload-file/upload-file.js"></script>
+    <script src="~/Assets/Shared/upload-file/upload-file.js"></script>
+    <script src="~/Assets/Client/js/style.js"></script>
+    <script>
+        $(document).on({
+            ajaxStart: function () {
+                $("body").addClass("loading");
+            },
+            ajaxStop: function () {
+                $("body").removeClass("loading");
+            }
+        });
+    </script>
+    <script>
+        // Show apply form
+        __('#upload-cv, .upload__button--cancel, .upload--close, .main__upload').forEach((item) => {
+            item.addEventListener('click', () => {
+                _('.main__upload').classList.toggle('show');
+            })
+        })
+
+        _('.main__upload--post').addEventListener('click', (e) => {
+            e.stopPropagation();
+        })
+    </script>
     <script>
         $('.main__upload--post').click(e => {
             e.stopPropagation()
         })
     </script>
+
     <script>
         $('.btn-default.edit-by-upload').click(function() {
             const cvId = $(this).data('id')
