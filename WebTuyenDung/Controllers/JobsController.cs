@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Data;
@@ -23,16 +24,27 @@ namespace WebTuyenDung.Controllers
             _fileService = fileService;
         }
 
-        public async Task<IActionResult> Index(SearchJobRequest request)
+        [HttpGet]
+        public async Task<IActionResult> Index([FromQuery] SearchJobRequest request)
         {
-            IQueryable<RecruimentNews> jobsQuery = DbContext.RecruimentNews;
+            IQueryable<RecruimentNews> baseQuery = DbContext.RecruimentNews.AsNoTracking();
+            IQueryable<RecruimentNews> query = baseQuery;
 
             if (request.JobType != null)
             {
-                jobsQuery = jobsQuery.Where(e => e.JobType == request.JobType);
+                query = query.Where(e => e.JobType == request.JobType);
+            }
+            if (request.Position != null)
+            {
+                query = query.Where(e => e.Position == request.Position);
+            }
+            if (!string.IsNullOrWhiteSpace(request.Salary))
+            {
+                var (minSalary, maxSalary) = SalaryHelper.ParseSalary(request.Salary);
+                query = query.Where(e => e.MinimumSalary >= minSalary && e.MaximumSalary <= maxSalary);
             }
 
-            var hotJobsQuery = jobsQuery.QueryTopItems<TopJobsViewModel>(5)
+            var hotJobsQuery = baseQuery.QueryTopItems<TopJobsViewModel>(5)
                                         .Select(e => new TopJobsViewModel(e)
                                         {
                                             Employer = new BaseEmployerViewModel(e.Employer)
@@ -42,7 +54,7 @@ namespace WebTuyenDung.Controllers
                                         })
                                         .Future();
 
-            var jobs = await jobsQuery.PaginateAsync<RecruimentNews, DetailRecruimentNewsViewModel>(request)
+            var jobs = await query.PaginateAsync<RecruimentNews, DetailRecruimentNewsViewModel>(request)
                                       .Select(e => new DetailRecruimentNewsViewModel(e)
                                       {
                                           Employer = new BaseEmployerViewModel(e.Employer)

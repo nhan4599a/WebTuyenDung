@@ -1,23 +1,52 @@
 ﻿@{
     Layout = "_AuthenticationLayout";
 }
+
+@section styles {
+    <style>
+        .d-none {
+            display: none !important
+        }
+    </style>
+}
+
+@section js_scripts {
+    <script src="~/Assets/Shared/sign-up-screen.js"></script>
+}
+
 <div class="card-header">
     <h3 class="text-center font-weight-light my-4">Đăng ký</h3>
 </div>
 <div class="card-body">
     <form id="sign-in__form" action="/authentication/sign-up">
-        <p id="sign-in-error" class="error text-danger"></p>
-        <div class="form-floating mb-3">
+        <ul id="sign-in-error" class="error text-danger"></ul>
+        <div class="form-floating mb-3 sign-up-first-batch">
             <input type="text" class="form-control" autocomplete="false" name="username" id="username" />
             <label for="username" class="control-label">Tên đăng nhập</label>
         </div>
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-3 sign-up-first-batch">
             <input type="password" class="form-control" autocomplete="false" name="password" id="password" />
             <label for="password" class="control-label">Mật khẩu</label>
         </div>
+        <div class="form-floating mb-3 sign-up-first-batch">
+            <input type="password" class="form-control" autocomplete="false" name="re-password" id="re-password" />
+            <label for="re-password" class="control-label">Nhập lại mật khẩu</label>
+        </div>
+        <div class="form-floating mb-3 d-none">
+            <input type="text" class="form-control" autocomplete="false" name="name" id="name" />
+            <label for="name" class="control-label">Tên</label>
+        </div>
+        <div class="form-floating mb-3 d-none">
+            <input type="text" class="form-control" autocomplete="false" name="address" id="address" />
+            <label for="address" class="control-label">Địa chỉ</label>
+        </div>
+        <div class="form-floating mb-3 d-none">
+            <input type="text" class="form-control" autocomplete="false" name="phoneNumber" id="phoneNumber" />
+            <label for="phoneNumber" class="control-label">Số điện thoại</label>
+        </div>
         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
             <a class="small me-3" href="/authentication/sign-in">Đã có tài khoản?</a>
-            <button class="btn btn-primary">Đăng ký</button>
+            <button class="btn btn-primary btn-next">Tiếp tục</button>
         </div>
     </form>
 </div>

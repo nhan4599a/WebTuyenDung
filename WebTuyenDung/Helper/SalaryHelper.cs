@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace WebTuyenDung.Helper
 {
@@ -9,23 +10,30 @@ namespace WebTuyenDung.Helper
 
         public static (int? MinimumSalary, int? MaximumSalary) ParseSalary(string salary)
         {
-            if (salary == "Thỏa thuận")
+            try
+            {
+                if (salary == "Thỏa thuận")
+                {
+                    return (null, null);
+                }
+
+                if (salary.StartsWith("Dưới"))
+                {
+                    return (0, int.Parse(salary[5..^6]));
+                }
+                else if (salary.StartsWith("Trên"))
+                {
+                    return (int.Parse(salary[5..^6]), null);
+                }
+
+                var salaryGroups = SalaryRegex().Match(salary).Groups;
+
+                return (int.Parse(salaryGroups[1].ValueSpan), int.Parse(salaryGroups[2].ValueSpan));
+            }
+            catch (Exception)
             {
                 return (null, null);
             }
-
-            if (salary.StartsWith("Dưới"))
-            {
-                return (0, int.Parse(salary[5..^6]));
-            }
-            else if (salary.StartsWith("Trên"))
-            {
-                return (int.Parse(salary[5..^6]), null);
-            }
-
-            var salaryGroups = SalaryRegex().Match(salary).Groups;
-
-            return (int.Parse(salaryGroups[1].ValueSpan), int.Parse(salaryGroups[2].ValueSpan));
         }
     }
 }

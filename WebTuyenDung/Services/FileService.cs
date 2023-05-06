@@ -33,6 +33,13 @@ namespace WebTuyenDung.Services
             return fileName;
         }
 
+        public async Task ReplaceFileAsync(string oldName, IFormFile file, FilePath filePath)
+        {
+            var actualFilePath = GetActualFilePath(oldName, filePath);
+            using var fileStream = new FileStream(actualFilePath, FileMode.Truncate, FileAccess.Write, FileShare.None);
+            await file.CopyToAsync(fileStream);
+        }
+
         private string GetActualFilePath(string fileName, FilePath filePath)
         {
             var directory = _basePath + filePath.GetContentDirectory();

@@ -17,7 +17,7 @@ let progressBar = document.querySelector(".progress-bar");
 let removeFileButton = document.querySelector(".remove-file-icon");
 let uploadButton = document.querySelector(".upload-button");
 let fileFlag = 0;
-let uploadForm = document.querySelector('#upload-cv-form');
+let uploadForm = document.querySelector('.main__upload--post');
 const ALLOWED_FILE_EXTENSIONS = ['doc', 'docx', 'pdf', 'png', 'jpg', 'jpeg']
 const ERROR_MESSAGE_TEMPLATE = `<span class="material-icons-outlined">error</span> {0}
                                         <span class="material-icons-outlined cancel-alert-button">cancel</span>`;
@@ -88,40 +88,7 @@ removeFileButton.addEventListener("click", () => {
     uploadButton.innerHTML = `Upload`;
 });
 
-uploadForm.addEventListener('submit', e => {
-    e.preventDefault();
-
-    let tempData = $(uploadForm).serializeArray();
-
-    if (!tempData[1].value) {
-        $('#upload-form-error').text('You must input name for cv')
-        return
-    }
-    if (fileInput.files.length === 0) {
-        $(cannotUploadMessage).html(ERROR_MESSAGE_TEMPLATE.replace('{0}', 'Please select a file first'))
-        return
-    }
-
-    let formData = new FormData();
-    formData.append('__RequestVerificationToken', tempData[0].value)
-    formData.append('name', tempData[1].value);
-    formData.append('cv', fileInput.files[0]);
-
-    $.ajax({
-        url: '/cv/upload',
-        method: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: () => {
-            _('.main__upload').classList.toggle('show');
-            alert('Upload cv thành công')
-        },
-        error: (response) => {
-            $('#upload-form-error').text(JSON.parse(response.responseText)['Name'][0])
-        }
-    })
-})
+uploadForm.addEventListener('submit', onUploadCVFormSubmit)
 
 function getFileExtension(fileName) {
     const lastIndexOfDotCharacter = fileName.lastIndexOf('.')

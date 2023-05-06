@@ -23,8 +23,34 @@
         CKEDITOR.replace("txtGiaiThuong");
     </script>
     <script src="~/Assets/Client/js/style.js"></script>
-}
+    <script>
+        $('#update-cv-form').submit(function(e) {
+            e.preventDefault()
+            const keyValuePairs = $(this).serializeArray()
+            const data = {}
+            for (var keyValuePair of keyValuePairs) {
+                data[keyValuePair.name] = keyValuePair.value
+            }
+            data.Objective = CKEDITOR.instances['txtMucTieu'].getData()
+            data.Experience = CKEDITOR.instances['txtKinhNghiem'].getData()
+            data.Skills = CKEDITOR.instances['txtKyNang'].getData()
+            data.Education = CKEDITOR.instances['txtHocVan'].getData()
+            data.SoftSkills = CKEDITOR.instances['txtKyNangMem'].getData()
+            data.Rewards = CKEDITOR.instances['txtGiaiThuong'].getData()
 
+            $.ajax({
+                url: '/cv/edit/@Model.Id',
+                method: 'POST',
+                data: {
+                    data: data
+                },
+                success: () => {
+                    location.href = '/cv/my-cv'
+                }
+            })
+        })
+    </script>
+}
 
 <div class="main__fixed bg-img"></div>
 
@@ -38,7 +64,7 @@
                             <h4 class="header-title mb-0">Thông tin tạo hồ sơ xin việc</h4>
                         </div>
                         <div class="collapse pt-3 show">
-                            <form action="/cv/edit/@Model.Id" method="post">
+                            <form action="/cv/edit/@Model.Id" method="post" id="update-cv-form">
                                 @Html.AntiForgeryToken()
 
                                 <div class="form-horizontal">

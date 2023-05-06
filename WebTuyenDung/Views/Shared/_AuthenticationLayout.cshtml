@@ -8,6 +8,7 @@
     <meta name="author" content="" />
     <title>Đăng nhập - Administrator</title>
     <link href="~/Assets/Admin/css/styles.css" rel="stylesheet" />
+    @await RenderSectionAsync("styles")
 </head>
 <body class="bg-primary">
     <div id="layoutAuthentication">
@@ -26,13 +27,10 @@
         </div>
     </div>
 
-    @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jqueryval")*@
     <script src="~/Assets/Shared/jquery/jquery-3.4.1.min.js"></script>
     <script src="~/Assets/Shared/boostrap/bootstrap.min.js"></script>
     <script src="~/Assets/Admin/js/common.js"></script>
-    <script src="~/Assets/Shared/sign-in-screen.js"></script>
+    @await RenderSectionAsync("js_scripts")
 
     <script>
         setTimeout(() => {

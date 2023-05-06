@@ -57,19 +57,19 @@ namespace WebTuyenDung.Controllers
         [ActionName("sign-up")]
         [HttpPost]
         [AutoShortCircuitValidationFailedRequest]
-        public async Task<IActionResult> SignUp([FromBody] SignUpRequest signUpRequest)
+        public async Task<IActionResult> SignUp([FromBody] CandidateSignUpRequest signUpRequest)
         {
-            var isUserExisted = await DbContext.Users.AnyAsync(e => e.Username == signUpRequest.Username);
+            var isUserExisted = await ValidateUsername(signUpRequest.Username);
 
             if (isUserExisted)
             {
                 return BadRequest("Tên đăng nhập đã được sử dụng");
             }
 
-            var user = signUpRequest.Adapt<User>();
-            user.Role = UserRole.Candidate;
+            var candidate = signUpRequest.Adapt<Candidate>();
+            candidate.Role = UserRole.Candidate;
 
-            DbContext.Users.Add(user);
+            DbContext.Candidates.Add(candidate);
 
             await DbContext.SaveChangesAsync();
 
@@ -95,7 +95,7 @@ namespace WebTuyenDung.Controllers
         [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> SignUpEmployer([FromBody] SignUpEmployerRequest signUpRequest)
         {
-            var isUserExisted = await DbContext.Users.AnyAsync(e => e.Username == signUpRequest.Username);
+            var isUserExisted = await ValidateUsername(signUpRequest.Username);
 
             if (isUserExisted)
             {
@@ -113,7 +113,15 @@ namespace WebTuyenDung.Controllers
             return Ok();
         }
 
-        [HttpPost("/authentication/sign-out")]
+        [ActionName("validate")]
+        [HttpGet]
+        public Task<bool> ValidateUsername(string username)
+        {
+            return DbContext.Users.AnyAsync(e => e.Username == username);
+        }
+
+        [ActionName("sign-out")]
+        [HttpPost]
         public async new Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync();

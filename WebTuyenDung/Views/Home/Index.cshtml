@@ -26,7 +26,6 @@
             }
         });
     </script>
-    <script src="/Assets/Shared/upload-file/upload-file.js"></script>
     <script>
         // Show apply form
         __('#upload-cv, .upload__button--cancel, .upload--close, .main__upload').forEach((item) => {
@@ -66,7 +65,43 @@
                 }
             })
         })
+
+        const onUploadCVFormSubmit = (e) => {
+            e.preventDefault();
+
+            let tempData = $(uploadForm).serializeArray();
+
+            if (!tempData[1].value) {
+                $('#upload-form-error').text('You must input name for cv')
+                return
+            }
+            if (fileInput.files.length === 0) {
+                $(cannotUploadMessage).html(ERROR_MESSAGE_TEMPLATE.replace('{0}', 'Please select a file first'))
+                return
+            }
+
+            let formData = new FormData();
+            formData.append('__RequestVerificationToken', tempData[0].value)
+            formData.append('name', tempData[1].value);
+            formData.append('cv', fileInput.files[0]);
+
+            $.ajax({
+                url: '/cv/upload',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: () => {
+                    _('.main__upload').classList.toggle('show');
+                    alert('Upload cv thành công')
+                },
+                error: (response) => {
+                    $('#upload-form-error').text(JSON.parse(response.responseText)['Name'][0])
+                }
+            })
+        }
     </script>
+    <script src="/Assets/Shared/upload-file/upload-file.js"></script>
 }
 
 <div class="main__fixed bg-img"></div>
@@ -285,7 +320,7 @@
 @if (User.Identity!.IsAuthenticated && User.IsInRole(AuthorizationConstants.CANDIDATE_ROLE))
 {
     <div class="main__upload">
-        <form class="main__upload--post" id="upload-cv-form">
+        <form class="main__upload--post" id="upload-cv-form" data-is-upload="true">
             @Html.AntiForgeryToken()
             <div class="main__upload--title">
                 <h4>Upload CV của bạn</h4>

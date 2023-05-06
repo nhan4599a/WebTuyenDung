@@ -20,7 +20,6 @@
 }
 
 @section scripts_Main {
-    <script src="~/Assets/Shared/upload-file/upload-file.js"></script>
     <script src="~/Assets/Client/js/style.js"></script>
     <script>
         $(document).on({
@@ -31,29 +30,26 @@
                 $("body").removeClass("loading");
             }
         });
-    </script>
-    <script>
+
         // Show apply form
         __('#upload-cv, .upload__button--cancel, .upload--close, .main__upload').forEach((item) => {
             item.addEventListener('click', () => {
                 _('.main__upload').classList.toggle('show');
             })
         })
-
-        _('.main__upload--post').addEventListener('click', (e) => {
-            e.stopPropagation();
-        })
-    </script>
-    <script>
+        
         $('.main__upload--post').click(e => {
             e.stopPropagation()
         })
     </script>
-
     <script>
         $('.btn-default.edit-by-upload').click(function() {
             const cvId = $(this).data('id')
-
+            const name = $(this).data('name')
+            const url = $(this).data('url')
+            $('#update-cv-form').data('id', cvId)
+            $('#update-cv-form').children('input[type=text]').val(name)
+            $('#update-cv-form').children('input[name=url]').val(url)
             $('.main__upload').toggleClass('show')
         })
 
@@ -71,7 +67,31 @@
                 }
             })
         })
+
+        const onUploadCVFormSubmit = (e) => {
+            e.preventDefault()
+
+            const cvId = $(this).data('id')
+
+            const thisElement = document.getElementById('update-cv-form')
+            
+            const formData = new FormData(thisElement)
+            formData.delete('CV')
+            formData.append('CV', fileInput.files[0])
+
+            $.ajax({
+                url: `/cv/edit/${cvId}`,
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: () => {
+                    alert('Update cv thành công')
+                }
+            })
+        }
     </script>
+    <script src="~/Assets/Shared/upload-file/upload-file.js"></script>
 }
 
 <div class="main__fixed bg-img"></div>
@@ -122,7 +142,8 @@
                                                 }
                                                 else
                                                 {
-                                                    <a href="#" class="btn-default mx-2 p-1 edit-by-upload" data-id="@item.Id">
+                                                    <a href="#" class="btn-default mx-2 p-1 edit-by-upload" data-id="@item.Id"
+                                                        data-name="@item.Name" data-url="@item.Url.Substring(item.Url.LastIndexOf('/') + 1)">
                                                         <i class="fa-solid fa-pen-to-square mr-1"></i>Sửa
                                                     </a>
                                                 }
@@ -142,8 +163,9 @@
     </div>
 </div>
 <div class="main__upload">
-    <form class="main__upload--post" id="upload-cv-form">
+    <form class="main__upload--post" id="update-cv-form">
         @Html.AntiForgeryToken()
+        <input type="hidden" name="url" />
         <div class="main__upload--title">
             <h4>Upload CV của bạn</h4>
             <div class="upload--close"></div>

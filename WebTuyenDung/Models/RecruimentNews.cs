@@ -37,6 +37,8 @@ namespace WebTuyenDung.Models
 
         public int? MaximumSalary { get; set; }
 
+        public string Benefit { get; set; } = default!;
+
         public DateOnly? Deadline { get; set; }
 
         public int NumberOfCandidates { get; set; }

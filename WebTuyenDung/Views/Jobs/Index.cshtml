@@ -6,7 +6,34 @@
 
 @{
     ViewBag.Title = "Tìm kiếm công việc";
-    var currentPage = Context.Request.Query["pageIndex"] != StringValues.Empty ? int.Parse(Context.Request.Query["pageIndex"]!) : 1;
+    var query = Context.Request.Query;
+    var baseUrl = "/jobs?";
+    var position = query["position"];
+    var jobType = query["jobType"];
+    var salary = query["salary"];
+
+    if (position.Count != 0)
+    {
+        baseUrl += $"position={position}";
+    }
+    if (jobType.Count != 0)
+    {
+        baseUrl += (baseUrl.EndsWith("?") ? "" : "&") + $"jobType={jobType}";
+    }
+    if (salary.Count != 0)
+    {
+        baseUrl += (baseUrl.EndsWith("?") ? "" : "&") + $"salary={salary}";
+    }
+
+    var pageIndex = query["pageIndex"];
+    var currentPage = pageIndex.Count != 0 ? int.Parse(pageIndex!) : 1;
+
+    if (!baseUrl.EndsWith("?"))
+    {
+        baseUrl += "&";
+    }
+
+    baseUrl += "pageIndex=";
 }
 
 @section css_Main {
@@ -18,7 +45,7 @@
     <script src="~/Assets/Client/js/searchkey.js"></script>
     @*<script src="~/Assets/Client/js/searchResult.js"></script>*@
 
-    <script>
+    @*<script>
         load("/Home/GetPaging", $('#keyword').val(), 1, $('#CapBac').val(), $('#DiaChi').val(), null, null, null);
 
         $("body").on("click", ".result__paging--list li a", function (event) {
@@ -30,7 +57,7 @@
         $("#ChuyenNganh, #LoaiCV, #MucLuong").on("change", function () {
             load("/Home/GetPaging", $('#keyword').val(), 1, $('#CapBac').val(), $('#DiaChi').val(), $('#ChuyenNganh').val(), $('#LoaiCV').val(), $('#MucLuong').val());
         });
-    </script>
+    </script>*@
 }
 
 <div class="main__fixed bg-img"></div>
@@ -52,29 +79,29 @@
                 <h1 class="result__header--title">@*Việc làm @(Request["KeyWord"] != null ? Request["KeyWord"] : "")*@</h1>
             </li>
         </ul>
-        <div class="main__result--search row">
+        <form class="main__result--search row" method="get">
             <div class="search__item col l-3 m-3 c-6">
                 <select class="form-control text-box single-line selectpicker"
                         data-live-search="true" data-val="true"
                         id="position" name="position">
-                    <option value="">-- Chọn vị trí cần tuyển --</option>
-                    <option value="0">
+                    <option value="" selected="@(position.Count == 0)">-- Chọn vị trí cần tuyển --</option>
+                    <option value="0" selected="@(position.Count > 0 && position[0] == "0")">
                         Business Analyst
                     </option>
-                    <option value="1">Kỹ sư cầu nối</option>
-                    <option value="2">
+                    <option value="1" selected="@(position.Count > 0 && position[0] == "1")">Kỹ sư cầu nối</option>
+                    <option value="2" selected="@(position.Count > 0 && position[0] == "2")">
                         Lập trình viên
                     </option>
-                    <option value="3">
+                    <option value="3" selected="@(position.Count > 0 && position[0] == "3")">
                         Tester
                     </option>
-                    <option value="4">
+                    <option value="4" selected="@(position.Count > 0 && position[0] == "4")">
                         Quality Control
                     </option>
-                    <option value="5">
+                    <option value="5" selected="@(position.Count > 0 && position[0] == "5")">
                         Quality Assurance
                     </option>
-                    <option value="6">
+                    <option value="6" selected="@(position.Count > 0 && position[0] == "6")">
                         Quản lý dự án phần mềm
                     </option>
                 </select>
@@ -84,32 +111,34 @@
                 <select class="form-control text-box single-line selectpicker"
                         data-live-search="true" data-val="true" id="jobType"
                         name="jobType">
-                    <option value="">
+                    <option value="" selected="@(jobType.Count == 0)">
                         -- Chọn hình thức làm việc --
                     </option>
-                    <option value="0">Parttime - Bán thời gian</option>
-                    <option value="1">Fulltime - Toàn thời gian</option>
-                    <option value="2">
+                    <option value="0" selected="@(jobType.Count > 0 && jobType[0] == "0")">Parttime - Bán thời gian</option>
+                    <option value="1" selected="@(jobType.Count > 0 && jobType[0] == "1")">Fulltime - Toàn thời gian</option>
+                    <option value="2" selected="@(jobType.Count > 0 && jobType[0] == "2")">
                         Remote - Làm việc từ xa
                     </option>
                 </select>
             </div>
             <div class="search__item col l-3 m-3 c-6">
-                <select class="form-control text-box single-line selectpicker" data-live-search="true">
-                    <option value="Dưới 3 triệu">Dưới 3 triệu</option>
-                    <option value="3 - triệu">3 - triệu</option>
-                    <option value="5 - 7 triệu">5 - 7 triệu</option>
-                    <option value="7 - 10 triệu">7 - 10 triệu</option>
-                    <option value="Trên 10 triệu">Trên 10 triệu</option>
-                    <option value="Thỏa thuận">Thỏa thuận</option>
+                <select class="form-control text-box single-line selectpicker" data-live-search="true" name="salary">
+                    <option value="" selected="@(salary.Count == 0)">-- Chọn mức lương --</option>
+                    <option value="Dưới 3 triệu" selected="@(salary.Count > 0 && salary[0] == "Dưới 3 triệu")">Dưới 3 triệu</option>
+                    <option value="3 - 5 triệu" selected="@(salary.Count > 0 && salary[0] == "3 - 5 triệu")">3 - 5 triệu</option>
+                    <option value="5 - 7 triệu" selected="@(salary.Count > 0 && salary[0] == "5 - 7 triệu")">5 - 7 triệu</option>
+                    <option value="7 - 10 triệu" selected="@(salary.Count > 0 && salary[0] == "7 - 10 triệu")">7 - 10 triệu</option>
+                    <option value="Trên 10 triệu" selected="@(salary.Count > 0 && salary[0] == "Trên 10 triệu")">Trên 10 triệu</option>
+                    <option value="Thỏa thuận" selected="@(salary.Count > 0 && salary[0] == "Thỏa thuận")">Thỏa thuận</option>
                 </select>
             </div>
-        </div>
+            <button class="btn btn-primary" style="margin-left: 15px" type="submit">Seach</button>
+        </form>
         <div class="main__result--total">
             <p class="result__total--content">
                 @if (Model.SearchResult.TotalRecords == 0)
                 {
-                    <div>Không tìm được tin tuyển dụng phù hợp</div>
+                    @: Không tìm được tin tuyển dụng phù hợp
                 }
                 else
                 {
@@ -132,11 +161,14 @@
                                             <a class="result__name--link text-line-1" href="/recruiment-news/@job.Id">
                                                 @job.JobName
                                             </a>
-                                            <span class="result__name--save">
-                                                <a href="#" title="Lưu tin tuyển dụng">
-                                                    <i class='fa-solid fa-heart'></i>
-                                                </a>
-                                            </span>
+                                            @if (User.Identity!.IsAuthenticated)
+                                            {
+                                                <span class="result__name--save">
+                                                    <a href="#" title="Lưu tin tuyển dụng">
+                                                        <i class='fa-solid fa-heart'></i>
+                                                    </a>
+                                                </span>
+                                            }
                                         </h2>
                                         <div class="result__name--employer mb-5">
                                             <a href="/employers/@job.Employer.Id" class="result__employer--link text-line-1">
@@ -162,7 +194,7 @@
                                                 Ngày đăng: <span>@job.CreatedAt.GetApplicationTimeRepresentation()</span>
                                             </p>
                                             <p class="result__date--end mb-0">
-                                                Hết hạn: <span>@(job.Deadline.HasValue ? job.Deadline.Value.GetApplicationTimeRepresentation(): "Vô thời hạn")</span>
+                                                Hết hạn: <span>@(job.Deadline.HasValue ? job.Deadline.Value.GetApplicationTimeRepresentation() : "Vô thời hạn")</span>
                                             </p>
                                         </div>
                                         <p class="result__address mb-0">
@@ -183,7 +215,7 @@
                             @if (currentPage > 1)
                             {
                                 <li class="previous">
-                                    <a href="#" data-page="@(currentPage - 1)">‹</a>
+                                    <a href="@(baseUrl + (currentPage - 1))" data-page="@(currentPage - 1)">‹</a>
                                 </li>
                             }
                             @for (int i = 1; i <= Model.SearchResult.TotalPages; i++)
@@ -191,20 +223,20 @@
                                 if (i == currentPage)
                                 {
                                     <li class="active">
-                                        <a href="#" data-page="@i">@i</a>
+                                        <a href="@(baseUrl + i)" data-page="@i">@i</a>
                                     </li>
                                 }
                                 else
                                 {
                                     <li>
-                                        <a href="#" data-page="@i">@i</a>
+                                        <a href="@(baseUrl + i)" data-page="@i">@i</a>
                                     </li>
                                 }
                             }
                             @if (currentPage < Model.SearchResult.TotalPages)
                             {
                                 <li class="next">
-                                    <a href="#" data-page="@(currentPage + 1)">›</a>
+                                    <a href="@(baseUrl + (currentPage + 1))" data-page="@(currentPage + 1)">›</a>
                                 </li>
                             }
                         </ul>

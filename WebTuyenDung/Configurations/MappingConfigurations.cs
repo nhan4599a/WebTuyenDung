@@ -45,7 +45,7 @@ namespace WebTuyenDung.Configurations
                 .Map(e => e.EmployerAvatar, source => source.RecruimentNews.Employer.Avatar)
                 .Map(e => e.EmployerName, source => source.RecruimentNews.Employer.Name);
 
-            TypeAdapterConfig<SignUpRequest, User>
+            TypeAdapterConfig<BaseSignUpRequest, User>
                 .NewConfig()
                 .Include<SignUpEmployerRequest, Employer>()
                 .Map(e => e.PasswordHashed, source => source.Password.Sha256());

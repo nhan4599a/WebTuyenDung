@@ -125,10 +125,20 @@ namespace WebTuyenDung.Controllers
         [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> Create(CreateCVViewModel viewModel)
         {
+            var candidateId = User.GetUserId();
+
+            var isExisted = await DbContext.CVs.AnyAsync(e => e.CandidateId == candidateId && e.Name == viewModel.Name);
+
+            if (isExisted)
+            {
+                ModelState.AddModelError(nameof(viewModel.Name), "The provided name is already existed");
+                return View();
+            }
+
             var cv = new CurriculumVitae
             {
                 Name = viewModel.Name,
-                CandidateId = User.GetUserId(),
+                CandidateId = candidateId,
                 Type = CVType.DirectInput,
                 IsUploadDirectlyByUser = true,
                 Detail = viewModel.Adapt<CurriculumVitaeDetail>()
@@ -160,28 +170,43 @@ namespace WebTuyenDung.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, CurriculumVitaeDetailViewModel viewModel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, UpdateCurriculumVitaeRequest request)
         {
-            var transaction = await DbContext.Database.BeginTransactionAsync();
-
-            await DbContext.CVs.Where(e => e.Id == id).UpdateFromQueryAsync(e => new CurriculumVitae { Name = viewModel.Name });
-
-            await DbContext.CVDetails.Where(e => e.CVId == id).UpdateFromQueryAsync(e => new CurriculumVitaeDetail
+            if (request.CV == null)
             {
-                ExpectedPosition = viewModel.ExpectedPosition,
-                Email = viewModel.Email,
-                SourceVersionControlUrl = viewModel.SourceVersionControlUrl,
-                Objective = viewModel.Objective,
-                Experience = viewModel.Experience,
-                Skills = viewModel.Skills,
-                Education = viewModel.Education,
-                SoftSkills = viewModel.SoftSkills,
-                Rewards = viewModel.Rewards
-            });
+                var transaction = await DbContext.Database.BeginTransactionAsync();
 
-            await transaction.CommitAsync();
+                var data = request.Data!;
 
-            return RedirectToAction("my-cv");
+                await DbContext.CVs.Where(e => e.Id == id).UpdateFromQueryAsync(e => new CurriculumVitae { Name = data.Name });
+
+                await DbContext.CVDetails.Where(e => e.CVId == id).UpdateFromQueryAsync(e => new CurriculumVitaeDetail
+                {
+                    ExpectedPosition = data.ExpectedPosition,
+                    Email = data.Email,
+                    SourceVersionControlUrl = data.SourceVersionControlUrl,
+                    Objective = data.Objective,
+                    Experience = data.Experience,
+                    Skills = data.Skills,
+                    Education = data.Education,
+                    SoftSkills = data.SoftSkills,
+                    Rewards = data.Rewards
+                });
+
+                await transaction.CommitAsync();
+            }
+            else
+            {
+                await _fileService.ReplaceFileAsync(request.Url!, request.CV!, FilePath.CurriculumTitae);
+
+                await DbContext.CVs.Where(e => e.Id == id).UpdateFromQueryAsync(e => new CurriculumVitae
+                {
+                    Name = request.Name!
+                });
+            }
+
+            return Ok();
         }
     }
 }

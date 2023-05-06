@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebTuyenDung.Validations;
+﻿using WebTuyenDung.Validations;
 
 namespace WebTuyenDung.Requests
 {
@@ -7,8 +6,8 @@ namespace WebTuyenDung.Requests
     {
         public string Username { get; set; } = default!;
 
-        //[LengthBoundary(8, 63)]
-        //[PasswordComplexity]
+        [LengthBoundary(8, 63)]
+        [PasswordComplexity]
         public string Password { get; set; } = default!;
     }
 }

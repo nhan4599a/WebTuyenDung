@@ -365,7 +365,7 @@
               <div class="col-md-10">
                 <textarea class="form-control" cols="20" data-val="true"
                           data-val-required="Chưa nhập mô tả công việc" id="txtMoTa"
-                          name="jobDescription" rows="2"></textarea>
+                          name="jobDescription" rows="2">@Model.JobDescription</textarea>
                 <span class="text-danger" style="display: none"></span>
               </div>
             </div>
@@ -376,7 +376,7 @@
               </label>
               <div class="col-md-10">
                 <textarea class="form-control" cols="20" data-val="true" id="txtYeuCau"
-                          name="jobRequirements" rows="2"></textarea>
+                          name="jobRequirements" rows="2">@Model.JobRequirements</textarea>
                 <span class="text-danger" style="display: none"></span>
               </div>
             </div>
@@ -387,7 +387,7 @@
               </label>
               <div class="col-md-10">
                 <textarea class="form-control" cols="20" id="txtKyNang"
-                          name="relativeSkills" rows="2"></textarea>
+                          name="relativeSkills" rows="2">@Model.RelativeSkills</textarea>
                 <span class="text-danger" style="display: none"></span>
               </div>
             </div>
@@ -398,7 +398,7 @@
               </label>
               <div class="col-md-10">
                 <textarea class="form-control" cols="20" id="txtQuyenLoi"
-                          name="benefit" rows="2"></textarea>
+                          name="benefit" rows="2">@Model.Benefit</textarea>
                 <span class="text-danger" style="display: none"></span>
               </div>
             </div>
@@ -409,7 +409,7 @@
               </label>
               <div class="col-md-6">
                 <input class="form-control" data-val="true"
-                       id="numberOfCandidates" name="numberOfCandidates" type="number" value="1" />
+                       id="numberOfCandidates" name="numberOfCandidates" type="number" value="@Model.NumberOfCandidates" />
                 <span class="text-danger"></span>
               </div>
             </div>
