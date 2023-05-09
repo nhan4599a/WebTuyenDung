@@ -54,7 +54,8 @@ namespace WebTuyenDung.Controllers
                 return Unauthorized();
             }
 
-            var queryResult = await DbContext.CVs
+            var queryResult = await DbContext
+                                        .CVs
                                         .Where(e => e.Id == id)
                                         .Select(e => new { e.FilePath, e.CandidateId })
                                         .FirstOrDefaultAsync();
@@ -71,14 +72,19 @@ namespace WebTuyenDung.Controllers
 
             if (queryResult.FilePath == null)
             {
-                return View("View");
+                var cvDetail = await DbContext
+                                        .CVs
+                                        .Where(e => e.Id == id)
+                                        .ProjectToType<CurriculumVitaeDetailViewModel>()
+                                        .FirstOrDefaultAsync();
+
+                return View("View", cvDetail);
             }
             else
             {
                 var actualCvPath = _fileService.GetStaticFileUrlForFile(queryResult.FilePath, FilePath.CurriculumTitae)!;
                 return RedirectPermanent(actualCvPath);
             }
-
         }
 
         [HttpPost]
@@ -155,7 +161,7 @@ namespace WebTuyenDung.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var cvItem = await DbContext.CVs
-                                        .Where(e => e.Id == id && e.Type == CVType.DirectInput)
+                                        .Where(e => e.Id == id)
                                         .ProjectToType<CurriculumVitaeDetailViewModel>()
                                         .FirstOrDefaultAsync();
 

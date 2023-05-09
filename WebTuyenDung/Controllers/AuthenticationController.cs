@@ -39,6 +39,10 @@ namespace WebTuyenDung.Controllers
             {
                 return BadRequest("Sai tên đăng nhập hoặc mật khẩu");
             }
+            if (user is Employer employer && !employer.IsApproved)
+            {
+                return BadRequest("Nhà tuyển dụng chưa được xác nhận bởi admin");
+            }
 
             await HttpContext.SignInAsync(user);
 
@@ -56,8 +60,7 @@ namespace WebTuyenDung.Controllers
 
         [ActionName("sign-up")]
         [HttpPost]
-        [AutoShortCircuitValidationFailedRequest]
-        public async Task<IActionResult> SignUp([FromBody] CandidateSignUpRequest signUpRequest)
+        public async Task<IActionResult> SignUp([FromForm] CandidateSignUpRequest signUpRequest)
         {
             var isUserExisted = await ValidateUsername(signUpRequest.Username);
 
@@ -73,7 +76,7 @@ namespace WebTuyenDung.Controllers
 
             await DbContext.SaveChangesAsync();
 
-            return Ok();
+            return Redirect("/authentication/sign-in");
         }
 
         [ActionName("sign-up-employer")]
@@ -93,7 +96,7 @@ namespace WebTuyenDung.Controllers
         [ActionName("sign-up-employer")]
         [HttpPost]
         [AutoShortCircuitValidationFailedRequest]
-        public async Task<IActionResult> SignUpEmployer([FromBody] SignUpEmployerRequest signUpRequest)
+        public async Task<IActionResult> SignUpEmployer([FromForm] SignUpEmployerRequest signUpRequest)
         {
             var isUserExisted = await ValidateUsername(signUpRequest.Username);
 
@@ -110,7 +113,7 @@ namespace WebTuyenDung.Controllers
 
             await DbContext.SaveChangesAsync();
 
-            return Ok();
+            return Redirect("/authentication/sign-in?ReturnUrl=%2FEmployer");
         }
 
         [ActionName("validate")]

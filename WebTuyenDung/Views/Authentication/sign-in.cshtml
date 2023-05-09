@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "_AuthenticationLayout";
+    var returnUrl = Context.Request.Query["ReturnUrl"].FirstOrDefault();
 }
 
 @section js_scripts {
@@ -21,7 +22,14 @@
             <label for="password" class="control-label">Mật khẩu</label>
         </div>
         <div class="d-flex justify-content-between mt-4 mb-0">
-            <a class="btn btn-primary" href="/authentication/sign-up">Đăng ký</a>
+            @if (returnUrl != null && returnUrl.StartsWith("/employer", StringComparison.InvariantCultureIgnoreCase))
+            {
+                <a class="btn btn-primary" href="/authentication/sign-up-employer">Đăng ký</a>
+            }
+            else if (returnUrl == null || !returnUrl.StartsWith("/admin", StringComparison.InvariantCultureIgnoreCase))
+            {
+                <a class="btn btn-primary" href="/authentication/sign-up">Đăng ký</a>
+            }
             <div class="d-flex align-items-center">
                 <a class="small me-3" href="#">Quên mật khẩu?</a>
                 <button class="btn btn-primary">Đăng nhập</button>

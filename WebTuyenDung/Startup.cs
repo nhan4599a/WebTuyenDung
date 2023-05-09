@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
+using WebTuyenDung.Binders.Factories;
 using WebTuyenDung.Configurations;
 using WebTuyenDung.Constants;
 using WebTuyenDung.Conventions;
@@ -34,6 +35,7 @@ namespace WebTuyenDung
             services.AddControllersWithViews(mvc =>
             {
                 mvc.Conventions.Add(new ControllerNameConvention());
+                mvc.ModelBinderProviders.Insert(0, new DateOnlyModelBinderProvider());
             }).AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());

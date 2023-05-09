@@ -1,11 +1,13 @@
-﻿@{
+﻿@model WebTuyenDung.ViewModels.User.CurriculumVitaeDetailViewModel
+
+@{
 	Layout = null;
 }
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title></title>
+	<title>@User.GetName() - @Model.ExpectedPosition</title>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<style type="text/css">
@@ -101,7 +103,7 @@
 		<p style="position:absolute;top:696px;left:23px;white-space:nowrap" class="ft10">Self Learning</p>
 		<p style="position:absolute;top:728px;left:23px;white-space:nowrap" class="ft19">Basic English <br />Communication</p>
 		<p style="position:absolute;top:862px;left:35px;white-space:nowrap" class="ft10">HTML, CSS (Basic)</p>
-		<p style="position:absolute;top:862px;left:190px;white-space:nowrap" class="ft10">SQL</p>
+		<p style="position:absolute;top:862px;left:190px;white-space:nowrap" class="ft10">SQL</p>	
 		<p style="position:absolute;top:889px;left:35px;white-space:nowrap" class="ft10">JavaScript (Basic)</p>
 		<p style="position:absolute;top:889px;left:190px;white-space:nowrap" class="ft10">Java</p>
 		<p style="position:absolute;top:917px;left:35px;white-space:nowrap" class="ft10">Java</p>
@@ -122,20 +124,25 @@
 		<p style="position:absolute;top:668px;left:666px;white-space:nowrap" class="ft12">(Nov 2013&#160;&gt;&#160;Jun 2014)</p>
 		<p style="position:absolute;top:688px;left:379px;white-space:nowrap" class="ft13"><b>Member</b></p>
 		<p style="position:absolute;top:711px;left:379px;white-space:nowrap" class="ft19">- Project built on top of Discord website reference.&#160;<br />- Technologies used in the project include: API provided by getstream.io,<br />Firebase log-in, website building with HTML, CSS based on JavaScript language.&#160;<br />- This one also has user manuals.</p>
-		<p style="position:absolute;top:82px;left:251px;white-space:nowrap" class="ft14"><b>PHẠM KIÊN TRUNG</b></p>
-		<p style="position:absolute;top:136px;left:251px;white-space:nowrap" class="ft15"><b>Fresher Frontend ReactJS</b></p>
+		<p style="position:absolute;top:82px;left:251px;white-space:nowrap" class="ft14"><b>@User.GetName().ToUpper()</b></p>
+		<p style="position:absolute;top:136px;left:251px;white-space:nowrap" class="ft15"><b>@Model.ExpectedPosition</b></p>
 		<p style="position:absolute;top:203px;left:278px;white-space:nowrap" class="ft10">May 2, 2000</p>
 		<p style="position:absolute;top:204px;left:254px;white-space:nowrap" class="ft16"></p>
-		<p style="position:absolute;top:203px;left:584px;white-space:nowrap" class="ft10">Male</p>
+		<p style="position:absolute;top:203px;left:584px;white-space:nowrap" class="ft10">@User.GetGender()</p>
 		<p style="position:absolute;top:204px;left:562px;white-space:nowrap" class="ft16"></p>
-		<p style="position:absolute;top:228px;left:278px;white-space:nowrap" class="ft10">0908324691</p>
+		<p style="position:absolute;top:228px;left:278px;white-space:nowrap" class="ft10">@User.GetPhoneNumber()</p>
 		<p style="position:absolute;top:230px;left:255px;white-space:nowrap" class="ft16"></p>
-		<p style="position:absolute;top:228px;left:584px;white-space:nowrap" class="ft10">phamkientrung.box@gmail.com</p>
+		<p style="position:absolute;top:228px;left:584px;white-space:nowrap" class="ft10">@Model.Email</p>
 		<p style="position:absolute;top:230px;left:560px;white-space:nowrap" class="ft16"></p>
-		<p style="position:absolute;top:255px;left:278px;white-space:nowrap" class="ft10">Ho Chi Minh, Vietnam</p>
+		<p style="position:absolute;top:255px;left:278px;white-space:nowrap" class="ft10">@User.GetAddress()</p>
 		<p style="position:absolute;top:257px;left:257px;white-space:nowrap" class="ft16"></p>
 		<p style="position:absolute;top:257px;left:561px;white-space:nowrap" class="ft16"></p>
-		<p style="position:absolute;top:255px;left:584px;white-space:nowrap" class="ft10"><a href="https://github.com/Trung252">https://github.com/Trung252</a></p>
+		<p style="position:absolute;top:255px;left:584px;white-space:nowrap" class="ft10">
+			@if (!string.IsNullOrWhiteSpace(Model.SourceVersionControlUrl))
+			{
+				<a href="@Model.SourceVersionControlUrl">@Model.SourceVersionControlUrl</a>
+			}
+		</p>
 		<p style="position:absolute;top:318px;left:23px;white-space:nowrap" class="ft17"><b>ABOUT ME</b></p>
 		<p style="position:absolute;top:517px;left:23px;white-space:nowrap" class="ft17"><b>PERSONAL SKILLS</b></p>
 		<p style="position:absolute;top:818px;left:23px;white-space:nowrap" class="ft17"><b>SPECIALIZED SKILLS</b></p>

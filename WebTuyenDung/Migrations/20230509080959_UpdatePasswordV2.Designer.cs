@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebTuyenDung.Data;
 
@@ -11,9 +12,11 @@ using WebTuyenDung.Data;
 namespace WebTuyenDung.Migrations
 {
     [DbContext(typeof(RecruimentDbContext))]
-    partial class RecruimentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230509080959_UpdatePasswordV2")]
+    partial class UpdatePasswordV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

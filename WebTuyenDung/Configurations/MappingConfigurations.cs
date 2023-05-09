@@ -47,6 +47,7 @@ namespace WebTuyenDung.Configurations
 
             TypeAdapterConfig<BaseSignUpRequest, User>
                 .NewConfig()
+                .Include<CandidateSignUpRequest, Candidate>()
                 .Include<SignUpEmployerRequest, Employer>()
                 .Map(e => e.PasswordHashed, source => source.Password.Sha256());
 

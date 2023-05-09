@@ -4,8 +4,11 @@
     })
 })
 
-$('sign-form__form').submit(e => {
-    e.preventDefault()
+$('#sign-in__form').submit(e => {
+    if ($('.btn-submit').hasClass('d-none')) {
+        $('.btn-next').click()
+        e.preventDefault()
+    }
 })
 
 $('.btn-next').click(e => {
@@ -38,7 +41,8 @@ $('.btn-next').click(e => {
 
                     $('.form-floating:not(.sign-up-first-batch), .form-group:not(.sign-up-first-batch)').removeClass('d-none')
 
-                    $('.btn-next').removeClass('btn-next').text('Đăng ký')
+                    $('.btn-next').addClass('d-none')
+                    $('.btn-submit').removeClass('d-none')
                 } else {
                     $('#sign-in-error').html('Username is already existed')
                 }
