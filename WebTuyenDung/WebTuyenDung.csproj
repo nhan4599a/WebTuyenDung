@@ -48,7 +48,6 @@
 		</ItemGroup>
 
 		<ItemGroup>
-		  <Folder Include="Areas\Employer\Views\Candidates\" />
 		  <Folder Include="wwwroot\Files\CV\" />
 		</ItemGroup>
 
