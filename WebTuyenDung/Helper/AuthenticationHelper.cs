@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -26,9 +27,10 @@ namespace WebTuyenDung.Helper
             return identity.FindFirstValue(AuthenticationConstants.USER_FORMAL_NAME_KEY)!;
         }
 
-        public static string? GetBirthDay(this ClaimsPrincipal identity)
+        public static DateOnly? GetBirthDay(this ClaimsPrincipal identity)
         {
-            return identity.FindFirstValue(AuthenticationConstants.CANDIDATE_BIRTH_DAY_KEY);
+            var rawResult = identity.FindFirstValue(AuthenticationConstants.CANDIDATE_BIRTH_DAY_KEY);
+            return rawResult == null ? null : DateOnly.ParseExact(rawResult, DateTimeFormatConstants.DATE_ONLY_FORMAT);
         }
 
         public static string? GetPhoneNumber(this ClaimsPrincipal identity)

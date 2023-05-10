@@ -192,6 +192,7 @@ namespace WebTuyenDung.Controllers
                     ExpectedPosition = data.ExpectedPosition,
                     Email = data.Email,
                     SourceVersionControlUrl = data.SourceVersionControlUrl,
+                    Introduction = data.Introduction,
                     Objective = data.Objective,
                     Experience = data.Experience,
                     Skills = data.Skills,

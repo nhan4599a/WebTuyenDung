@@ -10,6 +10,8 @@
 
         public string? SourceVersionControlUrl { get; set; }
 
+        public string Introduction { get; set; } = default!;
+
         public string Objective { get; set; } = default!;
 
         public string Experience { get; set; } = default!;
