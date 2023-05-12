@@ -9,13 +9,11 @@ namespace WebTuyenDung.Areas.Employer.Controllers
 {
     public class PostsController : BaseEmployerController
     {
-        private readonly RecruimentDbContext dbContext;
-        private readonly FileService fileService;
+        private readonly RecruimentDbContext _dbContext;
 
-        public PostsController(RecruimentDbContext dbContext, FileService fileService)
+        public PostsController(RecruimentDbContext dbContext)
         {
-            this.dbContext = dbContext;
-            this.fileService = fileService;
+            this._dbContext = dbContext;
         }
 
         public IActionResult Index()
@@ -33,7 +31,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         {
             TempData[ViewConstants.VIEW_AREA] = ViewConstants.EMPLOYER_AREA;
 
-            var post = await dbContext.Posts.FirstOrDefaultAsync(e => e.Id == id);
+            var post = await _dbContext.Posts.FirstOrDefaultAsync(e => e.Id == id);
 
             if (post == null)
             {

@@ -36,13 +36,18 @@ namespace WebTuyenDung.Controllers
                                                 .DeferredFirstOrDefault(e => e.Id == id)
                                                 .FutureValue();
 
-            var candidateId = User.GetUserId();
-            var isJobSaved = await DbContext
+            var isJobSaved = false;
+            
+            if (User.Identity!.IsAuthenticated)
+            {
+                var candidateId = User.GetUserId();
+                isJobSaved = await DbContext
                                         .SavedRecruimentNews
                                         .DeferredAny(e => e.RecruimentNewsId == id && e.CandidateId == candidateId)
                                         .FutureValue()
                                         .ValueAsync();
-
+            }
+            
             var recruimentNews = await recruimentNewsQuery.ValueAsync();
 
             if (recruimentNews == null)

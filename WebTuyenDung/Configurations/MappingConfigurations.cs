@@ -5,6 +5,7 @@ using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
 using WebTuyenDung.ViewModels;
+using WebTuyenDung.ViewModels.Employer;
 using WebTuyenDung.ViewModels.User;
 using Management = WebTuyenDung.ViewModels.Management;
 
@@ -44,6 +45,10 @@ namespace WebTuyenDung.Configurations
                 .NewConfig()
                 .Map(e => e.EmployerAvatar, source => source.RecruimentNews.Employer.Avatar)
                 .Map(e => e.EmployerName, source => source.RecruimentNews.Employer.Name);
+
+            TypeAdapterConfig<JobApplication, JobApplicationViewModel>
+                .NewConfig()
+                .Map(e => e.LikeCount, e => e.CV.LikeCount);
 
             TypeAdapterConfig<BaseSignUpRequest, User>
                 .NewConfig()

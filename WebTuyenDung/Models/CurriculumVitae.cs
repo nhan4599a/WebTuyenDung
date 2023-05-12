@@ -20,6 +20,8 @@ namespace WebTuyenDung.Models
 
         public CVType Type { get; set; }
 
+        public int LikeCount { get; set; } = default!;
+
         public CurriculumVitaeDetail? Detail { get; set; }
     }
 }

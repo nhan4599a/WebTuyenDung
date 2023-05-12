@@ -1,17 +1,35 @@
-﻿@model WebTuyenDung.Models.Candidate
+﻿@using WebTuyenDung.Constants;
+@using WebTuyenDung.Enums;
+@model WebTuyenDung.Models.Candidate
 
 @{
     ViewBag.Title = "Thông tin cá nhân";
+    var popup = TempData["popup"];
 }
 
 @section css_Main {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/Assets/Admin/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Assets/Client/css/info.css">
 }
 
 @section scripts_Main {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/Assets/Client/js/style.js"></script>
     <script src="~/Assets/Client/js/info.js"></script>
+    <script>
+        $(document).ready(() => {
+            $('.date').datepicker({
+                format: 'dd/mm/yyyy'
+            })
+        })
+    </script>
+    @if (popup != null)
+    {
+        <script>
+            alert("Cập nhật thông tin thành công")
+        </script>
+    }
 }
 
 
@@ -27,9 +45,9 @@
                             <h4 class="header-title mb-0">Thông tin cá nhân</h4>
                         </div>
                         <div class="collapse pt-3 show">
-                            <form action="/user/my-info" method="post" enctype="multipart/form-data">
+                            <form action="/user/info" method="post" enctype="multipart/form-data">
                                 @Html.AntiForgeryToken()
-
+                                @Html.HiddenFor(e => e.Id)
                                 <div class="form-horizontal">
 
                                     <div class="form-group align-items-center row main__image">
@@ -81,21 +99,27 @@
                                     <div class="form-group align-items-center justify-content-center row">
                                         @Html.LabelFor(model => model.Gender, "Giới tính", new { @class = "control-label col-md-2" })
                                         <div class="col-md-6">
-                                            @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>()
-                                            {
-                                                new SelectListItem() {Value = "0", Text = "Nam"},
-                                                new SelectListItem() {Value = "1", Text = "Nữ"}
-                                            }, "-- Chọn giới tính --",
-                                            new { @class = "form-control text-box single-line" })
+                                            <select class="form-control text-box single-line" name="gender" id="gender">
+                                                @if (Model.Gender == Gender.Male)
+                                                {
+                                                    <option value="0" selected>Nam</option>
+                                                    <option value="1">Nữ</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="0">Nam</option>
+                                                    <option value="1" selected>Nữ</option>
+                                                }
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="form-group align-items-center justify-content-center row">
-                                        @Html.LabelFor(model => model.BirthDay, "Nhập ngày sinh", new { @class = "control-label col-md-2" })
+                                        <label class="control-label col-md-2" for="birthDay">Nhập ngày sinh</label>
                                         <div class="col-md-6">
-                                            @Html.EditorFor(model => model.BirthDay, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                                            @Html.ValidationMessageFor(model => model.BirthDay, "", new { @class = "text-danger" })
+                                            <input type="text" class="form-control date" name="birthDay" id="birthDay" value="@Model.BirthDay.ToString(DateTimeFormatConstants.DATE_ONLY_FORMAT)" />
                                         </div>
+                                        @Html.ValidationMessageFor(model => model.BirthDay, "", new { @class = "text-danger" })
                                     </div>
 
                                     <div class="form-group align-items-center justify-content-center row">

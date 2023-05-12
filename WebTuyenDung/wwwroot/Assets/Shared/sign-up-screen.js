@@ -1,6 +1,9 @@
 ﻿$(document).ready(() => {
+
     $('.input-group.date').datepicker({
-        format: 'dd/mm/yyyy'
+        format: 'dd/mm/yyyy',
+        startDate: moment().subtract(60, 'years').format('dd/MM/yyyy'),
+        endDate: moment().subtract(18, 'years').format('dd/MM/yyyy')
     })
 })
 

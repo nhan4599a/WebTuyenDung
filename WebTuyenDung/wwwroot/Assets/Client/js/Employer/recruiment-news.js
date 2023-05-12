@@ -35,11 +35,14 @@
                 } else {
                     str += "<td><span class='badge badge-warning'>Chờ phê duyệt</span></td>";
                 }
-                if (mode == 0 || mode == 1) {
+                if (mode == 0) {
+                    str += `<td><a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a></td>`;
+                }
+                else if (mode == 1) {
                     str += `<td class="d-flex"><a class="btn btn-warning" href="/employer/recruiment-news/edit/${value.id}">Sửa</a>`;
-                    str += `<a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a>`;
+                    str += `<a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a></td>`;
                 } else if (mode == 2) {
-                    str += `<td class="d-flex"><a class="btn btn-danger ml-1" href="/employer/recrument-news/edit/${value.id}">Gia hạn thêm</a></td>`
+                    str += `<td><a class="btn btn-danger ml-1" href="/employer/recrument-news/edit/${value.id}">Gia hạn thêm</a></td>`
                 }
 
                 //create pagination

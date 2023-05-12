@@ -2,14 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
 using WebTuyenDung.Data;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
-using WebTuyenDung.ViewModels;
 using WebTuyenDung.ViewModels.Abstraction;
 using WebTuyenDung.ViewModels.Management;
 
@@ -51,13 +49,13 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AutoShortCircuitValidationFailedRequest]
-        public async Task<IActionResult> Create(CreateRecruimentNewsViewModel createRecruimentNewsViewModel)
+        public async Task<IActionResult> Create(CreateOrUpdateRecruimentNewsRequest request)
         {
-            var recruimentNews = createRecruimentNewsViewModel.Adapt<RecruimentNews>();
+            var recruimentNews = request.Adapt<RecruimentNews>();
 
-            if (createRecruimentNewsViewModel.Salary != "Khác" && createRecruimentNewsViewModel.Salary != "Thỏa thuận")
+            if (request.Salary != "Khác" && request.Salary != "Thỏa thuận")
             {
-                var (MinimumSalary, MaximumSalary) = SalaryHelper.ParseSalary(createRecruimentNewsViewModel.Salary);
+                var (MinimumSalary, MaximumSalary) = SalaryHelper.ParseSalary(request.Salary);
 
                 recruimentNews.MinimumSalary = MinimumSalary;
                 recruimentNews.MaximumSalary = MaximumSalary;
@@ -72,6 +70,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var recruimentNews = await dbContext.RecruimentNews.FirstOrDefaultAsync(e => e.Id == id);
@@ -82,6 +81,43 @@ namespace WebTuyenDung.Areas.Employer.Controllers
             }
 
             return View(recruimentNews);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, CreateOrUpdateRecruimentNewsRequest request)
+        {
+            var updatedCount = await dbContext
+                                        .RecruimentNews
+                                        .Where(e => e.Id == id)
+                                        .UpdateFromQueryAsync(e => new RecruimentNews
+                                        {
+                                            JobName = request.JobName,
+                                            Position = request.Position,
+                                            PositionDetail = request.PositionDetail,
+                                            JobType = request.JobType,
+                                            Salary = request.Salary,
+                                            MinimumSalary = request.MinimumSalary,
+                                            MaximumSalary = request.MaximumSalary,
+                                            CityId = request.CityId,
+                                            DistrictId = request.DistrictId,
+                                            WardId = request.WardId,
+                                            WorkingAddress = request.WorkingAddress,
+                                            JobDescription = request.JobDescription,
+                                            JobRequirements = request.JobRequirements,
+                                            RelativeSkills = request.RelativeSkills,
+                                            Benefit = request.Benefit,
+                                            NumberOfCandidates = request.NumberOfCandidates,
+                                            EmployeeGender = request.Gender,
+                                            Deadline = request.Deadline
+                                        });
+
+            if (updatedCount == 0)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -29,7 +29,9 @@
                 str += "<td>" + value.candidateName + "</td>";
                 str += "<td>" + value.createdAt + "</td>";
                 str += "<td><span class='badge badge-warning'>" + parseApplicationsStatus(value.status) + "</span></td>";
+                str += `<td class="like-count">${value.likeCount}</td>`
                 str += `<td><a href='/employer/applications/view/${value.id}' target='_blank' class='btn btn-success'>Xem hồ sơ</a>`;
+                str += `<br /><a href='#' class='btn btn-success btn-like mt-1' data-action='${value.isLiked ? "unlike" : "like"}' data-id='${value.id}'>Like</a>`
                 str += `<br /><a href='/employer/applications/edit/${value.id}' class='btn btn-warning mt-1'>Cập nhật trạng thái</a></td>`;
                 str += "</tr>";
 
@@ -56,6 +58,26 @@
             });
             //load str to class="load-list"
             $("#datatablesSimple > tbody").html(str);
+
+            $('.btn.btn-success.btn-like').click(function () {
+                const element = $(this)
+                const id = element.data('id')
+                const isLiked = !(element.data('action') == 'like')
+
+                $.ajax({
+                    url: '/api/applications',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        isLiked: isLiked
+                    },
+                    success: () => {
+                        element.data('action', isLiked ? 'like' : 'unlike').text(isLiked ? 'Like' : 'Unlike')
+                        const count = parseInt(element.parent().parent().children('.like-count').text())
+                        element.parent().parent().children('.like-count').text(count + (isLiked ? -1 : 1))
+                    }
+                })
+            })
         }
     });
 }

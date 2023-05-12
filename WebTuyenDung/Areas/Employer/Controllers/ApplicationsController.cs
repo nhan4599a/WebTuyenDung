@@ -15,29 +15,16 @@ namespace WebTuyenDung.Areas.Employer.Controllers
 {
     public class ApplicationsController : BaseEmployerController
     {
-        private readonly RecruimentDbContext dbContext;
+        private readonly RecruimentDbContext _dbContext;
 
         public ApplicationsController(RecruimentDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public IActionResult Index()
         {
             return View();
-        }
-
-        [HttpGet]
-        public Task<IPaginationResult<JobApplicationViewModel>> Search(SearchRequest request)
-        {
-            var userId = User.GetUserId();
-
-            var query = dbContext
-                            .JobApplications
-                            .Where(e => e.RecruimentNews.EmployerId == userId)
-                            .AsNoTracking();
-
-            return query.PaginateAsync<JobApplication, JobApplicationViewModel>(request);
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -56,13 +43,37 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, JobApplication jobApplication)
         {
-            var updatedCount = await dbContext
+            var updatedCount = await _dbContext
                                         .JobApplications
                                         .Where(e => e.Id == id)
                                         .UpdateFromQueryAsync(e => new JobApplication
                                         {
                                             Status = jobApplication.Status
                                         });
+
+            if (jobApplication.Status == JobApplicationStatus.Passed)
+            {
+                var countData = await _dbContext.PotentialCandidateCount
+                                                .FirstOrDefaultAsync(e => e.CandidateId == jobApplication.CandidateId
+                                                        && e.JobPosition == jobApplication.RecruimentNews.Position);
+
+                if (countData == null)
+                {
+                    _dbContext.PotentialCandidateCount.Add(new PotentialCandidateCount
+                    {
+                        CandidateId = jobApplication.CandidateId,
+                        JobPosition = jobApplication.RecruimentNews.Position,
+                        Count = 1
+                    });
+                }
+                else
+                {
+
+                    countData.Count += 1;
+                }
+
+                await _dbContext.SaveChangesAsync();
+            }
 
             return updatedCount == 0 ? BadRequest() : RedirectToAction(nameof(Index));
         }
@@ -82,13 +93,13 @@ namespace WebTuyenDung.Areas.Employer.Controllers
 
         private async Task<JobApplication?> TryGetAndUpdateJobApplication(int id)
         {
-            var jobApplication = await dbContext.JobApplications.FirstOrDefaultAsync(e => e.Id == id);
+            var jobApplication = await _dbContext.JobApplications.FirstOrDefaultAsync(e => e.Id == id);
 
             if (jobApplication != null && jobApplication.Status == JobApplicationStatus.Received)
             {
                 jobApplication.Status = JobApplicationStatus.Seen;
-                dbContext.Entry(jobApplication).State = EntityState.Modified;
-                await dbContext.SaveChangesAsync();
+                _dbContext.Entry(jobApplication).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
             }
 
             return jobApplication;

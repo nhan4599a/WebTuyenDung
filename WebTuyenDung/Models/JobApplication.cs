@@ -22,5 +22,7 @@ namespace WebTuyenDung.Models
         public string? CandidateNote { get; set; }
 
         public RecruimentNews RecruimentNews { get; set; } = default!;
+
+        public CurriculumVitae CV { get; set; } = default!;
     }
 }

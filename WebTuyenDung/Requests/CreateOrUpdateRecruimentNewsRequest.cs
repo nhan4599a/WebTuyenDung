@@ -1,9 +1,9 @@
 ﻿using System;
 using WebTuyenDung.Enums;
 
-namespace WebTuyenDung.ViewModels
+namespace WebTuyenDung.Requests
 {
-    public class CreateRecruimentNewsViewModel
+    public class CreateOrUpdateRecruimentNewsRequest
     {
         public string JobName { get; set; } = default!;
 
@@ -19,9 +19,13 @@ namespace WebTuyenDung.ViewModels
 
         public int? MaximumSalary { get; set; }
 
-        public int CityId { get; set; } = default!;
+        public int CityId { get; set; }
 
-        public string WorkingAddress { get; set;} = default!;
+        public int DistrictId { get; set; }
+
+        public int WardId { get; set; }
+
+        public string WorkingAddress { get; set; } = default!;
 
         public string JobDescription { get; set; } = default!;
 

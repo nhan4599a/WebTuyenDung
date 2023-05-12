@@ -1,4 +1,8 @@
-﻿<link href="~/Assets/Admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+﻿@using WebTuyenDung.Enums;
+@using WebTuyenDung.ViewModels;
+@model Dictionary<JobPosition, PotentialCandidateViewModel[]>
+
+<link href="~/Assets/Admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="~/Assets/Admin/css/styles.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -19,114 +23,46 @@
 
                 <div id="cardCollpase5" class="collapse pt-3 show">
                     <div id="accordion">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                        Intern BA
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-centered mb-0" id="datatablesSimple">
-                                            <thead>
-                                                <tr>
-                                                    <th>STT</th>
-                                                    <th>Họ tên</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th>Email</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Bui Phuoc Tai</td>
-                                                    <td>0703751020</td>
-                                                    <td>buiphuoctai@gmail.com</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                        @foreach (var job in Model)
+                        {
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-@job.Key" aria-expanded="true"
+                                                aria-controls="collapse-@job.Key">
+                                            @job.Key
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapse-@job.Key" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover table-centered mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th>Họ tên</th>
+                                                        <th>Số điện thoại</th>
+                                                        <th>Email</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (var i = 0; i < job.Value.Length; i++)
+                                                    {
+                                                        <tr>
+                                                            <td>@(i + 1)</td>
+                                                            <td>@job.Value[i].Name</td>
+                                                            <td>@job.Value[i].PhoneNumber</td>
+                                                            <td>@job.Value[i].Email</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                        Fresher .NET
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-centered mb-0" id="datatablesSimple">
-                                            <thead>
-                                                <tr>
-                                                    <th>STT</th>
-                                                    <th>Họ tên</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th>Email</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Bui Phuoc Tai</td>
-                                                    <td>0703751020</td>
-                                                    <td>buiphuoctai@gmail.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Ho Nguyen Tri Nhan</td>
-                                                    <td>0703751020</td>
-                                                    <td>buiphuoctai@gmail.com</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                        Junior Back-end
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-centered mb-0" id="datatablesSimple">
-                                            <thead>
-                                                <tr>
-                                                    <th>STT</th>
-                                                    <th>Họ tên</th>
-                                                    <th>Số điện thoại</th>
-                                                    <th>Email</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Bui Phuoc Tai</td>
-                                                    <td>0703751020</td>
-                                                    <td>buiphuoctai@gmail.com</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
 
                     <div class="row align-items-center mt-2">

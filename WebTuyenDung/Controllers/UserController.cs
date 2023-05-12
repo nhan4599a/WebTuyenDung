@@ -34,8 +34,18 @@ namespace WebTuyenDung.Controllers
         [Authorize(Policy = AuthorizationConstants.CANDIDATE_ONLY_POLICY)]
         public async Task<IActionResult> UpdateUserInfo(Candidate candidate)
         {
-            DbContext.Entry(candidate).State = EntityState.Modified;
-            await DbContext.SaveChangesAsync();
+            await DbContext.Candidates
+                            .Where(e => e.Id == candidate.Id)
+                            .UpdateFromQueryAsync(e => new Candidate
+                            {
+                                Name = candidate.Name,
+                                PhoneNumber = candidate.PhoneNumber,
+                                Gender = candidate.Gender,
+                                BirthDay = candidate.BirthDay,
+                                Address = candidate.Address
+                            });
+
+            TempData["popup"] = "Cập nhật thông tin thành công";
 
             return View(candidate);
         }

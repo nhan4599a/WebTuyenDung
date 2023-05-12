@@ -13,7 +13,9 @@
         "numberOfCandidates": 10,
         "isApproved": true,
         "cityId": 279,
-        "minumumSalary": 5,
+        "districtId": 510,
+        "wardId": 519,
+        "minimumSalary": 5,
         "maximumSalary": 10
     },
     {
@@ -30,7 +32,9 @@
         "numberOfCandidates": 10,
         "isApproved": true,
         "cityId": 279,
-        "minumumSalary": 5,
+        "districtId": 510,
+        "wardId": 519,
+        "minimumSalary": 5,
         "maximumSalary": 10
     },
     {
@@ -47,7 +51,9 @@
         "numberOfCandidates": 10,
         "isApproved": true,
         "cityId": 279,
-        "minumumSalary": 8,
+        "districtId": 510,
+        "wardId": 519,
+        "minimumSalary": 8,
         "maximumSalary": 13
     },
     {
@@ -64,7 +70,9 @@
         "numberOfCandidates": 10,
         "isApproved": true,
         "cityId": 279,
-        "minumumSalary": 8,
+        "districtId": 510,
+        "wardId": 519,
+        "minimumSalary": 8,
         "maximumSalary": 13
     },
     {
@@ -81,7 +89,9 @@
         "numberOfCandidates": 10,
         "isApproved": true,
         "cityId": 279,
-        "minumumSalary": 8,
+        "districtId": 510,
+        "wardId": 519,
+        "minimumSalary": 8,
         "maximumSalary": 13
     },
     {
@@ -98,7 +108,9 @@
         "numberOfCandidates": 10,
         "isApproved": true,
         "cityId": 279,
-        "minumumSalary": 5,
+        "districtId": 510,
+        "wardId": 519,
+        "minimumSalary": 5,
         "maximumSalary": 13
     },
     {
@@ -115,7 +127,9 @@
         "numberOfCandidates": 10,
         "isApproved": true,
         "cityId": 279,
-        "minumumSalary": 8,
+        "districtId": 510,
+        "wardId": 519,
+        "minimumSalary": 8,
         "maximumSalary": 13
     },
     {
@@ -132,7 +146,9 @@
         "numberOfCandidates": 10,
         "isApproved": true,
         "cityId": 626,
-        "minumumSalary": 8,
+        "districtId": 1207,
+        "wardId": 1209,
+        "minimumSalary": 8,
         "maximumSalary": 13
     },
     {
@@ -149,7 +165,9 @@
         "numberOfCandidates": 10,
         "isApproved": true,
         "cityId": 626,
-        "minumumSalary": 8,
+        "districtId": 1207,
+        "wardId": 1209,
+        "minimumSalary": 8,
         "maximumSalary": 13
     }
 ]

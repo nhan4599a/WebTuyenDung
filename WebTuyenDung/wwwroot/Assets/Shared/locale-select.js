@@ -14,7 +14,7 @@
                     const selectedDistrict = $('#input-district').data('selected')
 
                     $('#input-district')
-                        .html(buildLocaleSelectOptions(districtData, 'Quận', selectedDistrict))
+                        .html(buildLocaleSelectOptions(districtData, 'Quận', selectedDistrict)).change()
                         .prop('disabled', false)
                         .selectpicker('refresh', {
                             noneSelectedText: '-- Quận --'
@@ -36,9 +36,17 @@
                                     })
                             })
                         })
+
+                        if (selectedDistrict) {
+                            $('#input-district').change()
+                        }
                     }
                 })
             })
+
+            if (selectedCity) {
+                $('#input-city').change()
+            }
         }
     })
 })
