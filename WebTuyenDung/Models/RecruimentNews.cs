@@ -21,6 +21,10 @@ namespace WebTuyenDung.Models
 
         public int CityId { get; set; }
 
+        public int DistrictId { get; set; }
+
+        public int WardId { get; set; }
+
         public string WorkingAddress { get; set; } = default!;
 
         public string RelativeSkills { get; set; } = default!;

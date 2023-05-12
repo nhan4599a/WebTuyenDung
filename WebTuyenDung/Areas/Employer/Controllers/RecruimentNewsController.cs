@@ -24,7 +24,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         {
             this.dbContext = dbContext;
         }
-        
+
         public IActionResult Index()
         {
             return View();
@@ -53,11 +53,16 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> Create(CreateRecruimentNewsViewModel createRecruimentNewsViewModel)
         {
-            var (MinimumSalary, MaximumSalary) = SalaryHelper.ParseSalary(createRecruimentNewsViewModel.Salary);
-
             var recruimentNews = createRecruimentNewsViewModel.Adapt<RecruimentNews>();
-            recruimentNews.MinimumSalary = MinimumSalary;
-            recruimentNews.MaximumSalary = MaximumSalary;
+
+            if (createRecruimentNewsViewModel.Salary != "Khác" && createRecruimentNewsViewModel.Salary != "Thỏa thuận")
+            {
+                var (MinimumSalary, MaximumSalary) = SalaryHelper.ParseSalary(createRecruimentNewsViewModel.Salary);
+
+                recruimentNews.MinimumSalary = MinimumSalary;
+                recruimentNews.MaximumSalary = MaximumSalary;
+            }
+
             recruimentNews.EmployerId = User.GetUserId();
 
             dbContext.RecruimentNews.Add(recruimentNews);

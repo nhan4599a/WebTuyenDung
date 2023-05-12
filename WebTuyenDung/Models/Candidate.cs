@@ -12,7 +12,5 @@ namespace WebTuyenDung.Models
         public string Address { get; set; } = default!;
 
         public string PhoneNumber { get; set; } = default!;
-
-        public int ApprovedCount { get; set; }
     }
 }

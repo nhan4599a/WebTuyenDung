@@ -15,6 +15,10 @@ namespace WebTuyenDung.ViewModels
 
         public string Salary { get; set; } = default!;
 
+        public int? MinimumSalary { get; set; }
+
+        public int? MaximumSalary { get; set; }
+
         public int CityId { get; set; } = default!;
 
         public string WorkingAddress { get; set;} = default!;

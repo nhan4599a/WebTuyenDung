@@ -31,6 +31,8 @@ namespace WebTuyenDung.Data
 
         public DbSet<CurriculumVitaeDetail> CVDetails { get; set; }
 
+        public DbSet<PotentialCandidateCount> PotentialCandidateCount { get; set; }
+
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
             base.ConfigureConventions(configurationBuilder);

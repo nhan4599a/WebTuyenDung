@@ -62,6 +62,11 @@ namespace WebTuyenDung.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp([FromForm] CandidateSignUpRequest signUpRequest)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             var isUserExisted = await ValidateUsername(signUpRequest.Username);
 
             if (isUserExisted)
@@ -95,9 +100,20 @@ namespace WebTuyenDung.Controllers
 
         [ActionName("sign-up-employer")]
         [HttpPost]
-        [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> SignUpEmployer([FromForm] SignUpEmployerRequest signUpRequest)
         {
+            if (!ModelState.IsValid)
+            {
+                var model = DbContext
+                            .Locales
+                            .Where(e => e.Parent == null)
+                            .ProjectToType<LocaleViewModel>()
+                            .AsNoTracking()
+                            .AsAsyncEnumerable();
+
+                return View(model);
+            }
+
             var isUserExisted = await ValidateUsername(signUpRequest.Username);
 
             if (isUserExisted)
