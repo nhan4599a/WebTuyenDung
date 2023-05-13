@@ -2,6 +2,7 @@
     {
         "employerId": 2,
         "jobName": "Thực Tập Sinh .Net & Oracle 1",
+        "position": 2,
         "workingAddress": "Tòa Nhà 52 Lạc Long Quân, Tây Hồ, Hà Nội.",
         "relativeSkills": "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
         "jobDescription": "<ul><li>Sinh vi&ecirc;n năm cuối khối ng&agrave;nh IT phần mềm: C&ocirc;ng nghệ th&ocirc;ng tin, To&aacute;n tin, lập tr&igrave;nh vi&ecirc;n hoặc tương đương&hellip;</li><li>C&oacute; hiểu biết v&agrave; kỹ năng cơ bản về lập tr&igrave;nh: .Net, SQL, Oracle, HTML &amp; CSS, Javascript, Jquery&hellip;</li><li>Chủ động, đam m&ecirc; c&ocirc;ng việc, sẵn sang chấp nhận th&aacute;ch thức.</li><li>C&oacute; khả năng nghi&ecirc;n cứu c&ocirc;ng nghệ mới</li><li>Đọc hiểu t&agrave;i liệu chuy&ecirc;n ng&agrave;nh bằng Tiếng Anh.</li></ul>",
@@ -21,6 +22,7 @@
     {
         "employerId": 2,
         "jobName": "Thực Tập Sinh Unity - Hỗ Trợ Lương (C#)",
+        "position": 2,
         "workingAddress": "- Khu vực: Hà Nội - Khu Liền Kề HD Mom Lô 34 TT-02, đường Hàm Nghi, Mỹ Đình 2, Nam Từ Liêm, Hà Nội",
         "relativeSkills": "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
         "jobDescription": "<ul><li>Sinh vi&ecirc;n năm cuối khối ng&agrave;nh IT phần mềm: C&ocirc;ng nghệ th&ocirc;ng tin, To&aacute;n tin, lập tr&igrave;nh vi&ecirc;n hoặc tương đương&hellip;</li><li>C&oacute; hiểu biết v&agrave; kỹ năng cơ bản về lập tr&igrave;nh: .Net, SQL, Oracle, HTML &amp; CSS, Javascript, Jquery&hellip;</li><li>Chủ động, đam m&ecirc; c&ocirc;ng việc, sẵn sang chấp nhận th&aacute;ch thức.</li><li>C&oacute; khả năng nghi&ecirc;n cứu c&ocirc;ng nghệ mới</li><li>Đọc hiểu t&agrave;i liệu chuy&ecirc;n ng&agrave;nh bằng Tiếng Anh.</li></ul>",
@@ -40,6 +42,7 @@
     {
         "employerId": 2,
         "jobName": "Reactjs Developer",
+        "position": 2,
         "workingAddress": "- Khu vực: Hồ Chí Minh - Tầng 2 phòng 202 Tòa nhà Lotus, 16 Cửu Long, Phường 2, Quận Tân Bình, Thành phố Hồ Chí Minh",
         "relativeSkills": "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
         "jobDescription": "<ul><li>Sinh vi&ecirc;n năm cuối khối ng&agrave;nh IT phần mềm: C&ocirc;ng nghệ th&ocirc;ng tin, To&aacute;n tin, lập tr&igrave;nh vi&ecirc;n hoặc tương đương&hellip;</li><li>C&oacute; hiểu biết v&agrave; kỹ năng cơ bản về lập tr&igrave;nh: .Net, SQL, Oracle, HTML &amp; CSS, Javascript, Jquery&hellip;</li><li>Chủ động, đam m&ecirc; c&ocirc;ng việc, sẵn sang chấp nhận th&aacute;ch thức.</li><li>C&oacute; khả năng nghi&ecirc;n cứu c&ocirc;ng nghệ mới</li><li>Đọc hiểu t&agrave;i liệu chuy&ecirc;n ng&agrave;nh bằng Tiếng Anh.</li></ul>",
@@ -59,6 +62,7 @@
     {
         "employerId": 2,
         "jobName": "PHP Developer",
+        "position": 2,
         "workingAddress": "96 Định Công, Hoàng Mai, Hà Nội",
         "relativeSkills": "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
         "jobDescription": "<ul><li>Sinh vi&ecirc;n năm cuối khối ng&agrave;nh IT phần mềm: C&ocirc;ng nghệ th&ocirc;ng tin, To&aacute;n tin, lập tr&igrave;nh vi&ecirc;n hoặc tương đương&hellip;</li><li>C&oacute; hiểu biết v&agrave; kỹ năng cơ bản về lập tr&igrave;nh: .Net, SQL, Oracle, HTML &amp; CSS, Javascript, Jquery&hellip;</li><li>Chủ động, đam m&ecirc; c&ocirc;ng việc, sẵn sang chấp nhận th&aacute;ch thức.</li><li>C&oacute; khả năng nghi&ecirc;n cứu c&ocirc;ng nghệ mới</li><li>Đọc hiểu t&agrave;i liệu chuy&ecirc;n ng&agrave;nh bằng Tiếng Anh.</li></ul>",
@@ -78,6 +82,7 @@
     {
         "employerId": 2,
         "jobName": "Frontend developer (ReactJS)",
+        "position": 2,
         "workingAddress": "96 Định Công, Hoàng Mai, Hà Nội",
         "relativeSkills": "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
         "jobDescription": "<ul><li>Sinh vi&ecirc;n năm cuối khối ng&agrave;nh IT phần mềm: C&ocirc;ng nghệ th&ocirc;ng tin, To&aacute;n tin, lập tr&igrave;nh vi&ecirc;n hoặc tương đương&hellip;</li><li>C&oacute; hiểu biết v&agrave; kỹ năng cơ bản về lập tr&igrave;nh: .Net, SQL, Oracle, HTML &amp; CSS, Javascript, Jquery&hellip;</li><li>Chủ động, đam m&ecirc; c&ocirc;ng việc, sẵn sang chấp nhận th&aacute;ch thức.</li><li>C&oacute; khả năng nghi&ecirc;n cứu c&ocirc;ng nghệ mới</li><li>Đọc hiểu t&agrave;i liệu chuy&ecirc;n ng&agrave;nh bằng Tiếng Anh.</li></ul>",
@@ -97,6 +102,7 @@
     {
         "employerId": 2,
         "jobName": "UI, UX Designer",
+        "position": 8,
         "workingAddress": "96 Định Công, Hoàng Mai, Hà Nội",
         "relativeSkills": "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
         "jobDescription": "<ul><li>Sinh vi&ecirc;n năm cuối khối ng&agrave;nh IT phần mềm: C&ocirc;ng nghệ th&ocirc;ng tin, To&aacute;n tin, lập tr&igrave;nh vi&ecirc;n hoặc tương đương&hellip;</li><li>C&oacute; hiểu biết v&agrave; kỹ năng cơ bản về lập tr&igrave;nh: .Net, SQL, Oracle, HTML &amp; CSS, Javascript, Jquery&hellip;</li><li>Chủ động, đam m&ecirc; c&ocirc;ng việc, sẵn sang chấp nhận th&aacute;ch thức.</li><li>C&oacute; khả năng nghi&ecirc;n cứu c&ocirc;ng nghệ mới</li><li>Đọc hiểu t&agrave;i liệu chuy&ecirc;n ng&agrave;nh bằng Tiếng Anh.</li></ul>",
@@ -116,6 +122,7 @@
     {
         "employerId": 2,
         "jobName": "Business Analyst",
+        "position": 0,
         "workingAddress": "96 Định Công, Hoàng Mai, Hà Nội",
         "relativeSkills": "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
         "jobDescription": "<ul><li>Sinh vi&ecirc;n năm cuối khối ng&agrave;nh IT phần mềm: C&ocirc;ng nghệ th&ocirc;ng tin, To&aacute;n tin, lập tr&igrave;nh vi&ecirc;n hoặc tương đương&hellip;</li><li>C&oacute; hiểu biết v&agrave; kỹ năng cơ bản về lập tr&igrave;nh: .Net, SQL, Oracle, HTML &amp; CSS, Javascript, Jquery&hellip;</li><li>Chủ động, đam m&ecirc; c&ocirc;ng việc, sẵn sang chấp nhận th&aacute;ch thức.</li><li>C&oacute; khả năng nghi&ecirc;n cứu c&ocirc;ng nghệ mới</li><li>Đọc hiểu t&agrave;i liệu chuy&ecirc;n ng&agrave;nh bằng Tiếng Anh.</li></ul>",
@@ -135,6 +142,7 @@
     {
         "employerId": 2,
         "jobName": "Manual Tester",
+        "position": 3,
         "workingAddress": "96 Định Công, Hoàng Mai, Hà Nội",
         "relativeSkills": "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
         "jobDescription": "<ul><li>Sinh vi&ecirc;n năm cuối khối ng&agrave;nh IT phần mềm: C&ocirc;ng nghệ th&ocirc;ng tin, To&aacute;n tin, lập tr&igrave;nh vi&ecirc;n hoặc tương đương&hellip;</li><li>C&oacute; hiểu biết v&agrave; kỹ năng cơ bản về lập tr&igrave;nh: .Net, SQL, Oracle, HTML &amp; CSS, Javascript, Jquery&hellip;</li><li>Chủ động, đam m&ecirc; c&ocirc;ng việc, sẵn sang chấp nhận th&aacute;ch thức.</li><li>C&oacute; khả năng nghi&ecirc;n cứu c&ocirc;ng nghệ mới</li><li>Đọc hiểu t&agrave;i liệu chuy&ecirc;n ng&agrave;nh bằng Tiếng Anh.</li></ul>",
@@ -154,6 +162,7 @@
     {
         "employerId": 2,
         "jobName": "IT Support - Hỗ Trợ Kỹ Thuật",
+        "position": 8,
         "workingAddress": "G3 Sunshine Garden, đường Dương Văn Bé, P. Vĩnh Tuy, Q. Hai Bà Trưng, TP. Hà Nội",
         "relativeSkills": "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
         "jobDescription": "<ul><li>Sinh vi&ecirc;n năm cuối khối ng&agrave;nh IT phần mềm: C&ocirc;ng nghệ th&ocirc;ng tin, To&aacute;n tin, lập tr&igrave;nh vi&ecirc;n hoặc tương đương&hellip;</li><li>C&oacute; hiểu biết v&agrave; kỹ năng cơ bản về lập tr&igrave;nh: .Net, SQL, Oracle, HTML &amp; CSS, Javascript, Jquery&hellip;</li><li>Chủ động, đam m&ecirc; c&ocirc;ng việc, sẵn sang chấp nhận th&aacute;ch thức.</li><li>C&oacute; khả năng nghi&ecirc;n cứu c&ocirc;ng nghệ mới</li><li>Đọc hiểu t&agrave;i liệu chuy&ecirc;n ng&agrave;nh bằng Tiếng Anh.</li></ul>",

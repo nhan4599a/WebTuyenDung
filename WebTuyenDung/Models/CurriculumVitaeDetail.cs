@@ -25,7 +25,5 @@ namespace WebTuyenDung.Models
         public string Education { get; set; } = default!;
 
         public string SoftSkills { get; set; } = default!;
-
-        public string? Rewards { get; set; }
     }
 }

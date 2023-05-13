@@ -1,5 +1,4 @@
-﻿
-using Mapster;
+﻿using Mapster;
 using System.Reflection;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
@@ -58,6 +57,7 @@ namespace WebTuyenDung.Configurations
 
             TypeAdapterConfig<CurriculumVitae, CurriculumVitaeDetailViewModel>
                 .NewConfig()
+                .Map(e => e.Introduction, source => source.Detail!.Introduction)
                 .Map(e => e.ExpectedPosition, source => source.Detail!.ExpectedPosition)
                 .Map(e => e.Email, source => source.Detail!.Email)
                 .Map(e => e.SourceVersionControlUrl, source => source.Detail!.SourceVersionControlUrl)
@@ -65,10 +65,14 @@ namespace WebTuyenDung.Configurations
                 .Map(e => e.Experience, source => source.Detail!.Experience)
                 .Map(e => e.Skills, source => source.Detail!.Skills)
                 .Map(e => e.Education, source => source.Detail!.Education)
-                .Map(e => e.SoftSkills, source => source.Detail!.SoftSkills)
-                .Map(e => e.Rewards, source => source.Detail!.Rewards);
+                .Map(e => e.SoftSkills, source => source.Detail!.SoftSkills);
 
-            TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
+            TypeAdapterConfig<CreateCVViewModel, CurriculumVitaeDetail>
+                .NewConfig()
+                .Map(e => e.Skills, source => source.Skills.Substring(4, source.Skills.Length - 9))
+                .Map(e => e.SoftSkills, source => source.SoftSkills.Substring(4, source.SoftSkills.Length - 9));
+
+			TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
         }
     }
 }

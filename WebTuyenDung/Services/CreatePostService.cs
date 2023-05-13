@@ -26,7 +26,7 @@ namespace WebTuyenDung.Services
 
             if (!controller.ModelState.IsValid)
             {
-                return controller.View();
+                return controller.Redirect($"/{areaName}/posts/create");
             }
 
             var post = new Post

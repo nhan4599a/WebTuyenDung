@@ -105,34 +105,11 @@
 <body bgcolor="#A0A0A0" vlink="blue" link="blue">
 	<div id="page1-div">
 		<img width="892" height="1262" src="/assets/shared/target001.png" alt="background image" />
-		<p style="position:absolute;top:562px;left:23px;white-space:nowrap" class="ft10">Teamwork</p>
-		<p style="position:absolute;top:595px;left:23px;white-space:nowrap" class="ft10">Logical thinking and creative</p>
-		<p style="position:absolute;top:629px;left:23px;white-space:nowrap" class="ft10">Time Management</p>
-		<p style="position:absolute;top:662px;left:23px;white-space:nowrap" class="ft10">Public Speaking</p>
-		<p style="position:absolute;top:696px;left:23px;white-space:nowrap" class="ft10">Self Learning</p>
-		<p style="position:absolute;top:728px;left:23px;white-space:nowrap" class="ft19">Basic English <br />Communication</p>
-		<p style="position:absolute;top:862px;left:35px;white-space:nowrap" class="ft10">HTML, CSS (Basic)</p>
-		<p style="position:absolute;top:862px;left:190px;white-space:nowrap" class="ft10">SQL</p>
-		<p style="position:absolute;top:889px;left:35px;white-space:nowrap" class="ft10">JavaScript (Basic)</p>
-		<p style="position:absolute;top:889px;left:190px;white-space:nowrap" class="ft10">Java</p>
-		<p style="position:absolute;top:917px;left:35px;white-space:nowrap" class="ft10">Java</p>
-		<p style="position:absolute;top:917px;left:190px;white-space:nowrap" class="ft19">Basic knowledge of<br />mobile device<br />programming</p>
+		<ul style="position:absolute;top:862px;white-space:nowrap" class="ft10">@Html.Raw(Model.Skills)</ul>
+		<ul style="position:absolute;top:562px;white-space:nowrap" class="ft10">@Html.Raw(Model.SoftSkills)</ul>
 		<p id="about" style="position:absolute;top:362px;left:23px;white-space:nowrap" class="ft19">@Model.Introduction</p>
-		<p style="position:absolute;top:361px;left:379px;white-space:nowrap" class="ft11"><b>Industrial University of Ho Chi Minh City</b></p>
-		<p style="position:absolute;top:362px;left:650px;white-space:nowrap" class="ft10">&#160;</p>
-		<p style="position:absolute;top:363px;left:658px;white-space:nowrap" class="ft12">(   2018&#160;&gt;&#160;2022)</p>
-		<p style="position:absolute;top:384px;left:379px;white-space:nowrap" class="ft13"><b>Major: Information Technology</b></p>
-		<p style="position:absolute;top:407px;left:379px;white-space:nowrap" class="ft10">4th year student</p>
-		<p style="position:absolute;top:517px;left:379px;white-space:nowrap" class="ft11"><b>The Hotel manager app The project</b></p>
-		<p style="position:absolute;top:518px;left:617px;white-space:nowrap" class="ft10">&#160;</p>
-		<p style="position:absolute;top:519px;left:625px;white-space:nowrap" class="ft12">(Sep 2020&#160;&gt;&#160;Nov 2020)</p>
-		<p style="position:absolute;top:540px;left:379px;white-space:nowrap" class="ft13"><b>Member</b></p>
-		<p style="position:absolute;top:562px;left:379px;white-space:nowrap" class="ft110">- My responsibility is database building, program testing and debugging along<br />with the development of user manuals for the project.&#160;<br />- Technologies used in the project include: SQL Server Database, drawing app<br />Draw.io, WPS, website design with Figma and Eclipse on Java language.&#160;</p>
-		<p style="position:absolute;top:666px;left:379px;white-space:nowrap" class="ft11"><b>Real-time instant messaging Web Project</b></p>
-		<p style="position:absolute;top:667px;left:658px;white-space:nowrap" class="ft10">&#160;</p>
-		<p style="position:absolute;top:668px;left:666px;white-space:nowrap" class="ft12">(Nov 2013&#160;&gt;&#160;Jun 2014)</p>
-		<p style="position:absolute;top:688px;left:379px;white-space:nowrap" class="ft13"><b>Member</b></p>
-		<p style="position:absolute;top:711px;left:379px;white-space:nowrap" class="ft19">- Project built on top of Discord website reference.&#160;<br />- Technologies used in the project include: API provided by getstream.io,<br />Firebase log-in, website building with HTML, CSS based on JavaScript language.&#160;<br />- This one also has user manuals.</p>
+		<p style="position:absolute;top:384px;left:379px;white-space:nowrap" class="ft13">@Model.Education</p>
+		<p style="position:absolute;top:517px;left:379px;white-space:nowrap" class="ft13">@Model.Experience</p>
 		<p style="position:absolute;top:82px;left:251px;white-space:nowrap" class="ft14"><b>@User.GetName().ToUpper()</b></p>
 		<p style="position:absolute;top:136px;left:251px;white-space:nowrap" class="ft15"><b>@Model.ExpectedPosition</b></p>
 		<p style="position:absolute;top:203px;left:278px;white-space:nowrap" class="ft10">@User.GetBirthDay()!.Value.ToString("MMM d, yyyy")</p>
@@ -153,7 +130,7 @@
 			}
 		</p>
 		<p style="position:absolute;top:318px;left:23px;white-space:nowrap" class="ft17"><b>ABOUT ME</b></p>
-		<p style="position:absolute;top:517px;left:23px;white-space:nowrap" class="ft17"><b>PERSONAL SKILLS</b></p>
+		<p style="position:absolute;top:517px;left:23px;white-space:nowrap" class="ft17"><b>SOFT SKILLS</b></p>
 		<p style="position:absolute;top:818px;left:23px;white-space:nowrap" class="ft17"><b>SPECIALIZED SKILLS</b></p>
 		<p style="position:absolute;top:318px;left:379px;white-space:nowrap" class="ft17"><b>EDUCATION</b></p>
 		<p style="position:absolute;top:474px;left:379px;white-space:nowrap" class="ft17"><b>WORK EXPERIENCE</b></p>

@@ -44,9 +44,9 @@ namespace WebTuyenDung.ApiControllers
         {
             var transaction = await DbContext.Database.BeginTransactionAsync();
 
-            await DbContext.CVs.Where(e => e.Id == id).UpdateFromQueryAsync(e => new CurriculumVitae { IsDeleted = true });
+            await DbContext.CVDetails.Where(e => e.CVId == id).DeleteFromQueryAsync();
 
-            await DbContext.CVDetails.Where(e => e.CVId == id).UpdateFromQueryAsync(e => new CurriculumVitaeDetail { IsDeleted = true });
+            await DbContext.CVs.Where(e => e.Id == id).DeleteFromQueryAsync();
 
             await transaction.CommitAsync();
 

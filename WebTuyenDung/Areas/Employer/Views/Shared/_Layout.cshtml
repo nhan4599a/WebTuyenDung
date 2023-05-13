@@ -51,7 +51,7 @@
                         </div>
 
                         <!-- item-->
-                        <a href="@Url.Action("Info", "Home")" class="dropdown-item notify-item">
+                        <a href="/employer/info" class="dropdown-item notify-item">
                             <i class="remixicon-account-circle-line"></i>
                             <span>Thông tin công ty</span>
                         </a>
@@ -78,7 +78,7 @@
             </ul>
 
             <div class="logo-box">
-                <a href="@Url.Action("Index","Home")" class="logo text-center">
+                <a href="/employer" class="logo text-center">
                     <span class="logo-lg">
                         <img src="~/Assets/Client/img/logo.jpg" alt="" height="60">
                     </span>
@@ -129,7 +129,7 @@
                             <div class="page-title">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+                                        <li class="breadcrumb-item"><a href="/employer">Trang chủ</a></li>
                                         @if (ViewBag.PrevPage != null)
                                         {
                                             <li class="breadcrumb-item active"><a href="javascript: void(0);">@ViewBag.PrevPage</a></li>
@@ -157,11 +157,6 @@
             </footer>
         </div>
     </div>
-
-
-    @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jqueryval")*@
 
     <script src="~/Assets/Admin/js/vendor.min.js"></script>
 

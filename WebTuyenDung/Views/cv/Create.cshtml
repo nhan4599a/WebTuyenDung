@@ -15,12 +15,8 @@
     <script src="~/Assets/Plugins/ckeditor/ckeditor.js"></script>
 
     <script>
-        CKEDITOR.replace("txtMucTieu");
-        CKEDITOR.replace("txtKinhNghiem");
         CKEDITOR.replace("txtKyNang");
-        CKEDITOR.replace("txtHocVan");
         CKEDITOR.replace("txtKyNangMem");
-        CKEDITOR.replace("txtGiaiThuong");
     </script>
     <script src="~/Assets/Client/js/style.js"></script>
 }
@@ -65,7 +61,7 @@
                                     <div class="form-group align-items-center justify-content-center row mt-1">
                                         <label class="control-label col-md-2">Ngày sinh</label>
                                         <div class="col-md-6">
-                                            <input class="form-control" value="@User.GetBirthDay()" disabled />
+                                            <input class="form-control" value="@User.GetBirthDay()!.GetApplicationTimeRepresentation()" disabled />
                                         </div>
                                     </div>
 
@@ -153,14 +149,6 @@
                                         <div class="col-md-10">
                                             @Html.TextAreaFor(model => model.SoftSkills, new { @class = "form-control", id = "txtKyNangMem" })
                                             @Html.ValidationMessageFor(model => model.SoftSkills, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group align-items-center justify-content-center row">
-                                        @Html.LabelFor(model => model.Rewards, "Giải thưởng đạt được", new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.TextAreaFor(model => model.Rewards, new { @class = "form-control", id = "txtGiaiThuong" })
-                                            @Html.ValidationMessageFor(model => model.Rewards, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 

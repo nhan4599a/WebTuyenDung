@@ -9,6 +9,9 @@
         "password": password
     };
 
+    $('#username-error').css({ display: 'none' })
+    $('#password-error').css({ display: 'none' })
+
     if (username.length > 0 && password.length > 0) {
 
         $.ajax({
@@ -43,6 +46,13 @@
                 }
             }
         });
+    } else {
+
+        if (username.length === 0) {
+            $('#username-error').css({ display: 'inline' })
+        } else {
+            $('#password-error').css({ display: 'inline' })
+        }
     }
 })
 

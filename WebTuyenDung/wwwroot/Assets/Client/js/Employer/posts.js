@@ -1,6 +1,6 @@
 ﻿var load = function (keyWord, pageIndex, pageSize) {
 
-    const isApproved = getQueryParams().isApproved ?? 0;
+    const isApproved = getQueryParams().isApproved ?? 1;
     
     const userId = $('#user-id').val()
 
@@ -9,7 +9,8 @@
         data: {
             keyWord: keyWord,
             pageIndex: pageIndex,
-            pageSize: pageSize
+            pageSize: pageSize,
+            isApproved: isApproved >= 1
         },
         type: "GET",
         success: function (response) {
@@ -29,7 +30,7 @@
                 str += "<td>" + value.author + "</td>";
                 str += "<td>" + value.createdAt + "</td>";
                 str += "<td>" + value.view + "</td>";
-                str += "<td><span class='badge badge-success'>" + value.status + "</span></td>";
+                str += `<td><span class="bad bad-success">${isApproved == 0 ? 'Chưa được duyệt' : 'Đã duyệt'}</span></td>`
                 if (isApproved == 0) {
                     str += `<td class="d-flex">
                                 <a class="btn btn-warning" href="/employer/posts/edit/${value.id}">Sửa</a>

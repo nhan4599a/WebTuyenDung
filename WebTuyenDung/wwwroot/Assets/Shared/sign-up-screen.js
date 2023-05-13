@@ -30,6 +30,11 @@ $('.btn-next').click(e => {
     if (password !== rePassword) {
         validationError += `<li>Password does not match</li>`
     }
+
+    const validatePasswordResult = validatePassword(password)
+    if (validatePasswordResult) {
+        validationError += `<li>${validatePasswordResult}</li>`
+    }
     $('#sign-in-error').html(validationError)
 
     if (!validationError) {
@@ -53,3 +58,35 @@ $('.btn-next').click(e => {
         })
     }
 })
+
+function validatePassword(password) {
+    if (password.length < 6 && password > 63) {
+        return 'Password phải từ 6 đến 63 ký tự'
+    }
+
+    const INVALID_PASSWORD_CHARS = ['$', '&', '<', '>', '(', ')', '/', '\\', '\'', '"', '`', '{', '}', ',', '~']
+
+    let categoryCount = {};
+
+    for (var char in password) {
+        if (INVALID_PASSWORD_CHARS.includes(char)) {
+            return "Password must include lower, upper, digit and at least one of following characters ['.', '!', '@', '#', ' % ', ' ^']"
+        }
+
+        if (char.match(/[a-z]/)) {
+            categoryCount.lower ??= 1;
+        } else if (char.match(/[A-Z]/)) {
+            categoryCount.upper ??= 1;
+        } else if (char.match(/[0-9]/)) {
+            categoryCount.number ??= 1;
+        } else {
+            categoryCount.other ??= 1;
+        }
+    }
+
+    if (Object.keys(categoryCount).length !== 4) {
+        return "Password must include lower, upper, digit and at least one of following characters ['.', '!', '@', '#', ' % ', ' ^']"
+    }
+
+    return ''
+}

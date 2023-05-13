@@ -2,6 +2,6 @@
 {
     public class SearchPostsRequest : SearchRequest
     {
-        public bool IsApproved { get; set; } = true;
+        public bool IsApproved { get; set; }
     }
 }

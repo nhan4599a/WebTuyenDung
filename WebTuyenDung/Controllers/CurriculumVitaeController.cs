@@ -197,8 +197,7 @@ namespace WebTuyenDung.Controllers
                     Experience = data.Experience,
                     Skills = data.Skills,
                     Education = data.Education,
-                    SoftSkills = data.SoftSkills,
-                    Rewards = data.Rewards
+                    SoftSkills = data.SoftSkills
                 });
 
                 await transaction.CommitAsync();

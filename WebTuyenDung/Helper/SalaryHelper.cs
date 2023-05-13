@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using WebTuyenDung.ViewModels.User.Abstraction;
 
 namespace WebTuyenDung.Helper
 {
@@ -33,6 +34,27 @@ namespace WebTuyenDung.Helper
             catch (Exception)
             {
                 return (null, null);
+            }
+        }
+
+        public static string GetSalaryRepresentation(this BaseRecruimentNewsViewModel viewModel)
+        {
+            if (viewModel.Salary != "Khác")
+            {
+                return viewModel.Salary;
+            }
+
+            if (viewModel.MinimumSalary.HasValue && viewModel.MaximumSalary.HasValue)
+            {
+                return $"Từ {viewModel.MinimumSalary} đến {viewModel.MaximumSalary} triệu";
+            }
+            else if (viewModel.MinimumSalary.HasValue)
+            {
+                return $"Từ {viewModel.MinimumSalary} triệu";
+            }
+            else
+            {
+                return $"Upto {viewModel.MaximumSalary} triệu";
             }
         }
     }

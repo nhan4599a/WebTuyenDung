@@ -43,21 +43,6 @@
 @section scripts_Main {
     <script src="~/Assets/Client/js/style.js"></script>
     <script src="~/Assets/Client/js/searchkey.js"></script>
-    @*<script src="~/Assets/Client/js/searchResult.js"></script>*@
-
-    @*<script>
-        load("/Home/GetPaging", $('#keyword').val(), 1, $('#CapBac').val(), $('#DiaChi').val(), null, null, null);
-
-        $("body").on("click", ".result__paging--list li a", function (event) {
-            event.preventDefault();
-            var page = $(this).attr('data-page');
-            load("/Home/GetPaging", $('#keyword').val(), page, $('#CapBac').val(), $('#DiaChi').val(), null, null, null);
-        });
-
-        $("#ChuyenNganh, #LoaiCV, #MucLuong").on("change", function () {
-            load("/Home/GetPaging", $('#keyword').val(), 1, $('#CapBac').val(), $('#DiaChi').val(), $('#ChuyenNganh').val(), $('#LoaiCV').val(), $('#MucLuong').val());
-        });
-    </script>*@
 }
 
 <div class="main__fixed bg-img"></div>
@@ -103,6 +88,9 @@
                     </option>
                     <option value="6" selected="@(position.Count > 0 && position[0] == "6")">
                         Quản lý dự án phần mềm
+                    </option>
+                    <option value="6" selected="@(position.Count > 0 && position[0] == "7")">
+                        IT Support
                     </option>
                 </select>
                 <span class="text-danger" style="display: none"></span>
@@ -184,7 +172,7 @@
                                             <span class="result__icon">
                                                 <i class="fas fa-money-check-alt"></i>
                                             </span>
-                                            Lương: <span>@job.Salary</span>
+                                            Lương: <span>@job.GetSalaryRepresentation()</span>
                                         </p>
                                         <div class="result__date mb-5">
                                             <p class="result__date--start mb-0">

@@ -61,7 +61,7 @@
 }
 
 //click delete button
-$("body").on("click", "#datatablesSimple a.btn", function (event) {
+$("body").on("click", "#datatablesSimple a.btn[data-action]", function (event) {
     event.preventDefault();
     const userId = $(this).data('user');
     const action = $(this).data('action');

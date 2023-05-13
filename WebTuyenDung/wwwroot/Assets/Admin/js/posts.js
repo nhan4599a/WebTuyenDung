@@ -70,7 +70,7 @@
 }
 
 //click delete button
-$("body").on("click", "#datatablesSimple a.btn", function (event) {
+$("body").on("click", "#datatablesSimple a.btn[data-action]", function (event) {
     event.preventDefault();
     let postId = $(this).attr('data-user');
     let action = $(this).data('action');

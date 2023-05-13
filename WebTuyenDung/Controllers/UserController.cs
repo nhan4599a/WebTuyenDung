@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using WebTuyenDung.Attributes;
 using WebTuyenDung.Constants;
 using WebTuyenDung.Data;
+using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
@@ -47,11 +50,24 @@ namespace WebTuyenDung.Controllers
 
             TempData["popup"] = "Cập nhật thông tin thành công";
 
+            await HttpContext.SignOutAsync();
+            await HttpContext.SignInAsync(new Candidate
+            {
+                Id = candidate.Id,
+                Role = UserRole.Candidate,
+                Name = candidate.Name,
+                PhoneNumber = candidate.PhoneNumber,
+                Gender = candidate.Gender,
+                BirthDay = candidate.BirthDay,
+                Address = candidate.Address
+            });
+
             return View(candidate);
         }
 
         [ActionName("change-password")]
         [Authorize]
+        [SharedAction]
         public IActionResult ChangePassword()
         {
             return View();
@@ -60,6 +76,7 @@ namespace WebTuyenDung.Controllers
         [HttpPost]
         [ActionName("change-password")]
         [Authorize]
+        [SharedAction]
         public async Task<ActionResult> ChangePassword(ChangePasswordRequest changePasswordRequest)
         {
             var userId = User.GetUserId();
@@ -69,7 +86,7 @@ namespace WebTuyenDung.Controllers
             if (changePasswordRequest.OldPassword.Sha256() != actualPassword)
             {
                 ModelState.AddModelError("Password", "Password is not correct");
-                return BadRequest(ModelState);
+                return View();
             }
 
             await DbContext
@@ -79,6 +96,8 @@ namespace WebTuyenDung.Controllers
                     {
                         PasswordHashed = changePasswordRequest.NewPassword.Sha256()
                     });
+
+            TempData["popup"] = "Đổi mật khẩu thành công";
 
             return View();
         }

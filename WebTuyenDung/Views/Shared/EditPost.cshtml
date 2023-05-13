@@ -1,22 +1,22 @@
-﻿@using WebTuyenDung.ViewComponents;
+﻿@model Post
 @{
-  ViewBag.Title = "Sửa thông tin bài viết";
-  ViewBag.PrevPage = "Bài viết";
-  ViewBag.CurrentPage = "Sửa bài viết";
-  Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Sửa thông tin bài viết";
+    ViewBag.PrevPage = "Bài viết";
+    ViewBag.CurrentPage = "Sửa bài viết";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 
 @section scripts {
-  <script src="~/Assets/Plugins/ckeditor/ckeditor.js"></script>
+    <script src="~/Assets/Plugins/ckeditor/ckeditor.js"></script>
 
-  <script>
-    var editor = CKEDITOR.replace("txtNoiDung");
+    <script>
+        var editor = CKEDITOR.replace("txtNoiDung");
 
-    $('#Image').change(() => {
-      $('#image_update').css('display', 'none');
-    })
-  </script>
+        $('#Image').change(() => {
+            $('#image_update').css('display', 'none');
+        })
+    </script>
 }
 
-@await (Component.InvokeAsync<EditPostViewComponent>())
+@await (Component.InvokeAsync("EditPost", Model))

@@ -8,6 +8,8 @@
         Tester,
         QC,
         QA,
-        PM
+        PM,
+        ITSupport,
+        Designer
     }
 }

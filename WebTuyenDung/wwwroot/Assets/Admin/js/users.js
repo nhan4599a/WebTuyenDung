@@ -19,12 +19,12 @@
                 str += "<tr>";
                 str += "<td>" + (startSTT + index) + "</td>";
                 str += "<td>" + value.username + "</td>";
-                str += "<td>" + value.role + "</td>";
+                str += "<td>" + parseUserRole(value.role) + "</td>";
                 str += "<td>" + value.createdAt + "</td>";
                 str += "<td>Hoạt động</td>";
-                str += '<td class="d-flex justify-content-around"><a class="btn btn-warning" href="/admin/users/edit/' + value.Id + '">Cập nhật</a>';
-                str += '<a class="btn btn-danger" href="#" data-user=' + value.Id + '>Xóa</a>';
-                str += '<a class="btn btn-success" href="/Admin/User/RoleAssign/' + value.Id + '">Phân quyền</a></td>'
+                str += '<td class="d-flex justify-content-around"><a class="btn btn-warning" href="/admin/users/edit/' + value.id + '">Cập nhật</a>';
+                str += '<a class="btn btn-danger" href="#" data-user=' + value.id + '>Xóa</a>';
+                str += '<a class="btn btn-success" href="/Admin/User/RoleAssign/' + value.id + '">Phân quyền</a></td>'
                 str += "</tr>";
 
                 //create pagination

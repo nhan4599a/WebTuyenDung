@@ -1,0 +1,75 @@
+﻿@using WebTuyenDung.Models;
+@model Employer
+
+@{
+    ViewBag.Title = "Thông tin nhà tuyển dụng";
+    ViewBag.PrevPage = "Quản lý ứng tuyển";
+    ViewBag.CurrentPage = $"Thông tin nhà tuyển dụng '{Model.Name}'";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header py-2">
+                    <h4 class="header-title mb-0">Thông tin nhà tuyển dụng: @Model.Name</h4>
+                </div>
+                <div class="collapse pt-3 show">
+                    <div class="form-horizontal">
+
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.Name, "Tên nhà tuyển dụng", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DisplayTextFor(model => model.Name )
+                            </div>
+                        </div>
+
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.PhoneNumber, "Số điện thoại", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DisplayTextFor(model => model.PhoneNumber)
+                            </div>
+                        </div>
+
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.Size, "Quy mô công ty", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DisplayTextFor(model => model.Size)
+                            </div>
+                        </div>
+
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.Description, "Mô tả", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DisplayTextFor(model => model.Description)
+                            </div>
+                        </div>
+
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.Address, "Địa chỉ", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DisplayTextFor(model => model.Address)
+                            </div>
+                        </div>
+
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.Website, "Tên website", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                <a href="@Model.Website" target="_blank">@Model.Website</a>
+                            </div>
+                        </div>
+
+                        <div class="form-group align-items-center row mt-3">
+                            <div class="col-md-2">
+                            </div>
+
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" href="/admin/employers">Trở về</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
