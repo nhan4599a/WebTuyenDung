@@ -8,12 +8,13 @@
         },
         type: "GET",
         success: function (response) {
-            var pageCurrent = pageIndex;
-            var totalPage = response.totalPages;
+            const pageCurrent = pageIndex;
+            const totalPage = response.totalPages;
 
-            var str = "";
-            var info = `Trang ${pageCurrent} / ${totalPage}`;
-            var startSTT = ((pageCurrent - 1) * pageSize) + 1;
+            let str = "";
+            const info = `Trang ${pageCurrent} / ${totalPage}`;
+            const startSTT = ((pageCurrent - 1) * pageSize) + 1;
+            const userId = $('#user-id').val()
             $("#selection-datatable_info").text(info);
             $.each(response.data, function (index, value) {
                 str += "<tr>";
@@ -22,9 +23,13 @@
                 str += "<td>" + parseUserRole(value.role) + "</td>";
                 str += "<td>" + value.createdAt + "</td>";
                 str += "<td>Hoạt động</td>";
-                str += '<td class="d-flex justify-content-around"><a class="btn btn-warning" href="/admin/users/edit/' + value.id + '">Cập nhật</a>';
-                str += '<a class="btn btn-danger" href="#" data-user=' + value.id + '>Xóa</a>';
-                str += '<a class="btn btn-success" href="/Admin/User/RoleAssign/' + value.id + '">Phân quyền</a></td>'
+                str += '<td class="d-flex justify-content-around">';
+                if (value.role != 2) {
+                    str += '<a class="btn btn-danger" href="#" data-user=' + value.id + ' data-action="remove">Xóa</a>';
+                }
+                if (value.role == 0 || (value.role == 2 && value.id != userId)) {
+                    str += `<a class="btn btn-success" href="#" data-user='${value.id}' data-target='${value.role == 0 ? 2 : 0}' data-action="role-assign">Gán làm ${value.role == 0 ? 'Admin' : 'Ứng viên'}</a></td>`
+                }
                 str += "</tr>";
 
                 //create pagination
@@ -55,16 +60,39 @@
 }
 
 //click delete button
-$("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
+$("body").on("click", "#datatablesSimple a.btn.btn-danger[data-action]", function (event) {
     event.preventDefault();
-    var user_delete = $(this).attr('data-user');
-    if (confirm("Bạn có muốn xóa tài khoản có id = " + user_delete + " này không?")) {
-        $.ajax({
-            url: "/api/admin/users/" + user_delete,
-            type: "DELETE",
-            success: () => {
-                location.reload();
-            }
-        });
+
+    const action = $(this).data('action')
+    const user_delete = $(this).attr('data-user');
+
+    if (action === 'remove') {
+        if (confirm(`Bạn có muốn xóa tài khoản có id = "${user_delete}" này không?`)) {
+            $.ajax({
+                url: "/api/users/" + user_delete,
+                type: "DELETE",
+                success: () => {
+                    location.reload();
+                },
+                error: () => {
+                    alert('User này đã có thông tin, không thể xóa')
+                }
+            });
+        }
+    } else {
+        const targetRole = $(this).data('target')
+
+        if (confirm(`Bạn có muốn gán tài khoản có id = "${user_delete}" này thành ${parseUserRole(targetRole)} không?`)) {
+            $.ajax({
+                url: "/api/users/" + user_delete,
+                type: "patch",
+                data: {
+                    role: targetRole
+                },
+                success: () => {
+                    location.reload();
+                }
+            });
+        }
     }
 });

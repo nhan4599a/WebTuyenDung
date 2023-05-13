@@ -1,4 +1,5 @@
 ﻿@using WebTuyenDung.Areas.Admin.ViewComponents;
+@using WebTuyenDung.Helper;
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -20,6 +21,7 @@
 
 <body>
 
+    <input type="hidden" value="@User.GetUserId()" id="user-id" />
     <!-- Begin page -->
     <div id="wrapper">
 
@@ -46,7 +48,7 @@
                     <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <img src="~/Assets/Client/img/Candidate/user-default.png" alt="user-image" class="rounded-circle">
                         <span class="pro-user-name ml-1">
-                            admin@gmail.com <i class="mdi mdi-chevron-down"></i>
+                            @User.GetName() <i class="mdi mdi-chevron-down"></i>
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -54,12 +56,6 @@
                         <div class="dropdown-header noti-title">
                             <h6 class="text-overflow m-0 text-center">Admin</h6>
                         </div>
-
-                        <!-- item-->
-                        <a href="@Url.Action("Index", "User")" class="dropdown-item notify-item">
-                            <i class="remixicon-account-circle-line"></i>
-                            <span>Tài khoản</span>
-                        </a>
 
                         <!-- item-->
                         <a href="/user/change-password" class="dropdown-item notify-item">

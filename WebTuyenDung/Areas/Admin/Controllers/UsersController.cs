@@ -13,11 +13,11 @@ namespace WebTuyenDung.Areas.Admin.Controllers
 {
     public class UsersController : BaseAdminController
     {
-        private readonly RecruimentDbContext dbContext;
+        private readonly RecruimentDbContext _dbContext;
 
         public UsersController(RecruimentDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            this._dbContext = dbContext;
         }
 
         public IActionResult Index()
@@ -28,7 +28,7 @@ namespace WebTuyenDung.Areas.Admin.Controllers
         [HttpGet]
         public Task<IPaginationResult<UserViewModel>> Search(SearchRequest searchRequest)
         {
-            IQueryable<User> query = dbContext.Users.AsNoTracking();
+            IQueryable<User> query = _dbContext.Users.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(searchRequest.Keyword))
             {
@@ -36,11 +36,6 @@ namespace WebTuyenDung.Areas.Admin.Controllers
             }
 
             return query.PaginateAsync<User, UserViewModel>(searchRequest);
-        }
-
-        public IActionResult Create()
-        {
-            return View();
         }
     }
 }

@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Data;
+using WebTuyenDung.Models;
+using WebTuyenDung.Requests;
 
 namespace WebTuyenDung.ApiControllers
 {
@@ -25,9 +29,26 @@ namespace WebTuyenDung.ApiControllers
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUser(int userId)
         {
-            var deletedCount = await DbContext.Users.DeleteByKeyAsync(userId);
+            try
+            {
+                var deletedCount = await DbContext.Users.DeleteByKeyAsync(userId);
+                return deletedCount != 1 ? BadRequest() : Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest("User này đã có thông tin, không thể xóa");
+            }
+        }
 
-            return deletedCount != 1 ? BadRequest() : Ok();
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateRole(int id, [FromBody] AssignRoleRequest request)
+        {
+            await DbContext.Users.Where(e => e.Id == id).UpdateFromQueryAsync(e => new User
+            {
+                Role = request.Role
+            });
+
+            return Ok();
         }
     }
 }

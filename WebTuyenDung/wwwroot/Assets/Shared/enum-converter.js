@@ -1,6 +1,6 @@
 ﻿const JOB_TYPE = ['Bán thời gian', 'Toàn thời gian', 'Làm việc remote từ xa']
 const APPLICATIONS_STATUS = ['Đã nhận hồ sơ', 'Đã xem', 'Ứng viên tiềm năng', 'Đã hẹn phỏng vấn', 'Đã vượt qua phỏng vấn', 'Đã trượt ứng tuyển']
-const USER_ROLES = ['Admin', 'Nhà tuyển dụng', 'Ứng viên']
+const USER_ROLES = ['Ứng viên', 'Nhà tuyển dụng', 'Admin']
 
 function parseJobType(numberValue) {
     return JOB_TYPE[numberValue]
