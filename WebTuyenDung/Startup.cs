@@ -84,7 +84,7 @@ namespace WebTuyenDung
 
             services.AddSingleton<FileService>();
             services.AddSingleton<IAuthorizationMiddlewareResultHandler, AppAuthorizationResultHandler>();
-            services.AddScoped<CreatePostService>();
+            services.AddScoped<PostService>();
             MappingConfigurations.ConfigMappings();
         }
 

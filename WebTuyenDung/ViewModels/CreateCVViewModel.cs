@@ -1,7 +1,11 @@
-﻿namespace WebTuyenDung.ViewModels
+﻿using Microsoft.AspNetCore.Http;
+
+namespace WebTuyenDung.ViewModels
 {
     public class CreateCVViewModel
     {
+        public IFormFile Image { get; set; } = default!;
+
         public string Name { get; set; } = default!;
 
         public string ExpectedPosition { get; set; } = default!;

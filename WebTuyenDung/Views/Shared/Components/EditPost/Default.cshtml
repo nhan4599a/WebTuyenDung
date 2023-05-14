@@ -14,9 +14,10 @@
                     <h4 class="header-title mb-0">Sửa thông tin bài viết mã số: @Model.Id</h4>
                 </div>
                 <div class="collapse pt-3 show">
-                    <form action="/posts/edit/@Model.Id" method="post" enctype="multipart/form-data">
+                    <form action="/posts/edit" method="post" enctype="multipart/form-data">
                         @Html.AntiForgeryToken()
-
+                        @Html.HiddenFor(e => e.Id)
+                        <input type="hidden" value="@Model.Image" name="oldImage" />
                         <div class="form-horizontal">
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -34,7 +35,7 @@
                                     @if (Model.Image != null)
                                     {
                                         <div class="mb-1" id="image_update">
-                                            <img src="@Model.Image" width="150" height="100" />
+                                            <img src="/Files/Posts/@Model.Image" width="150" height="100" />
                                         </div>
                                     }
                                     <input name="Image" id="Image" type="file" accept="image/*" />

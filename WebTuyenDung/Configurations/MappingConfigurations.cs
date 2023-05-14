@@ -72,6 +72,10 @@ namespace WebTuyenDung.Configurations
                 .Map(e => e.Skills, source => source.Skills.Substring(4, source.Skills.Length - 9))
                 .Map(e => e.SoftSkills, source => source.SoftSkills.Substring(4, source.SoftSkills.Length - 9));
 
+            TypeAdapterConfig<Candidate, PotentialCandidateViewModel>
+                .NewConfig()
+                .Map(e => e.Email, source => source.Username);
+
 			TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
         }
     }

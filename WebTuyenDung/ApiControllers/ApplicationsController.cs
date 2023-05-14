@@ -65,7 +65,7 @@ namespace WebTuyenDung.ApiControllers
 
                     cvItem.LikeCount += 1;
                 }
-
+                DbContext.Entry(cvItem).State = EntityState.Modified;
                 await DbContext.SaveChangesAsync();
             }
             else

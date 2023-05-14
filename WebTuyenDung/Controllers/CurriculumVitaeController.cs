@@ -45,8 +45,9 @@ namespace WebTuyenDung.Controllers
             return View(listCvs);
         }
 
-        [HttpGet("cv/{id:int}")]
+        [HttpGet("/cv/{id:int}")]
         [AllowAnonymous]
+        [SharedAction]
         public async Task<IActionResult> Index(int id)
         {
             if (!User.Identity!.IsAuthenticated || User.IsInRole(AuthorizationConstants.ADMIN_ROLE))
@@ -177,40 +178,40 @@ namespace WebTuyenDung.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, UpdateCurriculumVitaeRequest request)
+        public async Task<IActionResult> Replace(int id, ReplaceCurriculumVitaeRequest request)
         {
-            if (request.CV == null)
+            await _fileService.ReplaceFileAsync(request.Url!, request.CV!, FilePath.CurriculumTitae);
+
+            await DbContext.CVs.Where(e => e.Id == id).UpdateFromQueryAsync(e => new CurriculumVitae
             {
-                var transaction = await DbContext.Database.BeginTransactionAsync();
+                Name = request.Name!
+            });
 
-                var data = request.Data!;
+            return Ok();
+        }
 
-                await DbContext.CVs.Where(e => e.Id == id).UpdateFromQueryAsync(e => new CurriculumVitae { Name = data.Name });
+        [HttpPost]
+        [AutoShortCircuitValidationFailedRequest]
+        public async Task<IActionResult> Edit(int id, CurriculumVitaeDetailViewModel request)
+        {
+            var transaction = await DbContext.Database.BeginTransactionAsync();
 
-                await DbContext.CVDetails.Where(e => e.CVId == id).UpdateFromQueryAsync(e => new CurriculumVitaeDetail
-                {
-                    ExpectedPosition = data.ExpectedPosition,
-                    Email = data.Email,
-                    SourceVersionControlUrl = data.SourceVersionControlUrl,
-                    Introduction = data.Introduction,
-                    Objective = data.Objective,
-                    Experience = data.Experience,
-                    Skills = data.Skills,
-                    Education = data.Education,
-                    SoftSkills = data.SoftSkills
-                });
+            await DbContext.CVs.Where(e => e.Id == id).UpdateFromQueryAsync(e => new CurriculumVitae { Name = request.Name });
 
-                await transaction.CommitAsync();
-            }
-            else
+            await DbContext.CVDetails.Where(e => e.CVId == id).UpdateFromQueryAsync(e => new CurriculumVitaeDetail
             {
-                await _fileService.ReplaceFileAsync(request.Url!, request.CV!, FilePath.CurriculumTitae);
+                ExpectedPosition = request.ExpectedPosition,
+                Email = request.Email,
+                SourceVersionControlUrl = request.SourceVersionControlUrl,
+                Introduction = request.Introduction,
+                Objective = request.Objective,
+                Experience = request.Experience,
+                Skills = request.Skills.Substring(4, request.Skills.Length - 9),
+                Education = request.Education,
+                SoftSkills = request.SoftSkills.Substring(4, request.SoftSkills.Length - 9)
+            });
 
-                await DbContext.CVs.Where(e => e.Id == id).UpdateFromQueryAsync(e => new CurriculumVitae
-                {
-                    Name = request.Name!
-                });
-            }
+            await transaction.CommitAsync();
 
             return Ok();
         }

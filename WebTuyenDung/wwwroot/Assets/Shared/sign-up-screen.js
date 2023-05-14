@@ -68,7 +68,9 @@ function validatePassword(password) {
 
     let categoryCount = {};
 
-    for (var char in password) {
+    for (let i = 0; i < password.length; i++) {
+        const char = password.charAt(i)
+
         if (INVALID_PASSWORD_CHARS.includes(char)) {
             return "Password must include lower, upper, digit and at least one of following characters ['.', '!', '@', '#', ' % ', ' ^']"
         }
@@ -89,4 +91,4 @@ function validatePassword(password) {
     }
 
     return ''
-}
+}   

@@ -20,17 +20,17 @@ namespace WebTuyenDung.Controllers
     [Authorize(Policy = AuthorizationConstants.AUTHORIZED_PERSON_POLICY)]
     public class PostsController : BaseController
     {
-        private readonly CreatePostService _createPostService;
+        private readonly PostService _postService;
 
         private readonly FileService _fileService;
 
-        public PostsController(RecruimentDbContext dbContext, CreatePostService createPostService, FileService fileService) : base(dbContext)
+        public PostsController(RecruimentDbContext dbContext, PostService postService, FileService fileService) : base(dbContext)
         {
-            _createPostService = createPostService;
+            _postService = postService;
             _fileService = fileService;
         }
 
-        [HttpGet("posts/{id:int}")]
+        [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Index(int id)
         {
@@ -54,28 +54,14 @@ namespace WebTuyenDung.Controllers
         [SharedAction]
         public Task<IActionResult> Create(CreatePostViewModel createPostViewModel)
         {
-            return _createPostService.CreatePostAsync(this, createPostViewModel);
+            return _postService.CreatePostAsync(this, createPostViewModel);
         }
 
-        public async Task<IActionResult> Edit(int id)
+        [HttpPost]
+        [SharedAction]
+        public Task<IActionResult> Edit(UpdatePostViewModel post)
         {
-            var post = await DbContext.Posts.FirstOrDefaultAsync(e => e.Id == id);
-
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            return View(post);
-        }
-
-        [HttpPost("edit/{id:int}")]
-        public async Task<IActionResult> Edit(Post post)
-        {
-            DbContext.Entry(post).State = EntityState.Modified;
-            await DbContext.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index), new { id = post.Id });
+            return _postService.UpdatePostAsync(this, post);
         }
     }
 }

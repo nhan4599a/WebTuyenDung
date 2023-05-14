@@ -41,7 +41,7 @@ namespace WebTuyenDung.ApiControllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateRole(int id, [FromBody] AssignRoleRequest request)
+        public async Task<IActionResult> UpdateRole(int id, [FromForm] AssignRoleRequest request)
         {
             await DbContext.Users.Where(e => e.Id == id).UpdateFromQueryAsync(e => new User
             {

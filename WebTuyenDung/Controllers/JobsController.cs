@@ -41,7 +41,7 @@ namespace WebTuyenDung.Controllers
             if (!string.IsNullOrWhiteSpace(request.Salary))
             {
                 var (minSalary, maxSalary) = SalaryHelper.ParseSalary(request.Salary);
-                query = query.Where(e => e.MinimumSalary >= minSalary && e.MaximumSalary <= maxSalary);
+                query = query.Where(e => e.MinimumSalary >= minSalary || e.MaximumSalary <= maxSalary);
             }
 
             var hotJobsQuery = baseQuery.QueryTopItems<TopJobsViewModel>(5)

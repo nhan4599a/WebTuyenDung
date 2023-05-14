@@ -19,7 +19,7 @@ namespace WebTuyenDung.Areas.Admin.Controllers
             return View();
         }
 
-        [Route("/admin/employers/{id}")]
+        [Route("/admin/employers/{id:int}")]
         public async Task<IActionResult> Index(int id)
         {
             var employer = await _dbContext.Employers.FirstOrDefaultAsync(e => e.Id == id);

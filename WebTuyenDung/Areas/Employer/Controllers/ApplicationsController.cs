@@ -41,20 +41,15 @@ namespace WebTuyenDung.Areas.Employer.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, JobApplication jobApplication)
+        public async Task<IActionResult> Edit(int id, UpdateJobApplicationRequest request)
         {
-            var updatedCount = await _dbContext
-                                        .JobApplications
-                                        .Where(e => e.Id == id)
-                                        .UpdateFromQueryAsync(e => new JobApplication
-                                        {
-                                            Status = jobApplication.Status
-                                        });
+            var jobApplication = (await _dbContext.JobApplications.Include(e => e.RecruimentNews).FirstOrDefaultAsync(e => e.Id == id))!;
+            jobApplication.Status = request.Status;
 
-            if (jobApplication.Status == JobApplicationStatus.Passed)
+            if (request.Status == JobApplicationStatus.Passed)
             {
                 var countData = await _dbContext.PotentialCandidateCount
-                                                .FirstOrDefaultAsync(e => e.CandidateId == jobApplication.CandidateId
+                                                .FirstOrDefaultAsync(e => e.CandidateId == request.CandidateId
                                                         && e.JobPosition == jobApplication.RecruimentNews.Position);
 
                 if (countData == null)
@@ -68,14 +63,13 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                 }
                 else
                 {
-
                     countData.Count += 1;
                 }
-
-                await _dbContext.SaveChangesAsync();
             }
+            _dbContext.Entry(jobApplication).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
 
-            return updatedCount == 0 ? BadRequest() : RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(NoStore = true)]

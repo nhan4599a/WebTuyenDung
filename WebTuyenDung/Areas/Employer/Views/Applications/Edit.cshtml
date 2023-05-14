@@ -17,6 +17,7 @@
                 <div class="collapse pt-3 show">
                     <form action="/employer/applications/edit/@Model.Id" method="post">
                         @Html.AntiForgeryToken()
+                        @Html.HiddenFor(e => e.CandidateId)
 
                         <div class="form-horizontal">
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -64,7 +65,7 @@
                                         }
                                         @if (Model.Status == JobApplicationStatus.Scheduled)
                                         {
-                                            <option value="3">Đã Hẹn phỏng vấn</option>
+                                            <option value="3" selected>Đã Hẹn phỏng vấn</option>
                                         }
                                         else
                                         {
@@ -72,7 +73,7 @@
                                         }
                                         @if (Model.Status == JobApplicationStatus.Passed)
                                         {
-                                            <option value="4"selected>Đã vượt qua phỏng vấn</option>
+                                            <option value="4" selected>Đã vượt qua phỏng vấn</option>
                                         }
                                         else
                                         {

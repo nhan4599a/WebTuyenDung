@@ -34,6 +34,8 @@ namespace WebTuyenDung.Data
         public DbSet<PotentialCandidateCount> PotentialCandidateCount { get; set; }
 
         public DbSet<LikedCurriculumVitae> LikedCVs { get; set; }
+        
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {

@@ -3,6 +3,7 @@
     const isApproved = getQueryParams().isApproved ?? 1;
     
     const userId = $('#user-id').val()
+    const username = $('#username').val()
 
     $.ajax({
         url: `/api/posts/management/${userId}`,
@@ -27,15 +28,14 @@
                 str += "<td>" + (startSTT + index) + "</td>";
                 str += "<td><img src='" + value.image + "' width='50' height='50' ></td>";
                 str += "<td>" + value.title + "</td>";
-                str += "<td>" + value.author + "</td>";
+                str += "<td>" + username + "</td>";
                 str += "<td>" + value.createdAt + "</td>";
                 str += "<td>" + value.view + "</td>";
                 str += `<td><span class="bad bad-success">${isApproved == 0 ? 'Chưa được duyệt' : 'Đã duyệt'}</span></td>`
                 if (isApproved == 0) {
                     str += `<td class="d-flex">
-                                <a class="btn btn-warning" href="/employer/posts/edit/${value.id}">Sửa</a>
-                            </td>`;
-                    str += `<a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a>`;
+                                <a class="btn btn-warning" href="/employer/posts/edit/${value.id}">Sửa</a>`;
+                    str += `<a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a></td>`;
                 } else {
                     str += `<td>
                                 <a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a>
@@ -75,7 +75,7 @@ $("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
     var member_delete = $(this).attr('data-user');
     if (confirm("Bạn có muốn xóa bài viết có Mã = " + member_delete + " này không?")) {
         $.ajax({
-            url: `/posts/delete/${member_delete}`,
+            url: `/api/posts/${member_delete}`,
             type: "DELETE",
             success: () => {
                 location.reload();

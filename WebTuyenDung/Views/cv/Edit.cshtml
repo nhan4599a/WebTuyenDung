@@ -15,37 +15,39 @@
     <script src="~/Assets/Plugins/ckeditor/ckeditor.js"></script>
 
     <script>
-        CKEDITOR.replace("txtMucTieu");
-        CKEDITOR.replace("txtKinhNghiem");
         CKEDITOR.replace("txtKyNang");
-        CKEDITOR.replace("txtHocVan");
         CKEDITOR.replace("txtKyNangMem");
-        CKEDITOR.replace("txtGiaiThuong");
     </script>
     <script src="~/Assets/Client/js/style.js"></script>
     <script>
-        $('#update-cv-form').submit(function(e) {
+        $('#update-cv-form').submit(function (e) {
             e.preventDefault()
             const keyValuePairs = $(this).serializeArray()
-            const data = {}
-            for (var keyValuePair of keyValuePairs) {
-                data[keyValuePair.name] = keyValuePair.value
-            }
-            data.Objective = CKEDITOR.instances['txtMucTieu'].getData()
-            data.Experience = CKEDITOR.instances['txtKinhNghiem'].getData()
-            data.Skills = CKEDITOR.instances['txtKyNang'].getData()
-            data.Education = CKEDITOR.instances['txtHocVan'].getData()
-            data.SoftSkills = CKEDITOR.instances['txtKyNangMem'].getData()
-            data.Rewards = CKEDITOR.instances['txtGiaiThuong'].getData()
+            const thisElement = document.getElementById('update-cv-form')
+            const formData = new FormData(thisElement)
+
+            formData.delete('skills')
+            formData.append('skills', CKEDITOR.instances['txtKyNang'].getData())
+
+            formData.delete('softSkills')
+            formData.append('softSkills', CKEDITOR.instances['txtKyNangMem'].getData())
 
             $.ajax({
                 url: '/cv/edit/@Model.Id',
                 method: 'POST',
-                data: {
-                    data: data
-                },
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: () => {
+                    alert('Cập nhật CV thành công')
                     location.href = '/cv/my-cv'
+                },
+                error: (res) => {
+                    const responseObj = JSON.parse(res.responseText)
+
+                    for (const subErr in responseObj) {
+                        $(`span.text-danger[data-valmsg-for=${subErr}]`).text(responseObj[subErr])
+                    }
                 }
             })
         })
@@ -69,6 +71,17 @@
 
                                 <div class="form-horizontal">
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                    <div class="form-group align-items-center justify-content-center row mt-1">
+                                        @Html.LabelFor(model => model.ImageFile, "Ảnh", new { @class = "control-label col-md-2" })
+                                        <div class="col-md-6">
+                                            <div class="mb-1" id="image_update">
+                                                <img src="/Files/CV/@Model.Image" width="150" height="100" />
+                                            </div>
+                                            <input name="ImageFile" id="ImageFile" type="file" accept="image/*" />
+                                            @Html.ValidationMessageFor(model => model.ImageFile, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
 
                                     <div class="form-group align-items-center justify-content-center row mt-1">
                                         @Html.LabelFor(model => model.Name, "Tên hồ sơ", new { @class = "control-label col-md-2" })
@@ -135,6 +148,14 @@
                                     </div>
 
                                     <div class="form-group align-items-center justify-content-center row">
+                                        @Html.LabelFor(model => model.Introduction, "Giới thiệu bản thân", new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.TextAreaFor(model => model.Introduction, new { @class = "form-control", id = "txtGioiThieu" })
+                                            @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group align-items-center justify-content-center row">
                                         @Html.LabelFor(model => model.Objective, "Mục tiêu nghề ngiệp", new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
                                             @Html.TextAreaFor(model => model.Objective, new { @class = "form-control", id = "txtMucTieu" })
@@ -171,14 +192,6 @@
                                         <div class="col-md-10">
                                             @Html.TextAreaFor(model => model.SoftSkills, new { @class = "form-control", id = "txtKyNangMem" })
                                             @Html.ValidationMessageFor(model => model.SoftSkills, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group align-items-center justify-content-center row">
-                                        @Html.LabelFor(model => model.Rewards, "Giải thưởng đạt được", new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.TextAreaFor(model => model.Rewards, new { @class = "form-control", id = "txtGiaiThuong" })
-                                            @Html.ValidationMessageFor(model => model.Rewards, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 

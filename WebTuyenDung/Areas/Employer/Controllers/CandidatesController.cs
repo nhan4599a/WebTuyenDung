@@ -36,12 +36,12 @@ namespace WebTuyenDung.Areas.Employer.Controllers
             foreach (var job in jobs)
             {
                 var candidates = await _dbContext.PotentialCandidateCount
-                                                .Where(e => e.JobPosition == job)
-                                                .OrderByDescending(e => e.Count)
-                                                .Take(3)
-                                                .Select(e => e.Candidate)
-                                                .ProjectToType<PotentialCandidateViewModel>()
-                                                .ToArrayAsync();
+                                                    .Where(e => e.JobPosition == job)
+                                                    .OrderByDescending(e => e.Count)
+                                                    .Take(3)
+                                                    .Select(e => e.Candidate)
+                                                    .ProjectToType<PotentialCandidateViewModel>()
+                                                    .ToArrayAsync();
 
                 result.Add(job, candidates);
             }

@@ -15,13 +15,12 @@
             var info = `Trang ${pageCurrent} / ${totalPages}`;
             var startSTT = ((pageCurrent - 1) * pageSize) + 1;
             $("#selection-datatable_info").text(info);
-            console.log(response.data)
             $.each(response.data, function (index, value) {
                 str += "<tr>";
                 str += "<td>" + (index + startSTT) + "</td>";
                 str += "<td>" + value.name + "</td>";
                 str += "<td>" + value.phoneNumber + "</td>";
-                str += "<td>" + value.gender + "</td>";
+                str += "<td>" + parseGender(value.gender) + "</td>";
                 str += "<td>" + value.birthDay + "</td>";
                 str += "<td>" + value.address + "</td>";
                 str += '<td style="display: inline-grid;"><a style="min-width: 90px" class="btn btn-success" href="/admin/candidates/' + value.id + '">Xem thông tin</a>';
@@ -61,10 +60,13 @@ $("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
     var userId = $(this).attr('data-user');
     if (confirm("Bạn có muốn xóa ứng viên có Mã = " + userId + " này không?")) {
         $.ajax({
-            url: "/admin/candidates" + userId,
+            url: "/api/users/" + userId,
             type: "DELETE",
             success: () => {
                 location.reload();
+            },
+            error: () => {
+                alert('Ứng viên này đã có thông tin, không thể xóa')
             }
         });
     }

@@ -6,19 +6,18 @@ using WebTuyenDung.Data;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
-using WebTuyenDung.Enums;
-using WebTuyenDung.ViewModels.Admin;
 using WebTuyenDung.ViewModels.Abstraction;
+using WebTuyenDung.ViewModels.Admin;
 
 namespace WebTuyenDung.Areas.Admin.Controllers
 {
     public class CandidatesController : BaseAdminController
     {
-        private readonly RecruimentDbContext dbContext;
+        private readonly RecruimentDbContext _dbContext;
 
         public CandidatesController(RecruimentDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public IActionResult Index()
@@ -29,7 +28,7 @@ namespace WebTuyenDung.Areas.Admin.Controllers
         [HttpGet]
         public Task<IPaginationResult<CandidateViewModel>> Search(SearchRequest searchRequest)
         {
-            IQueryable<Candidate> query = dbContext.Candidates.AsNoTracking();
+            IQueryable<Candidate> query = _dbContext.Candidates.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(searchRequest.Keyword))
             {
@@ -38,5 +37,14 @@ namespace WebTuyenDung.Areas.Admin.Controllers
 
             return query.PaginateAsync<Candidate, CandidateViewModel>(searchRequest);
         }
+
+        [HttpGet("/admin/candidates/{id:int}")]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var candidate = await _dbContext.Candidates.FirstOrDefaultAsync(e => e.Id == id);
+
+            return View(candidate);
+        }
+
     }
 }

@@ -60,7 +60,7 @@
 }
 
 //click delete button
-$("body").on("click", "#datatablesSimple a.btn.btn-danger[data-action]", function (event) {
+$("body").on("click", "#datatablesSimple a.btn[data-action]", function (event) {
     event.preventDefault();
 
     const action = $(this).data('action')

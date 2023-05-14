@@ -1,5 +1,6 @@
 ﻿@using System.Security.Claims;
 @using WebTuyenDung.Areas.Employer.ViewComponents;
+@using WebTuyenDung.Helper;
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -22,7 +23,7 @@
 </head>
 
 <body>
-
+    <input type="hidden" value="@User.GetName()" id="username" />
     <!-- Begin page -->
     <div id="wrapper">
 

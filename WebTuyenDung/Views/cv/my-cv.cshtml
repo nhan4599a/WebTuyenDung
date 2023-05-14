@@ -71,7 +71,7 @@
         const onUploadCVFormSubmit = (e) => {
             e.preventDefault()
 
-            const cvId = $(this).data('id')
+            const cvId = $('#update-cv-form').data('id')
 
             const thisElement = document.getElementById('update-cv-form')
             
@@ -80,7 +80,7 @@
             formData.append('CV', fileInput.files[0])
 
             $.ajax({
-                url: `/cv/edit/${cvId}`,
+                url: `/cv/replace/${cvId}`,
                 method: 'POST',
                 data: formData,
                 processData: false,

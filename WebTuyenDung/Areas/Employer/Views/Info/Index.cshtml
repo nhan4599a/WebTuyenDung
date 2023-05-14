@@ -10,6 +10,10 @@
 }
 
 @section scripts {
+    @if (TempData["popup"] != null)
+    {
+        <script>alert("Cập nhật thông tin thành công")</script>
+    }
     <script src="~/Assets/Client/js/Employer/info.js"></script>
 }
 

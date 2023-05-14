@@ -1,12 +1,17 @@
 ﻿using Mapster;
-using WebTuyenDung.ViewModels.Abstraction;
+using Microsoft.AspNetCore.Http;
 
 namespace WebTuyenDung.ViewModels.User
 {
-    public class CurriculumVitaeDetailViewModel : BaseViewModel
+    public class CurriculumVitaeDetailViewModel
     {
         [AdaptIgnore]
-        public new int Id { get; set; }
+        public int Id { get; set; }
+
+        [AdaptIgnore]
+        public IFormFile? ImageFile { get; set; }
+
+        public string Image { get; set; } = default!;
 
         public string Name { get; set; } = default!;
 
@@ -27,7 +32,5 @@ namespace WebTuyenDung.ViewModels.User
         public string Education { get; set; } = default!;
 
         public string SoftSkills { get; set; } = default!;
-
-        public string? Rewards { get; set; }
     }
 }

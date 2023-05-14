@@ -1,0 +1,76 @@
+﻿@using WebTuyenDung.Enums;
+@using WebTuyenDung.Helper;
+@using WebTuyenDung.Models;
+@model Candidate
+
+@{
+    ViewBag.Title = "Thông tin ứng viên";
+    ViewBag.PrevPage = "Quản lý ứng viên";
+    ViewBag.CurrentPage = $"Thông ứng viên {Model.Name}";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header py-2">
+                    <h4 class="header-title mb-0">Thông tin ứng viên: @Model.Name</h4>
+                </div>
+                <div class="collapse pt-3 show">
+                    <div class="form-horizontal">
+
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.Id, "Mã ứng viên", new { @class = "control-label col-md-2"})
+                            <div class="col-md-6">
+                                @Model.Id
+                            </div>
+                        </div>
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.Name, "Tên ứng viên", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Model.Name
+                            </div>
+                        </div>
+
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.PhoneNumber, "Số điện thoại", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Model.PhoneNumber
+                            </div>
+                        </div>
+
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.Gender, "Giới tính", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Model.Gender.GetRepresentation()
+                            </div>
+                        </div>
+
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.BirthDay, "Nhập ngày sinh", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Model.BirthDay.GetApplicationTimeRepresentation()
+                            </div>
+                        </div>
+
+                        <div class="form-group align-items-center row">
+                            @Html.LabelFor(model => model.Address, "Nhập địa chỉ", new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Model.Address
+                            </div>
+                        </div>
+
+                        <div class="form-group align-items-center row mt-3">
+                            <div class="col-md-2">
+                            </div>
+
+                            <div class="col-md-6">
+                                <a class="btn btn-primary" href="/admin/candidates">Trở về</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

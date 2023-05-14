@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Data;
 using WebTuyenDung.Helper;
@@ -25,9 +26,18 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(Models.Employer employer)
         {
-            _dbContext.Entry(employer).State = EntityState.Modified;
+            await _dbContext.Employers.Where(e => e.Id == employer.Id)
+                            .UpdateFromQueryAsync(e => new Models.Employer
+                            {
+                                Name = employer.Name,
+                                PhoneNumber = employer.PhoneNumber,
+                                Size = employer.Size,
+                                Description = employer.Description,
+                                Address = employer.Address,
+                                Website = employer.Website
+                            });
 
-            await _dbContext.SaveChangesAsync();
+            TempData["popup"] = "Cập nhật thông tin thành công";
 
             return View(employer);
         }
