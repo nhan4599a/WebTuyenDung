@@ -72,8 +72,9 @@ function fetchCVs() {
                     let cvsHtml = ''
 
                     for (let cvItem of data) {
+                        const url = cvItem.url ?? `/cv/${cvItem.id}`
                         cvsHtml += `<input type="radio" name="CVId" value="${cvItem.id}" />
-                                        <a href="${cvItem.url}" target="_blank">${cvItem.name}</a><br>`;
+                                        <a href="${url}" target="_blank">${cvItem.name}</a><br>`;
                     }
 
                     listCVsContainer.html(cvsHtml)

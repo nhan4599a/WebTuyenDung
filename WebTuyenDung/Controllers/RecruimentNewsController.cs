@@ -66,6 +66,17 @@ namespace WebTuyenDung.Controllers
         public async Task<IActionResult> Apply(int id, [FromForm] ApplyJobRequest request)
         {
             var candidateName = User.GetName();
+            var candidateId = User.GetUserId();
+
+            var isAppliedBefore = await DbContext.JobApplications
+                                                .AnyAsync(e => e.CandidateId == candidateId && e.RecruimentNewsId == id);
+
+            if (isAppliedBefore)
+            {
+                TempData["popup"] = "Bạn đã ứng tuyển công việc này rồi, vui lòng theo dõi kết quả";
+                return Redirect($"/recruiment-news/{id}");
+            }
+
             var jobName = await DbContext.RecruimentNews.Where(e => e.Id == id).Select(e => e.JobName).FirstOrDefaultAsync();
 
             if (request.CV != null)
@@ -78,7 +89,7 @@ namespace WebTuyenDung.Controllers
                 {
                     Name = $"{candidateName} - {jobName} - {DateTime.Now:dd/MM/yyyy}",
                     FilePath = cvFilePath,
-                    CandidateId = User.GetUserId(),
+                    CandidateId = candidateId,
                     IsUploadDirectlyByUser = false,
                     Type = CVType.File
                 };
@@ -93,7 +104,7 @@ namespace WebTuyenDung.Controllers
                     {
                         CVId = savedCV.Id,
                         RecruimentNewsId = id,
-                        CandidateId = User.GetUserId(),
+                        CandidateId = candidateId,
                         Status = JobApplicationStatus.Received,
                         CandidateName = candidateName,
                         JobName = jobName!
@@ -111,7 +122,7 @@ namespace WebTuyenDung.Controllers
                     {
                         CVId = request.CVId!.Value,
                         RecruimentNewsId = id,
-                        CandidateId = User.GetUserId(),
+                        CandidateId = candidateId,
                         Status = JobApplicationStatus.Received,
                         CandidateName = candidateName,
                         JobName = jobName!
@@ -120,7 +131,7 @@ namespace WebTuyenDung.Controllers
                 await DbContext.SaveChangesAsync();
             }
 
-            TempData["alert"] = "Ứng tuyển thành công";
+            TempData["popup"] = "Ứng tuyển thành công";
 
             return Redirect($"/recruiment-news/{id}");
         }

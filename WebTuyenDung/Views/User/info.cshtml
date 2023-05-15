@@ -22,6 +22,12 @@
             $('.date').datepicker({
                 format: 'dd/mm/yyyy'
             })
+
+            $('input[name=PhoneNumber]').change(function () {
+                if ($(this).val().length == 10) {
+                    return false
+                }
+            })
         })
     </script>
     @if (popup != null)

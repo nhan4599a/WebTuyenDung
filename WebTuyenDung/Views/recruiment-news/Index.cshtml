@@ -72,11 +72,11 @@
             return false
         })
     </script>
-}
 
-@if (TempData.ContainsKey("alert"))
-{
-    <script>alert(@TempData["alert"])</script>
+    @if (TempData["popup"] != null)
+    {
+        <script>alert('Bạn đã ứng tuyển công việc này rồi, vui lòng theo dõi kết quả')</script>
+    }
 }
 
 <div class="main__fixed bg-img"></div>

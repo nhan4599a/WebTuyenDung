@@ -1,5 +1,7 @@
 ﻿@{
     var avatar = User.GetAvatar();
+
+    var notifications = (ViewData["notifications"] as List<Notification>)!;
 }
 
 <!DOCTYPE html>
@@ -23,6 +25,23 @@
     <link rel="stylesheet" href="~/Assets/Client/css/base.css">
     @RenderSection("css_Main", required: false)
     <link rel="stylesheet" href="~/Assets/Client/css/response.css">
+    <style>
+        #myBtn {
+            background: #97c83e;
+            text-align: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 100%;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none
+        }
+    </style>
 </head>
 <body>
     <div class="app">
@@ -67,6 +86,11 @@
                             }
 
                             <div class="user__info--name"><span>@User.Identity!.Name</span></div>
+                        </div>
+                        <div class="user__info--content">
+                            <div class="user__info--img bg-img">
+                                <button id="myBtn">@notifications.Count</button>
+                            </div>
                         </div>
                         <ul class="user__groups">
                             <li><a href="/user/info">Thông tin cá nhân</a></li>

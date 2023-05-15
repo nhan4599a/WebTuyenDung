@@ -11,7 +11,9 @@ namespace WebTuyenDung.Constants
 
         public const string USER_ID_KEY = ClaimTypes.NameIdentifier;
 
-        public const string USER_FORMAL_NAME_KEY = ClaimTypes.Name;
+        public const string USERNAME_KEY = ClaimTypes.Name;
+
+        public const string USER_FORMAL_NAME_KEY = ClaimTypes.GivenName;
 
         public const string CANDIDATE_BIRTH_DAY_KEY = ClaimTypes.DateOfBirth;
 

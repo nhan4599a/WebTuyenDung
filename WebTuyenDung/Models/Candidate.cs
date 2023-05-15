@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using WebTuyenDung.Enums;
 
 namespace WebTuyenDung.Models
@@ -12,6 +13,7 @@ namespace WebTuyenDung.Models
 
         public string Address { get; set; } = default!;
 
+        [MaxLength(10)]
         public string PhoneNumber { get; set; } = default!;
     }
 }

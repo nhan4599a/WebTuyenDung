@@ -129,9 +129,13 @@ namespace WebTuyenDung.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> Create(CreateCVViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             var candidateId = User.GetUserId();
 
             var isExisted = await DbContext.CVs.AnyAsync(e => e.CandidateId == candidateId && e.Name == viewModel.Name);

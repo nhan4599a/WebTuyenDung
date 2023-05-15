@@ -12,14 +12,19 @@ namespace WebTuyenDung.Helper
 {
     public static class AuthenticationHelper
     {
-        public static string? GetAvatar(this ClaimsPrincipal identity)
-        {
-            return identity.FindFirstValue(AuthenticationConstants.AVATAR_CLAIM_KEY);
-        }
-
         public static int GetUserId(this ClaimsPrincipal identity)
         {
             return int.Parse(identity.FindFirst(AuthenticationConstants.USER_ID_KEY)!.Value);
+        }
+
+        public static string GetUsername(this ClaimsPrincipal identity)
+        {
+            return identity.FindFirstValue(AuthenticationConstants.USERNAME_KEY)!;
+        }
+
+        public static string? GetAvatar(this ClaimsPrincipal identity)
+        {
+            return identity.FindFirstValue(AuthenticationConstants.AVATAR_CLAIM_KEY);
         }
 
         public static string GetName(this ClaimsPrincipal identity)

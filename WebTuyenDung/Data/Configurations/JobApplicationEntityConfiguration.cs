@@ -10,10 +10,7 @@ namespace WebTuyenDung.Data.Configurations
             base.Configure(builder);
 
             builder
-                .HasIndex(e => new { e.RecruimentNewsId, e.Status });
-
-            builder
-                .HasIndex(e => new { e.CandidateId, e.RecruimentNewsId, e.Status })
+                .HasIndex(e => new { e.CandidateId, e.RecruimentNewsId })
                 .IsUnique();
 
             builder

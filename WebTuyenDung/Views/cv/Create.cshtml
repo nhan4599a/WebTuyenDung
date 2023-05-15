@@ -17,6 +17,12 @@
     <script>
         CKEDITOR.replace("txtKyNang");
         CKEDITOR.replace("txtKyNangMem");
+
+        $('#Image').change(() => {
+            const file = document.getElementById('Image').files[0]
+
+            $('#Image-Update').prop('src', URL.createObjectURL(file))
+        })
     </script>
     <script src="~/Assets/Client/js/style.js"></script>
 }
@@ -43,13 +49,8 @@
                                     <div class="form-group align-items-center justify-content-center row mt-1">
                                         @Html.LabelFor(model => model.Image, "Ảnh", new { @class = "control-label col-md-2" })
                                         <div class="col-md-6">
-                                            @if (Model.Image != null)
-                                            {
-                                                <div class="mb-1" id="image_update">
-                                                    <img src="/Files/CV/@Model.Image" width="150" height="100" />
-                                                </div>
-                                            }
                                             <input name="Image" id="Image" type="file" accept="image/*" />
+                                            <img id="Image-Update" src="#" alt="Image" />
                                             @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -103,8 +104,7 @@
                                     <div class="form-group align-items-center justify-content-center row mt-1">
                                         @Html.LabelFor(model => model.Email, "Mail liên lạc", new { @class = "control-label col-md-2" })
                                         <div class="col-md-6">
-                                            @Html.EditorFor(model => model.Email
-                                            , new { htmlAttributes = new { @class = "form-control" } })
+                                            <input id="Email" name="Email" class="form-control" value="@User.GetUsername()" />
                                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                         </div>
                                     </div>

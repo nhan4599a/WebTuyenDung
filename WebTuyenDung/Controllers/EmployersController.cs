@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using WebTuyenDung.Attributes;
 using WebTuyenDung.Data;
 using WebTuyenDung.Enums;
 using WebTuyenDung.Services;
@@ -20,6 +21,7 @@ namespace WebTuyenDung.Controllers
             _fileService  = fileService;
         }
 
+        [SharedAction]
         public async Task<IActionResult> Index(int id)
         {
             var viewModel = await DbContext.Employers
