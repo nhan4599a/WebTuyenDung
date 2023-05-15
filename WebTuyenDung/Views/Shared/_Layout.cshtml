@@ -55,7 +55,7 @@
                     </a>
                 </div>
             </div>
-            <div class="row align-items-center justify-content-start">
+            <div class="align-items-center">
                 <nav class="header__navbar">
                     <ul class="header__navbar--list">
                         <li class="header__navbar--item active">
@@ -79,13 +79,13 @@
                         
                 </nav>
             </div>
-            <div class="row align-items-center justify-content-end">
+            <div class="col-md-8 align-items-center d-flex justify-content-end">
                 <div class="user__info--content">
                     <div class="user__info--img bg-img">
                         <button id="myBtn">@notifications.Count</button>
                     </div>
                 </div>
-                <ul class="user__groups">
+                <ul id="notificaton" class="user__groups">
                     <li><a href="/user/info">Thông tin cá nhân</a></li>
                     <li><a href="/user/change-password">Đổi mật khẩu</a></li>
                     <li><a href="/saved-jobs">Tin tuyển dụng đã lưu</a></li>
@@ -93,7 +93,7 @@
                     <li><a href="#" id="sign-out">Đăng xuất</a></li>
                 </ul>
             </div>
-            <div class="row align-items-center">
+            <div class="align-items-center d-flex justify-content-end">
                 @if (User.Identity!.IsAuthenticated)
                     {
                         <div class="header__user--info">
