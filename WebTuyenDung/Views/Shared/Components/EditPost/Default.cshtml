@@ -1,9 +1,13 @@
-﻿@using WebTuyenDung.Constants;
+﻿@using System.Text.Json;
+@using WebTuyenDung.Constants;
 @model Post
 
 @{
     var areaName = TempData.Peek(ViewConstants.VIEW_AREA);
     var backToPreviousPageUrl = areaName + "/posts";
+
+    var rawError = TempData["error"] as string;
+    var error = rawError == null ? null : JsonSerializer.Deserialize<HashSet<string>>(rawError);
 }
 
 <div class="row">
@@ -25,7 +29,10 @@
                                 @Html.LabelFor(model => model.Title, "Tên bài viết", new { @class = "control-label col-md-2" })
                                 <div class="col-md-6">
                                     @Html.TextAreaFor(model => model.Title, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                    @if (error != null && error.Contains("Title"))
+                                    {
+                                        <span class="text-danger">Title cannot be empty</span>
+                                    }
                                 </div>
                             </div>
 
@@ -39,6 +46,10 @@
                                         </div>
                                     }
                                     <input name="Image" id="Image" type="file" accept="image/*" />
+                                    @if (error != null && error.Contains("Image"))
+                                    {
+                                        <span class="text-danger">Image must be selected</span>
+                                    }
                                 </div>
                             </div>
 
@@ -46,7 +57,10 @@
                                 @Html.LabelFor(model => model.Content, "Nội dung", new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @Html.TextAreaFor(model => model.Content, new { @class = "form-control", id = "txtNoiDung" })
-                                    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                                    @if (error != null && error.Contains("Content"))
+                                    {
+                                        <span class="text-danger">Content cannot be empty</span>
+                                    }
                                 </div>
                             </div>
 

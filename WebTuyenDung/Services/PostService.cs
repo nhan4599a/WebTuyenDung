@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using WebTuyenDung.Constants;
 using WebTuyenDung.Data;
@@ -28,6 +30,8 @@ namespace WebTuyenDung.Services
 
             if (!controller.ModelState.IsValid)
             {
+                var keyHasError = controller.ModelState.Where(e => (e.Value?.Errors.Count ?? 0) >= 1).Select(e => e.Key).ToHashSet();
+                controller.TempData["error"] = JsonSerializer.Serialize(keyHasError);
                 return controller.Redirect($"/{areaName}/posts/create");
             }
 
@@ -53,6 +57,8 @@ namespace WebTuyenDung.Services
 
             if (!controller.ModelState.IsValid)
             {
+                var keyHasError = controller.ModelState.Where(e => (e.Value?.Errors.Count ?? 0) >= 1).Select(e => e.Key).ToHashSet();
+                controller.TempData["error"] = JsonSerializer.Serialize(keyHasError);
                 return controller.Redirect($"/{areaName}/posts/edit/{updatePostViewModel.Id}");
             }
 
