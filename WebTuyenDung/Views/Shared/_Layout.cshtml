@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="~/Assets/Client/css/response.css">
     <style>
         #myBtn {
-            background: #97c83e;
+            background: #607d8b;
             text-align: center;
             width: 45px;
             height: 45px;
@@ -37,10 +37,68 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-size: 20px;
+            font-size: 18px;
             color: white;
             font-weight: bold;
             text-decoration: none
+        }
+
+        .dropdown {
+            float: right;
+            margin-right: 115px;
+            overflow: hidden;
+        }
+
+            .dropdown .dropbtn {
+                font-size: 16px;
+                border: none;
+                outline: none;
+                color: white;
+                padding: 14px 16px;
+                background-color: #ff0000;
+                font-family: inherit;
+                margin: 0;
+            }
+
+        .dropbtn:hover {
+            cursor: pointer;
+        }
+
+        .dropdown:hover {
+            text-decoration: none;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 83%;
+            background-color: #413f3f !important;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            opacity: 0;
+            -webkit-transition: opacity .3s ease-in;
+            -moz-transition: opacity .3s ease-in;
+            -o-transition: opacity .3s ease-in;
+            transition: opacity .3 ease-in;
+        }
+
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 14px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .show {
+            display: block;
+            opacity: 1;
+            z-index: 11;
         }
     </style>
 </head>
@@ -48,97 +106,92 @@
     <div class="app">
         <!-- Header -->
         <header class="header row" id="header">
-            <div class="row align-items-center">
-                <div class="header__logo">
-                    <a href="/" class="header__logo--link">
-                        <img src="~/Assets/Client/img/logo.jpg" />
-                    </a>
-                </div>
+            <div class="header__logo">
+                <a href="/" class="header__logo--link">
+                    <img src="~/Assets/Client/img/logo.jpg" />
+                </a>
             </div>
-            <div class="align-items-center">
-                <nav class="header__navbar">
-                    <ul class="header__navbar--list">
-                        <li class="header__navbar--item active">
-                            <a href="/" rel="noopener">Trang chủ</a>
-                        </li>
-                        <li class="header__navbar--item">
-                            <a href="javascript:void(0)">
-                                Hồ sơ & CV
-                                <i class="fas fa-chevron-down"></i>
-                            </a>
-                            <ul class="header__subnav">
-                                <li><a href="/cv/my-cv">Quản lý CV</a></li>
-                                <li><a href="/cv/create">Tạo CV</a></li>
-                            </ul>
-                        </li>
-                        <li class="header__navbar--item">
-                            <a href="/jobs">Tìm việc làm</a>
-                        </li>
-                    </ul>
-
-                        
-                </nav>
-            </div>
-            <div class="col-md-8 align-items-center d-flex justify-content-end">
-                <div class="user__info--content">
-                    <div class="user__info--img bg-img">
-                        <button id="myBtn">@notifications.Count</button>
-                    </div>
-                </div>
-                <ul id="notificaton" class="user__groups">
-                    <li><a href="/user/info">Thông tin cá nhân</a></li>
-                    <li><a href="/user/change-password">Đổi mật khẩu</a></li>
-                    <li><a href="/saved-jobs">Tin tuyển dụng đã lưu</a></li>
-                    <li><a href="/job-application-histories">Lịch sử ứng tuyển</a></li>
-                    <li><a href="#" id="sign-out">Đăng xuất</a></li>
+            <nav class="header__navbar">
+                <ul class="header__navbar--list">
+                    <li class="header__navbar--item active">
+                        <a href="/" target="_blank" rel="noopener">Trang chủ</a>
+                    </li>
+                    <li class="header__navbar--item">
+                        <a href="javascript:void(0)">
+                            Hồ sơ & CV
+                            <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <ul class="header__subnav">
+                            <li><a href="/cv/my-cv">Quản lý CV</a></li>
+                            <li><a href="/cv/create">Tạo CV</a></li>
+                        </ul>
+                    </li>
+                    <li class="header__navbar--item">
+                        <a href="/jobs">Tìm việc làm</a>
+                    </li>
                 </ul>
-            </div>
-            <div class="align-items-center d-flex justify-content-end">
+
+
+
                 @if (User.Identity!.IsAuthenticated)
-                    {
-                        <div class="header__user--info">
-                            <div class="user__info--content">
-                                @if (avatar != null)
-                                {
-                                    <div class="user__info--img bg-img" style="background-image: url(@avatar);"></div>
-                                }
-                                else
-                                {
-                                    <div class="user__info--img bg-img" style="background-image: url(../../Assets/Client/img/Candidate/user-default.png);"></div>
-                                }
-
-                                <div class="user__info--name"><span>@User.Identity!.Name</span></div>
-                            </div>
-                            <ul class="user__groups">
-                                <li><a href="/user/info">Thông tin cá nhân</a></li>
-                                <li><a href="/user/change-password">Đổi mật khẩu</a></li>
-                                <li><a href="/saved-jobs">Tin tuyển dụng đã lưu</a></li>
-                                <li><a href="/job-application-histories">Lịch sử ứng tuyển</a></li>
-                                <li><a href="#" id="sign-out">Đăng xuất</a></li>
-                                <form action="/authentication/sign-out" method="post" style="display: none" id="sign-out-form">
-                                    @Html.AntiForgeryToken()
-                                </form>
-                            </ul>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="header__navbar--login">
-                            <div class="header__login--item">
-                                <a href="/admin">ADMIN</a>
-                            </div>
-                            <div class="header__login--item">
-                                <a id="btn-login" href="#">ỨNG VIÊN</a>
-                            </div>
-                            <div class="header__login--item">
-                                <a href="/employer">NHÀ TUYỂN DỤNG</a>
+                {
+                    <div class="col-sm-7 header__ruser--info">
+                        <div class="user__info--content d-flex justify-content-end">
+                            <div class="col-userinfo--img bg-img dropdown">
+                                <button class="dropbtn" id="myBtn" onclick="myFunction()">0</button>
                             </div>
                         </div>
-                    }
+                        <div class="dropdown-content" id="myDropdown">
+                            <a href="#" style="color: white;">Info</a>
+                            <a href="#" style="color: white;">Last news</a>
+                        </div>
+                    </div>
+                    <div class="header__user--info">
+                        <div class="user__info--content">
+                            @if (avatar != null)
+                            {
+                                <div class="user__info--img bg-img" style="background-image: url(@avatar);"></div>
+                            }
+                            else
+                            {
+                                <div class="user__info--img bg-img" style="background-image: url(../../Assets/Client/img/Candidate/user-default.png);"></div>
+                            }
 
+                            <div class="user__info--name"><span>@User.Identity!.Name</span></div>
+                        </div>
+                        <ul class="user__groups">
+                            <li><a href="/user/info">Thông tin cá nhân</a></li>
+                            <li><a href="/user/change-password">Đổi mật khẩu</a></li>
+                            <li><a href="/saved-jobs">Tin tuyển dụng đã lưu</a></li>
+                            <li><a href="/job-application-histories">Lịch sử ứng tuyển</a></li>
+                            <li><a href="#" id="sign-out">Đăng xuất</a></li>
+                            <form action="/authentication/sign-out" method="post" style="display: none" id="sign-out-form">
+                                @Html.AntiForgeryToken()
+                            </form>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <div class="header__navbar--login">
+                        <div class="header__login--item">
+                            <a href="/admin">ADMIN</a>
+                        </div>
+                        <div class="header__login--item">
+                            <a id="btn-login" href="#">ỨNG VIÊN</a>
+                        </div>
+                        <div class="header__login--item">
+                            <a href="/employer">NHÀ TUYỂN DỤNG</a>
+                        </div>
+                    </div>
+                }
+
+            </nav>
+
+            <!-- Navbar Mobile -->
+            <div class="header__icon--bars">
+                <div class="fas fa-bars"></div>
             </div>
-            
-            
             <div class="header__navbar--menu">
                 <div class="header__navbar--close">
                 </div>
@@ -164,11 +217,6 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-
-            <!-- Navbar Mobile -->
-            <div class="header__icon--bars">
-                <div class="fas fa-bars"></div>
             </div>
 
         </header>
@@ -268,6 +316,25 @@
 
             location.href = `/authentication/sign-in?ReturnUrl=${returnUrl}`
         })
+    </script>
+
+    <script>
+        function myFunction() {
+            $('#myDropdown').toggleClass('show');
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
     </script>
 </body>
 </html>
