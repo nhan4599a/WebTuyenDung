@@ -21,7 +21,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">*@
     <link rel="stylesheet" href="~/Assets/Client/css/grid.css">
     <link rel="stylesheet" href="~/Assets/Client/css/base.css">
     @RenderSection("css_Main", required: false)
@@ -134,8 +134,8 @@
                 @if (User.Identity!.IsAuthenticated)
                 {
                     <div class="col-sm-7 header__ruser--info">
-                        <div class="user__info--content d-flex justify-content-end" style="margin-left: 0">
-                            <div class="col-userinfo--img bg-img dropdown">
+                        <div class="user__info--content" style="margin-left: 0; float: right">
+                            <div class="col-userinfo--img bg-img dropdown" style="margin-left: 0; display:contents">
                                 <button class="dropbtn" id="myBtn" onclick="myFunction()">@notifications.Length</button>
                             </div>
                         </div>

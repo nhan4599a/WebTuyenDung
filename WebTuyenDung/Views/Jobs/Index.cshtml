@@ -46,13 +46,6 @@
 }
 
 <div class="main__fixed bg-img"></div>
-<div class="main__search">
-    <div class="main__search--wrapper grid wide">
-        @*@{
-        Html.RenderAction("_ViewSearch", "Home");
-        }*@
-    </div>
-</div>
 
 <div class="main_result">
     <div class="main__result--wrapper grid wide">
@@ -66,9 +59,7 @@
         </ul>
         <form class="main__result--search row" method="get">
             <div class="search__item col l-3 m-3 c-6">
-                <select class="form-control text-box single-line selectpicker"
-                        data-live-search="true" data-val="true"
-                        id="position" name="position">
+                <select class="form-control" id="position" name="position">
                     <option value="" selected="@(position.Count == 0)">-- Chọn vị trí cần tuyển --</option>
                     <option value="0" selected="@(position.Count > 0 && position[0] == "0")">
                         Business Analyst
@@ -96,9 +87,7 @@
                 <span class="text-danger" style="display: none"></span>
             </div>
             <div class="search__item col l-3 m-3 c-6">
-                <select class="form-control text-box single-line selectpicker"
-                        data-live-search="true" data-val="true" id="jobType"
-                        name="jobType">
+                <select class="form-control" id="jobType" name="jobType">
                     <option value="" selected="@(jobType.Count == 0)">
                         -- Chọn hình thức làm việc --
                     </option>
@@ -110,7 +99,7 @@
                 </select>
             </div>
             <div class="search__item col l-3 m-3 c-6">
-                <select class="form-control text-box single-line selectpicker" data-live-search="true" name="salary">
+                <select class="form-control" name="salary">
                     <option value="" selected="@(salary.Count == 0)">-- Chọn mức lương --</option>
                     <option value="Dưới 3 triệu" selected="@(salary.Count > 0 && salary[0] == "Dưới 3 triệu")">Dưới 3 triệu</option>
                     <option value="3 - 5 triệu" selected="@(salary.Count > 0 && salary[0] == "3 - 5 triệu")">3 - 5 triệu</option>
@@ -120,7 +109,7 @@
                     <option value="Thỏa thuận" selected="@(salary.Count > 0 && salary[0] == "Thỏa thuận")">Thỏa thuận</option>
                 </select>
             </div>
-            <button class="btn btn-primary" style="margin-left: 15px" type="submit">Seach</button>
+            <button class="btn btn-primary" style="margin-left: 15px; height: fit-content" type="submit">Seach</button>
         </form>
         <div class="main__result--total">
             <p class="result__total--content">
