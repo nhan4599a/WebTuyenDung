@@ -39,6 +39,7 @@ namespace WebTuyenDung.Migrations
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("FilePath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -80,6 +81,14 @@ namespace WebTuyenDung.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BirthDay")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CVId")
                         .HasColumnType("int");
 
@@ -104,6 +113,9 @@ namespace WebTuyenDung.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte>("Gender")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("Introduction")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -112,6 +124,10 @@ namespace WebTuyenDung.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Objective")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -71497,7 +71513,7 @@ namespace WebTuyenDung.Migrations
                         {
                             Id = 1,
                             Content = "<p>8 XU HƯỚNG TIẾP THỊ TR&Ecirc;N MẠNG X&Atilde; HỘI Đ&Aacute;NG CH&Uacute; &Yacute; TRONG NĂM 2022</p>",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 504, DateTimeKind.Unspecified).AddTicks(2139), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(8023), new TimeSpan(0, 7, 0, 0, 0)),
                             CreatedBy = 1,
                             Image = "blog_1224504607.jpg",
                             IsApproved = true,
@@ -71509,7 +71525,7 @@ namespace WebTuyenDung.Migrations
                         {
                             Id = 2,
                             Content = "<p>Ng&agrave;y nay, c&ugrave;ng với xu thế ph&aacute;t triển mạnh mẽ của kỹ thuật c&ocirc;ng nghệ m&agrave; nhiều doanh nghiệp đ&atilde; tiến h&agrave;nh &aacute;p dụng phương thức tiếp nhận CV online, mở ra nhiều cơ hội cho c&aacute;c ứng vi&ecirc;n. Tuy nhi&ecirc;n, do đặc th&ugrave; của phương thức n&agrave;y m&agrave; c&aacute;ch thể hiện nội dung v&agrave; c&aacute;ch tr&igrave;nh b&agrave;y bố cục CV c&oacute; nhiều kh&aacute;c biệt; nếu bạn kh&ocirc;ng c&oacute; sự chuẩn bị chu đ&aacute;o th&igrave; nguy cơ CV bị lờ đi l&agrave; rất lớn.</p><ul><li><a href=\"https://nghenghiep.timviecnhanh.com/huong-dan-ca-nhan-tu-quyet-toan-thue-tncn-nam-2022/\">Hướng dẫn c&aacute; nh&acirc;n tự quyết to&aacute;n thuế TNCN năm 2022</a></li><li><a href=\"https://nghenghiep.timviecnhanh.com/5-luu-y-ung-vien-can-chuan-bi-truoc-buoi-phong-van/\">5 lưu &yacute; ứng vi&ecirc;n cần chuẩn bị trước buổi phỏng vấn</a></li></ul><p><strong>C&aacute;ch để c&oacute; một ti&ecirc;u đề CV thu h&uacute;t nhất</strong></p><p>Do đ&oacute;, để CV trở n&ecirc;n đặc biệt v&agrave; thu h&uacute;t sự ch&uacute; &yacute; của nh&agrave; tuyển dụng, đồng thời tr&aacute;nh trường hợp bị &ldquo;delete&rdquo; khỏi danh s&aacute;ch ứng vi&ecirc;n th&igrave; việc chuẩn bị 1 hồ sơ CV chuy&ecirc;n nghiệp v&agrave; 1 ti&ecirc;u đề CV ho&agrave;n hảo sẽ đ&oacute;ng vai tr&ograve; quyết định.</p><p>Kh&aacute;c với c&aacute;ch nộp&nbsp;<a target=\"_blank\" href=\"https://www.timviecnhanh.com/nguoi-tim-viec/mau-cv-xin-viec\">CV xin việc</a>&nbsp;bản cứng khi nh&agrave; tuyển dụng sẽ trực tiếp xem qua nội dung trong CV của bạn, việc nộp CV online qua mail th&igrave; ti&ecirc;u đề CV cũng như ti&ecirc;u đề Email sẽ l&agrave; yếu tố thu h&uacute;t nh&agrave; tuyển dụng đầu ti&ecirc;n. Qua đ&oacute; dựa tr&ecirc;n c&aacute;ch bạn thể hiện ti&ecirc;u đề m&agrave; nh&agrave; tuyển dụng quyết định sẽ tiếp tục xem tiếp CV của bạn hay sẽ x&oacute;a n&oacute; m&agrave; kh&ocirc;ng c&aacute;ch kh&ocirc;ng bận t&acirc;m.</p><p>&nbsp;</p><p>Ti&ecirc;u đề CV l&agrave; điểm thu h&uacute;t nh&agrave; tuyển dụng đầu ti&ecirc;n</p><p>Ch&iacute;nh v&igrave; thế h&atilde;y thể hiện một ti&ecirc;u đề CV chuy&ecirc;n nghiệp, ngắn gọn v&agrave; đầy đủ nội dung để thu h&uacute;t nh&agrave; tuyển dụng; bạn n&ecirc;n n&ecirc;u r&otilde; vị tr&iacute; ứng tuyển trong ti&ecirc;u đề mail để nh&agrave; tuyển dụng dễ d&agrave;ng theo d&otilde;i. V&iacute; dụ bạn c&oacute; thể ghi như sau: &ldquo;Đơn xin ứng tuyển vị tr&iacute; Trưởng ph&ograve;ng Nh&acirc;n sự c&ocirc;ng ty ABC&rdquo;. Bạn n&ecirc;n tr&aacute;nh trường hợp đặt c&aacute;c ti&ecirc;u đề ngắn gọn, trổng kh&ocirc;ng như &ldquo;CV&rdquo;, &ldquo;Đơn xin việc&rdquo;,&hellip;</p><p><strong>&nbsp;Viết ti&ecirc;u đề CV ấn tượng đến nh&agrave; tuyển dụng</strong></p><p>Tiếp đến, để thu h&uacute;t nh&agrave; tuyển dụng quan t&acirc;m v&agrave; đọc hết nội dung của CV, bạn h&atilde;y tr&igrave;nh b&agrave;y c&aacute;c đề mục nội dung thật bắt mắt v&agrave; khoa học. C&aacute;ch viết CV ấn tượng đ&ograve;i hỏi bạn phải đảm bảo đầy đủ th&ocirc;ng tin m&agrave; nh&agrave; tuyển dụng cần, c&aacute;ch tr&igrave;nh b&agrave;y hợp l&yacute; để nh&agrave; tuyển dụng dễ theo d&otilde;i v&agrave; nắm bắt th&ocirc;ng tin. Th&ocirc;ng thường một CV thường bao gồm 6 đề mục: Th&ocirc;ng tin c&aacute; nh&acirc;n, Mục ti&ecirc;u nghề nghiệp, Tr&igrave;nh độ học vấn, Kinh nghiệm l&agrave;m việc, Hoạt động ngoại kh&oacute;a v&agrave; Kỹ năng.</p><p>Đối với phần th&ocirc;ng tin c&aacute; nh&acirc;n, bạn n&ecirc;n thể hiện đầy đủ th&ocirc;ng tin về họ t&ecirc;n, ng&agrave;y th&aacute;ng năm sinh, số điện thoại, email v&agrave; địa chỉ li&ecirc;n hệ để gi&uacute;p nh&agrave; tuyển dụng dễ d&agrave;ng li&ecirc;n hệ khi bạn đạt y&ecirc;u cầu.</p><p>N&ecirc;n sử dụng c&aacute;c địa chỉ email nghi&ecirc;m t&uacute;c li&ecirc;n quan đến họ t&ecirc;n của bạn, tr&aacute;nh sử dụng c&aacute;c mail thiếu ngi&ecirc;m t&uacute;c như&nbsp;congchua_bongbong@gmail.com.&nbsp;Sử dụng h&igrave;nh ảnh ch&iacute;nh diện, thể hiện r&otilde; khu&ocirc;n mặt trực diện, tr&aacute;nh c&aacute;c kiểu tạo d&aacute;ng kh&ocirc;ng ph&ugrave; hợp.</p><p>&nbsp;</p><p>Nh&agrave; tuyển dụng thường đ&aacute;nh gi&aacute; cao những ứng vi&ecirc;n biết l&ecirc;n kế hoạch v&agrave; mục ti&ecirc;u r&otilde; r&agrave;ng</p><p>Mục ti&ecirc;u c&ocirc;ng việc ch&iacute;nh l&agrave; phần quan trọng nhất, dựa v&agrave;o đ&acirc;y để nh&agrave; tuyển dụng đ&aacute;nh gi&aacute; xem liệu ứng vi&ecirc;n c&oacute; hiểu v&agrave; định hướng được c&ocirc;ng việc trong tương lai hay kh&ocirc;ng. Do đ&oacute; nh&agrave; tuyển dụng thường đ&aacute;nh gi&aacute; cao những ứng vi&ecirc;n biết l&ecirc;n kế hoạch v&agrave; c&oacute; mục ti&ecirc;u r&otilde; r&agrave;ng cho sự nghiệp.</p><p>Ch&iacute;nh v&igrave; thể h&atilde;y tập trung thể hiện c&aacute;c mục ti&ecirc;u ngắn hạn, d&agrave;i hạn v&agrave; tập trung v&agrave;o c&aacute;c mục ti&ecirc;u hướng đến lợi &iacute;ch của c&ocirc;ng ty để họ thấy rằng tuyển dụng bạn sẽ c&oacute; nhiều lợi &iacute;ch cho c&ocirc;ng ty.</p><p>Đối với Tr&igrave;nh độ học vấn, bạn n&ecirc;n n&ecirc;u t&oacute;m tắt ngắn gọn về qu&aacute; tr&igrave;nh học tập của m&igrave;nh bao gồm t&ecirc;n trường, chuy&ecirc;n ng&agrave;nh, thời điểm nhập học v&agrave; tốt nghiệp, bạn cũng n&ecirc;n m&ocirc; tả th&ecirc;m về c&aacute;c th&agrave;nh t&iacute;ch đạt được trong qu&aacute; tr&igrave;nh học tập cũng như điểm số tốt nghiệp để l&agrave; nổi bật hơn CV của m&igrave;nh.</p><p><strong>Viết một mẫu CV online ấn tượng nhất cho nh&agrave; tuyển dụng</strong></p><p>Một trong những c&aacute;ch viết CV xin việc online chuy&ecirc;n nghiệp ch&iacute;nh l&agrave; việc thể hiện kinh nghiệm l&agrave;m việc của bạn th&acirc;n. H&atilde;y tr&igrave;nh b&agrave;y cho nh&agrave; tuyển dụng biết về qu&aacute; tr&igrave;nh l&agrave;m việc trước đ&acirc;y của m&igrave;nh theo tr&igrave;nh tự thời gian; n&ecirc;u r&otilde; t&ecirc;n c&ocirc;ng ty, vị tr&iacute; v&agrave; thời gian l&agrave;m việc, đồng thời n&ecirc;u r&otilde; c&aacute;c th&agrave;nh t&iacute;ch, kỹ năng v&agrave; kinh nghiệm m&agrave; m&igrave;nh đạt được trong qu&aacute; tr&igrave;nh l&agrave;m việc tại những c&ocirc;ng ty n&agrave;y.</p><p>&nbsp;</p><p>B&iacute; quyết để viết CV v&agrave; đơn xin việc chuy&ecirc;n nghiệp</p><p>C&ugrave;ng với việc xem x&eacute;t c&aacute;c Hoạt động ngoại kh&oacute;a m&agrave; bạn tham gia cũng như c&aacute;c kỹ năng m&agrave; bạn tr&igrave;nh b&agrave;y trong CV m&agrave; nh&agrave; tuyển dụng c&oacute; thể đ&aacute;nh gi&aacute; được năng lực v&agrave; xem x&eacute;t xem liệu bạn c&oacute; ph&ugrave; hợp với vị tr&iacute; tuyển dụng hay kh&ocirc;ng.</p><p>T&oacute;m lại, CV l&agrave; một phần rất quan trọng đối với mỗi ứng vi&ecirc;n khi đi xin việc, n&oacute; như chiếc cầu nối th&ocirc;ng tin giữa nh&agrave; tuyển dụng v&agrave; ứng vi&ecirc;n. Do đ&oacute;, để gia tăng cơ hội tr&uacute;ng tuyển, h&atilde;y chuẩn bị một CV chuy&ecirc;n nghiệp với đầy đủ th&ocirc;ng tin v&agrave; một ti&ecirc;u đề CV bắt mắt để thu h&uacute;t nh&agrave; tuyển dụng c&aacute;c bạn nh&eacute;!</p>",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 504, DateTimeKind.Unspecified).AddTicks(2146), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(8027), new TimeSpan(0, 7, 0, 0, 0)),
                             CreatedBy = 1,
                             Image = "55a96e2911ecde2ae15b6e49e822f14f224954760.png",
                             IsApproved = true,
@@ -71521,7 +71537,7 @@ namespace WebTuyenDung.Migrations
                         {
                             Id = 3,
                             Content = "<p><strong>Để tiến gần hơn tới cơ hội nghề nghiệp CNTT n&oacute;i chung v&agrave; vai tr&ograve;&nbsp;<a target=\"_blank\" href=\"https://vn.joboko.com/t%C3%ACm-vi%E1%BB%87c-l%C3%A0m-l%E1%BA%ADp+tr%C3%ACnh+vi%C3%AAn\">lập tr&igrave;nh vi&ecirc;n</a>&nbsp;n&oacute;i ri&ecirc;ng, mỗi ứng vi&ecirc;n cần biết c&aacute;ch thể hiện tốt mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n trong CV cũng như khi trao đổi với nh&agrave; tuyển dụng trong buổi phỏng vấn.</strong></p><p>Trong CV xin việc lập tr&igrave;nh vi&ecirc;n, phần mục ti&ecirc;u nghề nghiệp chỉ l&agrave; một phần kh&aacute; ngắn m&agrave; trong cuộc phỏng vấn th&igrave; nh&agrave; tuyển dụng cũng c&oacute; thể chỉ hỏi bạn 1, 2 c&acirc;u về mục ti&ecirc;u v&agrave; định hướng ph&aacute;t triển sự nghiệp m&agrave; th&ocirc;i. Tuy nhi&ecirc;n, nếu t&igrave;m hiểu kỹ bạn sẽ hiểu rằng, những nội dung tưởng chừng như kh&ocirc;ng mấy quan trọng n&agrave;y thực chất lại c&oacute; vai tr&ograve; quyết định bạn c&oacute; tr&uacute;ng tuyển hay kh&ocirc;ng. C&ocirc;ng việc lập tr&igrave;nh vi&ecirc;n c&oacute; những đặc điểm kh&aacute;c biệt n&ecirc;n bạn cần t&igrave;m hiểu c&aacute;ch viết, c&aacute;ch n&oacute;i về&nbsp;<a target=\"_blank\" href=\"https://vn.joboko.com/blog/cach-tra-loi-muc-tieu-cong-viec-cua-ban-trong-3-nam-toi-la-gi-nsi515\">mục ti&ecirc;u nghề nghiệp</a>&nbsp;lập tr&igrave;nh vi&ecirc;n ch&iacute;nh x&aacute;c, thuyết phục.</p><p><strong>I. Mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n l&agrave; g&igrave;?</strong></p><p>Mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n hiểu đơn giản l&agrave; mục ti&ecirc;u ngắn hạn v&agrave; d&agrave;i hạn của những ứng vi&ecirc;n t&igrave;m kiếm việc l&agrave;m v&agrave; ph&aacute;t triển sự nghiệp từ vai tr&ograve; lập tr&igrave;nh vi&ecirc;n. Bạn c&oacute; thể l&agrave;&nbsp;<a target=\"_blank\" href=\"https://vn.joboko.com/t%C3%ACm-vi%E1%BB%87c-l%C3%A0m-l%E1%BA%ADp+tr%C3%ACnh+vi%C3%AAn+web\">lập tr&igrave;nh vi&ecirc;n web</a>, lập tr&igrave;nh vi&ecirc;n .NET hay lập tr&igrave;nh vi&ecirc;n Android, PHP,... nhưng điều quan trọng l&agrave; bạn muốn đạt được những g&igrave; từ c&ocirc;ng việc đ&oacute;? Th&agrave;nh c&ocirc;ng t&igrave;m được việc l&agrave;m lập tr&igrave;nh vi&ecirc;n lương cao, trong doanh nghiệp lớn hay c&oacute; vị thế v&agrave; danh tiếng trong ng&agrave;nh với những sản phẩm phần mềm v&agrave; ứng dụng, game chất lượng nhất? Bạn muốn thăng tiến l&ecirc;n gi&aacute;m đốc CNTT sau 7 - 10 năm nữa? Đ&oacute; l&agrave; những v&iacute; dụ dễ hiểu nhất về mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n.</p><p><strong>II. C&aacute;ch x&aacute;c định mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n</strong></p><p><strong>1. Tầm quan trọng của việc x&aacute;c định mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n</strong></p><p>Việc x&aacute;c định đ&uacute;ng mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n mang lại cho bạn những lợi &iacute;ch đ&aacute;ng kể, điển h&igrave;nh như:</p><ul><li>Hiểu r&otilde; về mong muốn, tham vọng của bản th&acirc;n, từ đ&oacute; c&oacute; động lực để phấn đấu ph&aacute;t triển sự nghiệp lập tr&igrave;nh vi&ecirc;n cũng như sự nghiệp CNTT n&oacute;i chung.</li><li>C&oacute; sự chuẩn bị sẵn s&agrave;ng cho c&aacute;c mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n của m&igrave;nh: Bắt đầu t&igrave;m việc l&agrave;m trong vai tr&ograve; lập tr&igrave;nh vi&ecirc;n ph&ugrave; hợp, c&oacute; định hướng lựa chọn doanh nghiệp để c&oacute; thể ph&aacute;t triển bản th&acirc;n, x&acirc;y dựng nền tảng vững chắc, học những chứng chỉ li&ecirc;n quan...</li><li>C&oacute; th&ocirc;ng tin r&otilde; r&agrave;ng về mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n để viết trong&nbsp;<a target=\"_blank\" href=\"https://vn.joboko.com/mau-cv-xin-viec-tao-cv\">CV xin việc</a>&nbsp;v&agrave; trả lời phỏng vấn, chứng minh bạn l&agrave; ứng vi&ecirc;n ph&ugrave; hợp nhất với c&ocirc;ng ty (v&igrave; mục ti&ecirc;u c&aacute; nh&acirc;n gắn với mục ti&ecirc;u chung).</li></ul><p><strong>2. C&aacute;c bước x&aacute;c định mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n</strong></p><p>R&otilde; r&agrave;ng, việc hiểu v&agrave; ki&ecirc;n định với mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n gi&uacute;p &iacute;ch được rất nhiều cho qu&aacute; tr&igrave;nh&nbsp;<a target=\"_blank\" href=\"https://vn.joboko.com/\">t&igrave;m việc l&agrave;m</a>&nbsp;cũng như x&acirc;y dựng sự nghiệp l&acirc;u d&agrave;i. Để t&igrave;m ra mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n cả trong ngắn hạn v&agrave; d&agrave;i hạn, bạn n&ecirc;n:</p><ul><li>Đ&aacute;nh gi&aacute; ch&iacute;nh x&aacute;c về c&aacute;c điều kiện bằng cấp, kinh nghiệm, thế mạnh của bản th&acirc;n.</li><li>Hiểu r&otilde; ch&iacute;nh m&igrave;nh y&ecirc;u th&iacute;ch g&igrave; trong c&ocirc;ng việc lập tr&igrave;nh vi&ecirc;n - v&iacute; dụ th&iacute;ch lập tr&igrave;nh game hay lập tr&igrave;nh ứng dụng...</li><li>T&igrave;m hiểu, ph&acirc;n t&iacute;ch về t&igrave;nh h&igrave;nh thị trường lao động ng&agrave;nh CNTT, lập tr&igrave;nh vi&ecirc;n, đồng thời am hiểu về xu hướng lập tr&igrave;nh ở hiện tại cũng như c&aacute;c dự đo&aacute;n nhu cầu nh&acirc;n sự v&agrave; cơ hội trong tương lai để biết chỗ đứng của m&igrave;nh ở đ&acirc;u.</li><li>Đọc, hiểu r&otilde; y&ecirc;u cầu của nh&agrave; tuyển dụng cho c&aacute;c vị tr&iacute; lập tr&igrave;nh vi&ecirc;n cũng như những vai tr&ograve; senior, leader, trưởng ph&ograve;ng CNTT, gi&aacute;m đốc CNTT (CTO),... v&agrave; tự so s&aacute;nh xem liệu bạn c&oacute; thể sẽ tốn bao nhi&ecirc;u thời gian để ho&agrave;n thiện, đ&aacute;p ứng được c&aacute;c y&ecirc;u cầu đ&oacute;? Bạn c&ograve;n thiếu g&igrave;, c&oacute; thể học v&agrave; n&acirc;ng cao chuy&ecirc;n m&ocirc;n, kỹ năng ra sao.</li><li>X&aacute;c định c&aacute;c mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n theo lộ tr&igrave;nh cụ thể như mục ti&ecirc;u ngắn hạn trong 1 - 2 năm, mục ti&ecirc;u trung hạn 2 - 4 năm hoặc d&agrave;i hạn từ 5 năm.</li></ul><p>Về cơ bản, mục ti&ecirc;u nghề nghiệp lập tr&igrave;nh vi&ecirc;n c&oacute; thể thay đổi theo thời gian nhưng khi x&aacute;c định mục ti&ecirc;u, bạn c&agrave;ng chia nhỏ mốc thời gian th&igrave; c&agrave;ng dễ theo s&aacute;t v&agrave; c&oacute; cảm gi&aacute;c th&agrave;nh tựu khi đạt được mỗi mục ti&ecirc;u. Hơn nữa, h&atilde;y ki&ecirc;n tr&igrave; với mục ti&ecirc;u đ&atilde; định hướng v&igrave; như vậy th&igrave; tỷ lệ th&agrave;nh c&ocirc;ng cao hơn.</p>",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 504, DateTimeKind.Unspecified).AddTicks(2148), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(8029), new TimeSpan(0, 7, 0, 0, 0)),
                             CreatedBy = 1,
                             Image = "2204-P1222321945.png",
                             IsApproved = true,
@@ -71620,11 +71636,11 @@ namespace WebTuyenDung.Migrations
                     b.Property<byte>("JobType")
                         .HasColumnType("tinyint");
 
-                    b.Property<int?>("MaximumSalary")
-                        .HasColumnType("int");
+                    b.Property<long?>("MaximumSalary")
+                        .HasColumnType("bigint");
 
-                    b.Property<int?>("MinimumSalary")
-                        .HasColumnType("int");
+                    b.Property<long?>("MinimumSalary")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("NumberOfCandidates")
                         .HasColumnType("int");
@@ -71667,7 +71683,7 @@ namespace WebTuyenDung.Migrations
                             Id = 1,
                             Benefit = "<ul><li>Bảo hiểm xã hội full lương</li><li>Lương tháng 13</li></ul>",
                             CityId = 279,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(8799), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(5090), new TimeSpan(0, 7, 0, 0, 0)),
                             Deadline = "31/12/2023",
                             DistrictId = 510,
                             EmployerId = 2,
@@ -71677,8 +71693,8 @@ namespace WebTuyenDung.Migrations
                             JobName = "Thực Tập Sinh .Net & Oracle 1",
                             JobRequirements = "<ul><li>Tham gia ph&acirc;n t&iacute;ch y&ecirc;u cầu, thiết kế t&iacute;nh năng, database, lập tr&igrave;nh trong c&aacute;c dự &aacute;n ph&aacute;t triển sản phẩm .Net v&agrave; C#;</li><li>Tham gia fix bugs hỗ trợ kh&aacute;ch h&agrave;ng;</li><li>Tham gia nghi&ecirc;n cứu v&agrave; tr&igrave;nh b&agrave;y c&aacute;c c&ocirc;ng nghệ mới;</li><li>Viết t&agrave;i liệu đặc tả kỹ thuật li&ecirc;n quan đến c&ocirc;ng việc dự &aacute;n;</li><li>Thực hiện c&aacute;c nhiệm vụ theo y&ecirc;u cầu của Gi&aacute;m đốc trung t&acirc;m C&ocirc;ng nghệ.</li></ul>",
                             JobType = (byte)1,
-                            MaximumSalary = 10,
-                            MinimumSalary = 5,
+                            MaximumSalary = 10L,
+                            MinimumSalary = 5L,
                             NumberOfCandidates = 10,
                             Position = (byte)2,
                             RelativeSkills = "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
@@ -71692,7 +71708,7 @@ namespace WebTuyenDung.Migrations
                             Id = 2,
                             Benefit = "<ul><li>Bảo hiểm xã hội full lương</li><li>Lương tháng 13</li></ul>",
                             CityId = 279,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(8813), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(5099), new TimeSpan(0, 7, 0, 0, 0)),
                             Deadline = "31/12/2023",
                             DistrictId = 510,
                             EmployerId = 2,
@@ -71702,8 +71718,8 @@ namespace WebTuyenDung.Migrations
                             JobName = "Thực Tập Sinh Unity - Hỗ Trợ Lương (C#)",
                             JobRequirements = "<ul><li>Tham gia ph&acirc;n t&iacute;ch y&ecirc;u cầu, thiết kế t&iacute;nh năng, database, lập tr&igrave;nh trong c&aacute;c dự &aacute;n ph&aacute;t triển sản phẩm .Net v&agrave; C#;</li><li>Tham gia fix bugs hỗ trợ kh&aacute;ch h&agrave;ng;</li><li>Tham gia nghi&ecirc;n cứu v&agrave; tr&igrave;nh b&agrave;y c&aacute;c c&ocirc;ng nghệ mới;</li><li>Viết t&agrave;i liệu đặc tả kỹ thuật li&ecirc;n quan đến c&ocirc;ng việc dự &aacute;n;</li><li>Thực hiện c&aacute;c nhiệm vụ theo y&ecirc;u cầu của Gi&aacute;m đốc trung t&acirc;m C&ocirc;ng nghệ.</li></ul>",
                             JobType = (byte)1,
-                            MaximumSalary = 10,
-                            MinimumSalary = 5,
+                            MaximumSalary = 10L,
+                            MinimumSalary = 5L,
                             NumberOfCandidates = 10,
                             Position = (byte)2,
                             RelativeSkills = "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
@@ -71717,7 +71733,7 @@ namespace WebTuyenDung.Migrations
                             Id = 3,
                             Benefit = "<ul><li>Bảo hiểm xã hội full lương</li><li>Lương tháng 13</li></ul>",
                             CityId = 279,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(8816), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(5101), new TimeSpan(0, 7, 0, 0, 0)),
                             Deadline = "31/12/2023",
                             DistrictId = 510,
                             EmployerId = 2,
@@ -71727,8 +71743,8 @@ namespace WebTuyenDung.Migrations
                             JobName = "Reactjs Developer",
                             JobRequirements = "<ul><li>Tham gia ph&acirc;n t&iacute;ch y&ecirc;u cầu, thiết kế t&iacute;nh năng, database, lập tr&igrave;nh trong c&aacute;c dự &aacute;n ph&aacute;t triển sản phẩm .Net v&agrave; C#;</li><li>Tham gia fix bugs hỗ trợ kh&aacute;ch h&agrave;ng;</li><li>Tham gia nghi&ecirc;n cứu v&agrave; tr&igrave;nh b&agrave;y c&aacute;c c&ocirc;ng nghệ mới;</li><li>Viết t&agrave;i liệu đặc tả kỹ thuật li&ecirc;n quan đến c&ocirc;ng việc dự &aacute;n;</li><li>Thực hiện c&aacute;c nhiệm vụ theo y&ecirc;u cầu của Gi&aacute;m đốc trung t&acirc;m C&ocirc;ng nghệ.</li></ul>",
                             JobType = (byte)1,
-                            MaximumSalary = 13,
-                            MinimumSalary = 8,
+                            MaximumSalary = 13L,
+                            MinimumSalary = 8L,
                             NumberOfCandidates = 10,
                             Position = (byte)2,
                             RelativeSkills = "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
@@ -71742,7 +71758,7 @@ namespace WebTuyenDung.Migrations
                             Id = 4,
                             Benefit = "<ul><li>Bảo hiểm xã hội full lương</li><li>Lương tháng 13</li></ul>",
                             CityId = 279,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(8819), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(5103), new TimeSpan(0, 7, 0, 0, 0)),
                             Deadline = "31/12/2023",
                             DistrictId = 510,
                             EmployerId = 2,
@@ -71752,8 +71768,8 @@ namespace WebTuyenDung.Migrations
                             JobName = "PHP Developer",
                             JobRequirements = "<ul><li>Tham gia ph&acirc;n t&iacute;ch y&ecirc;u cầu, thiết kế t&iacute;nh năng, database, lập tr&igrave;nh trong c&aacute;c dự &aacute;n ph&aacute;t triển sản phẩm .Net v&agrave; C#;</li><li>Tham gia fix bugs hỗ trợ kh&aacute;ch h&agrave;ng;</li><li>Tham gia nghi&ecirc;n cứu v&agrave; tr&igrave;nh b&agrave;y c&aacute;c c&ocirc;ng nghệ mới;</li><li>Viết t&agrave;i liệu đặc tả kỹ thuật li&ecirc;n quan đến c&ocirc;ng việc dự &aacute;n;</li><li>Thực hiện c&aacute;c nhiệm vụ theo y&ecirc;u cầu của Gi&aacute;m đốc trung t&acirc;m C&ocirc;ng nghệ.</li></ul>",
                             JobType = (byte)1,
-                            MaximumSalary = 13,
-                            MinimumSalary = 8,
+                            MaximumSalary = 13L,
+                            MinimumSalary = 8L,
                             NumberOfCandidates = 10,
                             Position = (byte)2,
                             RelativeSkills = "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
@@ -71767,7 +71783,7 @@ namespace WebTuyenDung.Migrations
                             Id = 5,
                             Benefit = "<ul><li>Bảo hiểm xã hội full lương</li><li>Lương tháng 13</li></ul>",
                             CityId = 279,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(8822), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(5105), new TimeSpan(0, 7, 0, 0, 0)),
                             Deadline = "31/12/2023",
                             DistrictId = 510,
                             EmployerId = 2,
@@ -71777,8 +71793,8 @@ namespace WebTuyenDung.Migrations
                             JobName = "Frontend developer (ReactJS)",
                             JobRequirements = "<ul><li>Tham gia ph&acirc;n t&iacute;ch y&ecirc;u cầu, thiết kế t&iacute;nh năng, database, lập tr&igrave;nh trong c&aacute;c dự &aacute;n ph&aacute;t triển sản phẩm .Net v&agrave; C#;</li><li>Tham gia fix bugs hỗ trợ kh&aacute;ch h&agrave;ng;</li><li>Tham gia nghi&ecirc;n cứu v&agrave; tr&igrave;nh b&agrave;y c&aacute;c c&ocirc;ng nghệ mới;</li><li>Viết t&agrave;i liệu đặc tả kỹ thuật li&ecirc;n quan đến c&ocirc;ng việc dự &aacute;n;</li><li>Thực hiện c&aacute;c nhiệm vụ theo y&ecirc;u cầu của Gi&aacute;m đốc trung t&acirc;m C&ocirc;ng nghệ.</li></ul>",
                             JobType = (byte)1,
-                            MaximumSalary = 13,
-                            MinimumSalary = 8,
+                            MaximumSalary = 13L,
+                            MinimumSalary = 8L,
                             NumberOfCandidates = 10,
                             Position = (byte)2,
                             RelativeSkills = "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
@@ -71792,7 +71808,7 @@ namespace WebTuyenDung.Migrations
                             Id = 6,
                             Benefit = "<ul><li>Bảo hiểm xã hội full lương</li><li>Lương tháng 13</li></ul>",
                             CityId = 279,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(8824), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(5106), new TimeSpan(0, 7, 0, 0, 0)),
                             Deadline = "31/12/2023",
                             DistrictId = 510,
                             EmployerId = 2,
@@ -71802,8 +71818,8 @@ namespace WebTuyenDung.Migrations
                             JobName = "UI, UX Designer",
                             JobRequirements = "<ul><li>Tham gia ph&acirc;n t&iacute;ch y&ecirc;u cầu, thiết kế t&iacute;nh năng, database, lập tr&igrave;nh trong c&aacute;c dự &aacute;n ph&aacute;t triển sản phẩm .Net v&agrave; C#;</li><li>Tham gia fix bugs hỗ trợ kh&aacute;ch h&agrave;ng;</li><li>Tham gia nghi&ecirc;n cứu v&agrave; tr&igrave;nh b&agrave;y c&aacute;c c&ocirc;ng nghệ mới;</li><li>Viết t&agrave;i liệu đặc tả kỹ thuật li&ecirc;n quan đến c&ocirc;ng việc dự &aacute;n;</li><li>Thực hiện c&aacute;c nhiệm vụ theo y&ecirc;u cầu của Gi&aacute;m đốc trung t&acirc;m C&ocirc;ng nghệ.</li></ul>",
                             JobType = (byte)1,
-                            MaximumSalary = 13,
-                            MinimumSalary = 5,
+                            MaximumSalary = 13L,
+                            MinimumSalary = 5L,
                             NumberOfCandidates = 10,
                             Position = (byte)8,
                             RelativeSkills = "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
@@ -71817,7 +71833,7 @@ namespace WebTuyenDung.Migrations
                             Id = 7,
                             Benefit = "<ul><li>Bảo hiểm xã hội full lương</li><li>Lương tháng 13</li></ul>",
                             CityId = 279,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(8826), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(5108), new TimeSpan(0, 7, 0, 0, 0)),
                             Deadline = "31/12/2023",
                             DistrictId = 510,
                             EmployerId = 2,
@@ -71827,8 +71843,8 @@ namespace WebTuyenDung.Migrations
                             JobName = "Business Analyst",
                             JobRequirements = "<ul><li>Tham gia ph&acirc;n t&iacute;ch y&ecirc;u cầu, thiết kế t&iacute;nh năng, database, lập tr&igrave;nh trong c&aacute;c dự &aacute;n ph&aacute;t triển sản phẩm .Net v&agrave; C#;</li><li>Tham gia fix bugs hỗ trợ kh&aacute;ch h&agrave;ng;</li><li>Tham gia nghi&ecirc;n cứu v&agrave; tr&igrave;nh b&agrave;y c&aacute;c c&ocirc;ng nghệ mới;</li><li>Viết t&agrave;i liệu đặc tả kỹ thuật li&ecirc;n quan đến c&ocirc;ng việc dự &aacute;n;</li><li>Thực hiện c&aacute;c nhiệm vụ theo y&ecirc;u cầu của Gi&aacute;m đốc trung t&acirc;m C&ocirc;ng nghệ.</li></ul>",
                             JobType = (byte)1,
-                            MaximumSalary = 13,
-                            MinimumSalary = 8,
+                            MaximumSalary = 13L,
+                            MinimumSalary = 8L,
                             NumberOfCandidates = 10,
                             Position = (byte)0,
                             RelativeSkills = "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
@@ -71842,7 +71858,7 @@ namespace WebTuyenDung.Migrations
                             Id = 8,
                             Benefit = "<ul><li>Bảo hiểm xã hội full lương</li><li>Lương tháng 13</li></ul>",
                             CityId = 626,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(8828), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(5109), new TimeSpan(0, 7, 0, 0, 0)),
                             Deadline = "31/12/2023",
                             DistrictId = 1207,
                             EmployerId = 2,
@@ -71852,8 +71868,8 @@ namespace WebTuyenDung.Migrations
                             JobName = "Manual Tester",
                             JobRequirements = "<ul><li>Tham gia ph&acirc;n t&iacute;ch y&ecirc;u cầu, thiết kế t&iacute;nh năng, database, lập tr&igrave;nh trong c&aacute;c dự &aacute;n ph&aacute;t triển sản phẩm .Net v&agrave; C#;</li><li>Tham gia fix bugs hỗ trợ kh&aacute;ch h&agrave;ng;</li><li>Tham gia nghi&ecirc;n cứu v&agrave; tr&igrave;nh b&agrave;y c&aacute;c c&ocirc;ng nghệ mới;</li><li>Viết t&agrave;i liệu đặc tả kỹ thuật li&ecirc;n quan đến c&ocirc;ng việc dự &aacute;n;</li><li>Thực hiện c&aacute;c nhiệm vụ theo y&ecirc;u cầu của Gi&aacute;m đốc trung t&acirc;m C&ocirc;ng nghệ.</li></ul>",
                             JobType = (byte)1,
-                            MaximumSalary = 13,
-                            MinimumSalary = 8,
+                            MaximumSalary = 13L,
+                            MinimumSalary = 8L,
                             NumberOfCandidates = 10,
                             Position = (byte)3,
                             RelativeSkills = "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
@@ -71867,7 +71883,7 @@ namespace WebTuyenDung.Migrations
                             Id = 9,
                             Benefit = "<ul><li>Bảo hiểm xã hội full lương</li><li>Lương tháng 13</li></ul>",
                             CityId = 626,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(8830), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(5111), new TimeSpan(0, 7, 0, 0, 0)),
                             Deadline = "31/12/2023",
                             DistrictId = 1207,
                             EmployerId = 2,
@@ -71877,8 +71893,8 @@ namespace WebTuyenDung.Migrations
                             JobName = "IT Support - Hỗ Trợ Kỹ Thuật",
                             JobRequirements = "<ul><li>Tham gia ph&acirc;n t&iacute;ch y&ecirc;u cầu, thiết kế t&iacute;nh năng, database, lập tr&igrave;nh trong c&aacute;c dự &aacute;n ph&aacute;t triển sản phẩm .Net v&agrave; C#;</li><li>Tham gia fix bugs hỗ trợ kh&aacute;ch h&agrave;ng;</li><li>Tham gia nghi&ecirc;n cứu v&agrave; tr&igrave;nh b&agrave;y c&aacute;c c&ocirc;ng nghệ mới;</li><li>Viết t&agrave;i liệu đặc tả kỹ thuật li&ecirc;n quan đến c&ocirc;ng việc dự &aacute;n;</li><li>Thực hiện c&aacute;c nhiệm vụ theo y&ecirc;u cầu của Gi&aacute;m đốc trung t&acirc;m C&ocirc;ng nghệ.</li></ul>",
                             JobType = (byte)1,
-                            MaximumSalary = 13,
-                            MinimumSalary = 8,
+                            MaximumSalary = 13L,
+                            MinimumSalary = 8L,
                             NumberOfCandidates = 10,
                             Position = (byte)8,
                             RelativeSkills = "<ul><li>.NET</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>JQuery</li><li>Oracle</li><li>SQL</li></ul>",
@@ -71991,7 +72007,7 @@ namespace WebTuyenDung.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(4660), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(2012), new TimeSpan(0, 7, 0, 0, 0)),
                             IsDeleted = false,
                             Name = "Admin",
                             PasswordHashed = "1CF58803332D6154476FE4D4710F26F1569196FF2097F677A01189B1A7DACAFF",
@@ -72017,7 +72033,8 @@ namespace WebTuyenDung.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.ToTable("Users", t =>
                         {
@@ -72034,7 +72051,7 @@ namespace WebTuyenDung.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(2973), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(947), new TimeSpan(0, 7, 0, 0, 0)),
                             IsDeleted = false,
                             Name = "Hoàng",
                             PasswordHashed = "1CF58803332D6154476FE4D4710F26F1569196FF2097F677A01189B1A7DACAFF",
@@ -72084,7 +72101,7 @@ namespace WebTuyenDung.Migrations
                             Id = 2,
                             Avatar = "logo223825242.png",
                             CoverImage = "bg-seccity220613511.jpg",
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 14, 22, 43, 58, 503, DateTimeKind.Unspecified).AddTicks(4367), new TimeSpan(0, 7, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 5, 16, 9, 58, 47, 506, DateTimeKind.Unspecified).AddTicks(1825), new TimeSpan(0, 7, 0, 0, 0)),
                             IsDeleted = false,
                             Name = "NCD Việt Nam",
                             PasswordHashed = "1CF58803332D6154476FE4D4710F26F1569196FF2097F677A01189B1A7DACAFF",

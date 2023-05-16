@@ -50,10 +50,14 @@ namespace WebTuyenDung.Controllers
 
             TempData["popup"] = "Cập nhật thông tin thành công";
 
+            var username = User.GetUsername();
+
             await HttpContext.SignOutAsync();
+
             await HttpContext.SignInAsync(new Candidate
             {
                 Id = candidate.Id,
+                Username = username,
                 Role = UserRole.Candidate,
                 Name = candidate.Name,
                 PhoneNumber = candidate.PhoneNumber,

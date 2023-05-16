@@ -68,8 +68,9 @@ namespace WebTuyenDung.Helper
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(AuthenticationConstants.USER_ID_KEY, user.Id.ToString()),
+                new Claim(AuthenticationConstants.USERNAME_KEY, user.Username),
+                new Claim(AuthenticationConstants.USER_FORMAL_NAME_KEY, user.Name),
                 new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 

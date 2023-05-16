@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Http;
+using WebTuyenDung.Enums;
 
 namespace WebTuyenDung.ViewModels.User
 {
@@ -14,6 +15,14 @@ namespace WebTuyenDung.ViewModels.User
         public string Image { get; set; } = default!;
 
         public string Name { get; set; } = default!;
+
+        public string BirthDay { get; set; } = default!;
+
+        public string PhoneNumber { get; set; } = default!;
+
+        public string Address { get; set; } = default!;
+
+        public Gender Gender { get; set; }
 
         public string ExpectedPosition { get; set; } = default!;
 

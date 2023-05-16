@@ -1,7 +1,7 @@
 ﻿@{
     var avatar = User.GetAvatar();
 
-    var notifications = (ViewData["notifications"] as List<Notification>)!;
+    var notifications = User.Identity!.IsAuthenticated ? (ViewData["notifications"] as Notification[])! : Array.Empty<Notification>();
 }
 
 <!DOCTYPE html>
@@ -131,14 +131,12 @@
                     </li>
                 </ul>
 
-
-
                 @if (User.Identity!.IsAuthenticated)
                 {
                     <div class="col-sm-7 header__ruser--info">
-                        <div class="user__info--content d-flex justify-content-end">
+                        <div class="user__info--content d-flex justify-content-end" style="margin-left: 0">
                             <div class="col-userinfo--img bg-img dropdown">
-                                <button class="dropbtn" id="myBtn" onclick="myFunction()">0</button>
+                                <button class="dropbtn" id="myBtn" onclick="myFunction()">@notifications.Length</button>
                             </div>
                         </div>
                         <div class="dropdown-content" id="myDropdown">
@@ -157,7 +155,7 @@
                                 <div class="user__info--img bg-img" style="background-image: url(../../Assets/Client/img/Candidate/user-default.png);"></div>
                             }
 
-                            <div class="user__info--name"><span>@User.Identity!.Name</span></div>
+                            <div class="user__info--name"><span>@User.GetName()</span></div>
                         </div>
                         <ul class="user__groups">
                             <li><a href="/user/info">Thông tin cá nhân</a></li>

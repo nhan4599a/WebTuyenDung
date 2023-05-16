@@ -30,7 +30,7 @@ namespace WebTuyenDung.Controllers
             _fileService = fileService;
         }
 
-        [HttpGet]
+        [HttpGet("posts/{id:int}")]
         [AllowAnonymous]
         public async Task<IActionResult> Index(int id)
         {
@@ -59,9 +59,9 @@ namespace WebTuyenDung.Controllers
 
         [HttpPost]
         [SharedAction]
-        public Task<IActionResult> Edit(UpdatePostViewModel post)
+        public Task<IActionResult> Edit(UpdatePostViewModel editPostViewModel)
         {
-            return _postService.UpdatePostAsync(this, post);
+            return _postService.UpdatePostAsync(this, editPostViewModel);
         }
     }
 }

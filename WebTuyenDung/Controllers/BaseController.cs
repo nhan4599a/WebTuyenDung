@@ -44,7 +44,7 @@ namespace WebTuyenDung.Controllers
             if (User.Identity!.IsAuthenticated)
             {
                 var userId = User.GetUserId();
-                var notifications = await DbContext.Notifications.Where(e => e.CandidateId == userId).ToListAsync();
+                var notifications = await DbContext.Notifications.Where(e => e.CandidateId == userId).ToArrayAsync();
                 ViewData["notifications"] = notifications;
             }
 

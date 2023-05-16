@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebTuyenDung.Data.Configurations;
+using WebTuyenDung.Enums;
 
 namespace WebTuyenDung.Models
 {
@@ -11,6 +12,14 @@ namespace WebTuyenDung.Models
         public string ExpectedPosition { get; set; } = default!;
 
         public string Email { get; set; } = default!;
+
+        public string BirthDay { get; set; } = default!;
+
+        public string PhoneNumber { get; set; } = default!;
+
+        public string Address { get; set; } = default!;
+
+        public Gender Gender { get; set; }
 
         public string? SourceVersionControlUrl { get; set; }
 

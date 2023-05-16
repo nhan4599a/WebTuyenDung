@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using System.Reflection;
+using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
@@ -38,7 +39,7 @@ namespace WebTuyenDung.Configurations
 
             TypeAdapterConfig<CurriculumVitae, CurriculumVitaeViewModel>
                 .NewConfig()
-                .Map(dest => dest.Url, source => source.FilePath);
+                .Map(dest => dest.Url, source => source.Type == CVType.DirectInput ? null : source.FilePath);
 
             TypeAdapterConfig<JobApplication, JobApplicationHistoryViewModel>
                 .NewConfig()
@@ -57,6 +58,7 @@ namespace WebTuyenDung.Configurations
 
             TypeAdapterConfig<CurriculumVitae, CurriculumVitaeDetailViewModel>
                 .NewConfig()
+                .Map(e => e.Image, source => source.FilePath)
                 .Map(e => e.Introduction, source => source.Detail!.Introduction)
                 .Map(e => e.ExpectedPosition, source => source.Detail!.ExpectedPosition)
                 .Map(e => e.Email, source => source.Detail!.Email)

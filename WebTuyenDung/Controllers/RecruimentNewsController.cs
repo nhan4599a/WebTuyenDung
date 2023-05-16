@@ -73,7 +73,7 @@ namespace WebTuyenDung.Controllers
 
             if (isAppliedBefore)
             {
-                TempData["popup"] = "Bạn đã ứng tuyển công việc này rồi, vui lòng theo dõi kết quả";
+                TempData["popup-error"] = "Bạn đã ứng tuyển công việc này rồi, vui lòng theo dõi kết quả";
                 return Redirect($"/recruiment-news/{id}");
             }
 
@@ -131,7 +131,7 @@ namespace WebTuyenDung.Controllers
                 await DbContext.SaveChangesAsync();
             }
 
-            TempData["popup"] = "Ứng tuyển thành công";
+            TempData["popup-success"] = "Ứng tuyển thành công";
 
             return Redirect($"/recruiment-news/{id}");
         }

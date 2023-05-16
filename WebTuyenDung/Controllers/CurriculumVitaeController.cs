@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
@@ -58,7 +59,7 @@ namespace WebTuyenDung.Controllers
             var queryResult = await DbContext
                                         .CVs
                                         .Where(e => e.Id == id)
-                                        .Select(e => new { e.FilePath, e.CandidateId })
+                                        .Select(e => new { e.Type, e.FilePath, e.CandidateId })
                                         .FirstOrDefaultAsync();
 
             if (queryResult == null)
@@ -71,7 +72,7 @@ namespace WebTuyenDung.Controllers
                 return Unauthorized();
             }
 
-            if (queryResult.FilePath == null)
+            if (queryResult.Type == CVType.DirectInput)
             {
                 var cvDetail = await DbContext
                                         .CVs
@@ -146,13 +147,21 @@ namespace WebTuyenDung.Controllers
                 return View();
             }
 
+            var filePath = await _fileService.SaveAsync(viewModel.Image, FilePath.CurriculumTitae);
+            var detail = viewModel.Adapt<CurriculumVitaeDetail>();
+            detail.Email = User.GetUsername();
+            detail.PhoneNumber = User.GetPhoneNumber()!;
+            detail.BirthDay = User.GetBirthDay()!.GetApplicationTimeRepresentation();
+            detail.Gender = Enum.Parse<Gender>(User.GetGender()!);
+
             var cv = new CurriculumVitae
             {
                 Name = viewModel.Name,
                 CandidateId = candidateId,
                 Type = CVType.DirectInput,
                 IsUploadDirectlyByUser = true,
-                Detail = viewModel.Adapt<CurriculumVitaeDetail>()
+                FilePath = filePath,
+                Detail = detail
             };
 
             DbContext.CVs.Add(cv);
@@ -199,6 +208,11 @@ namespace WebTuyenDung.Controllers
         public async Task<IActionResult> Edit(int id, CurriculumVitaeDetailViewModel request)
         {
             var transaction = await DbContext.Database.BeginTransactionAsync();
+
+            if (request.ImageFile != null)
+            {
+                await _fileService.ReplaceFileAsync(request.Image, request.ImageFile, FilePath.CurriculumTitae);
+            }
 
             await DbContext.CVs.Where(e => e.Id == id).UpdateFromQueryAsync(e => new CurriculumVitae { Name = request.Name });
 

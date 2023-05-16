@@ -4,13 +4,12 @@ using WebTuyenDung.ViewModels.User.Abstraction;
 
 namespace WebTuyenDung.Helper
 {
-    public static class SalaryHelper
+    public static partial class SalaryHelper
     {
-        //[GeneratedRegex(@"^(\d+) - (\d+) triệu$")]
-        //private static partial Regex SalaryRegex();
-        private static Regex SalaryRegex = new Regex(@"^(\d+) - (\d+) triệu$", RegexOptions.Compiled);
+        [GeneratedRegex(@"^(\d+) - (\d+) triệu$")]
+        private static partial Regex SalaryRegex();
 
-        public static (int? MinimumSalary, int? MaximumSalary) ParseSalary(string salary)
+        public static (uint? MinimumSalary, uint? MaximumSalary) ParseSalary(string salary)
         {
             try
             {
@@ -21,16 +20,16 @@ namespace WebTuyenDung.Helper
 
                 if (salary.StartsWith("Dưới"))
                 {
-                    return (0, int.Parse(salary[5..^6]));
+                    return (0, uint.Parse(salary[5..^6]));
                 }
                 else if (salary.StartsWith("Trên"))
                 {
-                    return (int.Parse(salary[5..^6]), null);
+                    return (uint.Parse(salary[5..^6]), null);
                 }
 
-                var salaryGroups = SalaryRegex.Match(salary).Groups;
+                var salaryGroups = SalaryRegex().Match(salary).Groups;
 
-                return (int.Parse(salaryGroups[1].ValueSpan), int.Parse(salaryGroups[2].ValueSpan));
+                return (uint.Parse(salaryGroups[1].ValueSpan), uint.Parse(salaryGroups[2].ValueSpan));
             }
             catch (Exception)
             {

@@ -40,7 +40,7 @@
                             <h4 class="header-title mb-0">Thông tin tạo hồ sơ xin việc</h4>
                         </div>
                         <div class="collapse pt-3 show">
-                            <form action="/cv/create" method="post">
+                            <form action="/cv/create" method="post" enctype="multipart/form-data">
                                 @Html.AntiForgeryToken()
 
                                 <div class="form-horizontal">

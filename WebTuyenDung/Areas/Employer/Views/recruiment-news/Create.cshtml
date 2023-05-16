@@ -60,7 +60,10 @@
                                 <div class="col-md-4">
                                     <input class="form-control" cols="20" id="jobName"
                                            name="jobName" rows="2" />
-                                    <span class="text-danger" style="display: none"></span>
+                                    @if (ViewContext.ModelState.ContainsKey("JobName"))
+                                    {
+                                        <span class="text-danger">Tên công việc không được để trống</span>
+                                    }
                                 </div>
 
                                 <label class="control-label col-md-2" for="jobType">
@@ -68,8 +71,7 @@
                                 </label>
                                 <div class="col-md-4">
                                     <select class="form-control text-box single-line selectpicker"
-                                            data-live-search="true" data-val="true"
-                                            data-val-required="Chưa chọn hình thức làm việc" id="jobType"
+                                            data-live-search="true" data-val="true" id="jobType"
                                             name="jobType">
                                         <option value="">
                                             -- Chọn hình thức làm việc --
@@ -80,7 +82,10 @@
                                             Remote - Làm việc từ xa
                                         </option>
                                     </select>
-                                    <span class="text-danger" style="display: none"></span>
+                                    @if (ViewContext.ModelState.ContainsKey("JobType"))
+                                    {
+                                        <span class="text-danger">Chưa chọn loại công việc</span>
+                                    }
                                 </div>
                             </div>
 
@@ -88,8 +93,7 @@
                                 <label class="control-label col-md-2" for="position">Vị trí</label>
                                 <div class="col-md-4">
                                     <select class="form-control text-box single-line selectpicker"
-                                            data-live-search="true" data-val="true"
-                                            data-val-required="Chưa chọn cấp bậc" id="position"
+                                            data-live-search="true" data-val="true" id="position"
                                             name="position">
                                         <option value="">-- Chọn vị trí cần tuyển --</option>
                                         <option value="0">
@@ -118,9 +122,11 @@
                                             Designer
                                         </option>
                                     </select>
-                                    <span class="text-danger" style="display: none"></span>
+                                    @if (ViewContext.ModelState.ContainsKey("Position"))
+                                    {
+                                        <span class="text-danger">Chưa chọn vị trí tuyển dụng</span>
+                                    }
                                 </div>
-
                                 <label class="control-label col-md-2" for="positionDetail">
                                     Chi tiết vị trí
                                 </label>
@@ -149,7 +155,6 @@
                                         <option value="Vue">Vue</option>
                                         <option value="Ruby">Ruby</option>
                                     </select>
-                                    <span class="text-danger" style="display: none"></span>
                                 </div>
                             </div>
 
@@ -269,6 +274,11 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div id="salary-error" style="display: none">
+                                <div class="col-md-2"></div>
+                                <span class="text-danger">Chưa chọn mức lương</span>
+                            </div>
                         </div>
 
                         <div class="form-group align-items-center row">
@@ -278,14 +288,19 @@
                             <div class="col-md-4">
                                 <input class="form-control" cols="20" id="workingAddress"
                                        name="workingAddress" rows="2" />
-                                <span class="text-danger" style="display: none"></span>
+                                @if (ViewContext.ModelState.ContainsKey("WorkingAddress")
+                                    || ViewContext.ModelState.ContainsKey("CityId")
+                                    || ViewContext.ModelState.ContainsKey("WardId")
+                                    || ViewContext.ModelState.ContainsKey("WardId"))
+                                {
+                                    <span class="text-danger">Địa chỉ làm việc không được để trống</span>
+                                }
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control text-box single-line selectpicker"
                                         data-live-search="true" data-val="true" id="input-city"
                                         name="cityId">
                                 </select>
-                                <span class="text-danger"></span>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control text-box single-line selectpicker"
@@ -293,7 +308,6 @@
                                         disabled
                                         name="districtId">
                                 </select>
-                                <span class="text-danger"></span>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control text-box single-line selectpicker"
@@ -301,7 +315,6 @@
                                         disabled
                                         name="wardId">
                                 </select>
-                                <span class="text-danger" style="display: none"></span>
                             </div>
                         </div>
 
@@ -310,10 +323,12 @@
                                 Mô tả công việc
                             </label>
                             <div class="col-md-10">
-                                <textarea class="form-control" cols="20" data-val="true"
-                                          data-val-required="Chưa nhập mô tả công việc" id="txtMoTa"
+                                <textarea class="form-control" cols="20" data-val="true" id="txtMoTa"
                                           name="jobDescription" rows="2"></textarea>
-                                <span class="text-danger" style="display: none"></span>
+                                @if (ViewContext.ModelState.ContainsKey("JobDescription"))
+                                {
+                                    <span class="text-danger">Mô tả công việc không được để trống</span>
+                                }
                             </div>
                         </div>
 
@@ -324,7 +339,10 @@
                             <div class="col-md-10">
                                 <textarea class="form-control" cols="20" data-val="true" id="txtYeuCau"
                                           name="jobRequirements" rows="2"></textarea>
-                                <span class="text-danger" style="display: none"></span>
+                                @if (ViewContext.ModelState.ContainsKey("JobRequirements"))
+                                {
+                                    <span class="text-danger">Yêu cầu ứng viên không được để trống</span>
+                                }
                             </div>
                         </div>
 
@@ -335,7 +353,10 @@
                             <div class="col-md-10">
                                 <textarea class="form-control" cols="20" id="txtKyNang"
                                           name="relativeSkills" rows="2"></textarea>
-                                <span class="text-danger" style="display: none"></span>
+                                @if (ViewContext.ModelState.ContainsKey("RelativeSkills"))
+                                {
+                                    <span class="text-danger">Kỹ năng liên quan không được để trống</span>
+                                }
                             </div>
                         </div>
 
@@ -346,7 +367,10 @@
                             <div class="col-md-10">
                                 <textarea class="form-control" cols="20" id="txtQuyenLoi"
                                           name="benefit" rows="2"></textarea>
-                                <span class="text-danger" style="display: none"></span>
+                                @if (ViewContext.ModelState.ContainsKey("Benefit"))
+                                {
+                                    <span class="text-danger">Quyền lợi không được để trống</span>
+                                }
                             </div>
                         </div>
 
@@ -356,7 +380,7 @@
                             </label>
                             <div class="col-md-6">
                                 <input class="form-control" data-val="true"
-                                       id="numberOfCandidates" name="numberOfCandidates" type="number" value="1" />
+                                       id="numberOfCandidates" name="numberOfCandidates" type="number" value="1" min="1" max="100" />
                                 <span class="text-danger"></span>
                             </div>
                         </div>

@@ -48,9 +48,13 @@ namespace WebTuyenDung.Areas.Employer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> Create(CreateOrUpdateRecruimentNewsRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             var recruimentNews = request.Adapt<RecruimentNews>();
 
             if (request.Salary != "Khác" && request.Salary != "Thỏa thuận")

@@ -1,4 +1,5 @@
-﻿@model WebTuyenDung.ViewModels.User.CurriculumVitaeDetailViewModel
+﻿@using WebTuyenDung.Enums;
+@model WebTuyenDung.ViewModels.User.CurriculumVitaeDetailViewModel
 
 @{
 	Layout = null;
@@ -7,7 +8,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>@User.GetName() - @Model.ExpectedPosition</title>
+	<title>@Model.Name - @Model.ExpectedPosition</title>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<style type="text/css">
@@ -160,8 +161,8 @@
 		<input type="file" id="avatar" class="avatar__input" accept=".jpg, .jpeg, .png">
 		<label for="avatar" class="avatar">
 			<img class="avatar__image"
-				 src="https://scontent-amt2-1.cdninstagram.com/t51.2885-19/s150x150/14597242_735459259944256_5329038366807687168_n.jpg"
-				 alt="">
+				 src="/files/CV/@Model.Image"
+				 alt="cv-image">
 			<div class="avatar__overlay">
 				<div class="avatar__overlay__icon">
 					<i class="fa fa-photo"></i>
@@ -173,17 +174,17 @@
 		<p id="about" style="position:absolute;top:362px;left:23px;white-space:nowrap" class="ft19">@Model.Introduction</p>
 		<p style="position:absolute;top:384px;left:379px;white-space:nowrap" class="ft13">@Model.Education</p>
 		<p style="position:absolute;top:517px;left:379px;white-space:nowrap" class="ft13">@Model.Experience</p>
-		<p style="position:absolute;top:82px;left:251px;white-space:nowrap" class="ft14"><b>@User.GetName().ToUpper()</b></p>
+		<p style="position:absolute;top:82px;left:251px;white-space:nowrap" class="ft14"><b>@Model.Email</b></p>
 		<p style="position:absolute;top:136px;left:251px;white-space:nowrap" class="ft15"><b>@Model.ExpectedPosition</b></p>
-		<p style="position:absolute;top:203px;left:278px;white-space:nowrap" class="ft10">@User.GetBirthDay()!.Value.ToString("MMM d, yyyy")</p>
+		<p style="position:absolute;top:203px;left:278px;white-space:nowrap" class="ft10">@Model.BirthDay</p>
 		<p style="position:absolute;top:204px;left:254px;white-space:nowrap" class="ft16"></p>
-		<p style="position:absolute;top:203px;left:584px;white-space:nowrap" class="ft10">@User.GetGender()</p>
+		<p style="position:absolute;top:203px;left:584px;white-space:nowrap" class="ft10">@Model.Gender.GetRepresentation()</p>
 		<p style="position:absolute;top:204px;left:562px;white-space:nowrap" class="ft16"></p>
-		<p style="position:absolute;top:228px;left:278px;white-space:nowrap" class="ft10">@User.GetPhoneNumber()</p>
+		<p style="position:absolute;top:228px;left:278px;white-space:nowrap" class="ft10">@Model.PhoneNumber</p>
 		<p style="position:absolute;top:230px;left:255px;white-space:nowrap" class="ft16"></p>
 		<p style="position:absolute;top:228px;left:584px;white-space:nowrap" class="ft10">@Model.Email</p>
 		<p style="position:absolute;top:230px;left:560px;white-space:nowrap" class="ft16"></p>
-		<p style="position:absolute;top:255px;left:278px;white-space:nowrap" class="ft10">@User.GetAddress()</p>
+		<p style="position:absolute;top:255px;left:278px;white-space:nowrap" class="ft10">@Model.Address</p>
 		<p style="position:absolute;top:257px;left:257px;white-space:nowrap" class="ft16"></p>
 		<p style="position:absolute;top:257px;left:561px;white-space:nowrap" class="ft16"></p>
 		<p style="position:absolute;top:255px;left:584px;white-space:nowrap" class="ft10">

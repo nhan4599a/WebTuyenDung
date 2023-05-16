@@ -5,7 +5,7 @@
 
 @{
     var areaName = TempData.Peek(ViewConstants.VIEW_AREA);
-    var backToPreviousPageUrl = areaName + "/posts";
+    var backToPreviousPageUrl = (string?)areaName == "employer" ? "/employer/posts?isApproved=0" : "/admin/posts";
 
     var rawError = TempData["error"] as string;
     var error = rawError == null ? null : JsonSerializer.Deserialize<HashSet<string>>(rawError);

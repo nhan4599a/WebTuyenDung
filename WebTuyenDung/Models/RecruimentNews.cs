@@ -37,9 +37,9 @@ namespace WebTuyenDung.Models
 
         public string Salary { get; set; } = default!;
 
-        public int? MinimumSalary { get; set; }
+        public uint? MinimumSalary { get; set; }
 
-        public int? MaximumSalary { get; set; }
+        public uint? MaximumSalary { get; set; }
 
         public string Benefit { get; set; } = default!;
 
