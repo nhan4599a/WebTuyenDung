@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
 using WebTuyenDung.Constants;
 using WebTuyenDung.Data;
-using WebTuyenDung.Helper;
 
 namespace WebTuyenDung.Controllers
 {
@@ -39,13 +37,6 @@ namespace WebTuyenDung.Controllers
             if (shouldAutoReturnBadRequest && !ModelState.IsValid)
             {
                 context.Result = BadRequest(ModelState);
-            }
-
-            if (User.Identity!.IsAuthenticated)
-            {
-                var userId = User.GetUserId();
-                var notifications = await DbContext.Notifications.Where(e => e.CandidateId == userId).ToArrayAsync();
-                ViewData["notifications"] = notifications;
             }
 
             await base.OnActionExecutionAsync(context, next);

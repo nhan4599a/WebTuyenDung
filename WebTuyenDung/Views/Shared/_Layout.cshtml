@@ -1,7 +1,5 @@
 ﻿@{
     var avatar = User.GetAvatar();
-
-    var notifications = User.Identity!.IsAuthenticated ? (ViewData["notifications"] as Notification[])! : Array.Empty<Notification>();
 }
 
 <!DOCTYPE html>
@@ -83,17 +81,17 @@
             transition: opacity .3 ease-in;
         }
 
-        .dropdown-content a {
-            float: none;
-            color: black;
-            padding: 14px 16px;
-            text-decoration: none;
-            display: block;
-        }
+            .dropdown-content a {
+                float: none;
+                color: black;
+                padding: 14px 16px;
+                text-decoration: none;
+                display: block;
+            }
 
-        .dropdown-content a:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
+                .dropdown-content a:hover {
+                    background-color: rgba(255, 255, 255, 0.3);
+                }
 
         .show {
             display: block;
@@ -139,9 +137,8 @@
                                 <button class="dropbtn" id="myBtn" onclick="myFunction()">@notifications.Length</button>
                             </div>
                         </div>
-                        <div class="dropdown-content" id="myDropdown">
-                            <a href="#" style="color: white;">Info</a>
-                            <a href="#" style="color: white;">Last news</a>
+                        <div class="user__groups" id="myDropdown" style="height: 120px; text-align: center">
+                            Không có thông báo nào
                         </div>
                     </div>
                     <div class="header__user--info">
@@ -211,7 +208,7 @@
                             <a href="/authentication/sign-in">Đăng nhập</a>
                         </li>
                         <li class="header__navbar--item-mb">
-                            <a href="">Nhà tuyển dụng</a>
+                            <a href="#">Nhà tuyển dụng</a>
                         </li>
                     </ul>
                 </div>

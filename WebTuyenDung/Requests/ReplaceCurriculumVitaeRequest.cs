@@ -4,7 +4,7 @@ namespace WebTuyenDung.Requests
 {
     public class ReplaceCurriculumVitaeRequest
     {
-        public IFormFile CV { get; set; } = default!;
+        public IFormFile? CV { get; set; }
 
         public string Name { get; set; } = default!;
 

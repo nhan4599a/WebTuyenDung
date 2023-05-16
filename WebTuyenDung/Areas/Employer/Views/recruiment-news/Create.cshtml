@@ -1,4 +1,5 @@
-﻿@model WebTuyenDung.Requests.CreateOrUpdateRecruimentNewsRequest
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@model WebTuyenDung.Requests.CreateOrUpdateRecruimentNewsRequest
 
 @{
     ViewBag.Title = "Đăng tin tuyển dụng mới";
@@ -60,7 +61,7 @@
                                 <div class="col-md-4">
                                     <input class="form-control" cols="20" id="jobName"
                                            name="jobName" rows="2" />
-                                    @if (ViewContext.ModelState.ContainsKey("JobName"))
+                                    @if (ViewContext.ModelState["JobName"]?.ValidationState == ModelValidationState.Invalid)
                                     {
                                         <span class="text-danger">Tên công việc không được để trống</span>
                                     }
@@ -82,7 +83,7 @@
                                             Remote - Làm việc từ xa
                                         </option>
                                     </select>
-                                    @if (ViewContext.ModelState.ContainsKey("JobType"))
+                                    @if (ViewContext.ModelState["JobType"]?.ValidationState == ModelValidationState.Invalid)
                                     {
                                         <span class="text-danger">Chưa chọn loại công việc</span>
                                     }
@@ -122,7 +123,7 @@
                                             Designer
                                         </option>
                                     </select>
-                                    @if (ViewContext.ModelState.ContainsKey("Position"))
+                                    @if (ViewContext.ModelState["Position"]?.ValidationState == ModelValidationState.Invalid)
                                     {
                                         <span class="text-danger">Chưa chọn vị trí tuyển dụng</span>
                                     }
@@ -288,10 +289,10 @@
                             <div class="col-md-4">
                                 <input class="form-control" cols="20" id="workingAddress"
                                        name="workingAddress" rows="2" />
-                                @if (ViewContext.ModelState.ContainsKey("WorkingAddress")
-                                    || ViewContext.ModelState.ContainsKey("CityId")
-                                    || ViewContext.ModelState.ContainsKey("WardId")
-                                    || ViewContext.ModelState.ContainsKey("WardId"))
+                                @if (ViewContext.ModelState["WorkingAddress"]?.ValidationState == ModelValidationState.Invalid
+                                    || ViewContext.ModelState["CityId"]?.ValidationState == ModelValidationState.Invalid
+                                    || ViewContext.ModelState["DistrictId"]?.ValidationState == ModelValidationState.Invalid
+                                    || ViewContext.ModelState["WardId"]?.ValidationState == ModelValidationState.Invalid)
                                 {
                                     <span class="text-danger">Địa chỉ làm việc không được để trống</span>
                                 }
@@ -325,7 +326,7 @@
                             <div class="col-md-10">
                                 <textarea class="form-control" cols="20" data-val="true" id="txtMoTa"
                                           name="jobDescription" rows="2"></textarea>
-                                @if (ViewContext.ModelState.ContainsKey("JobDescription"))
+                                @if (ViewContext.ModelState["JobDescription"]?.ValidationState == ModelValidationState.Invalid)
                                 {
                                     <span class="text-danger">Mô tả công việc không được để trống</span>
                                 }
@@ -339,7 +340,7 @@
                             <div class="col-md-10">
                                 <textarea class="form-control" cols="20" data-val="true" id="txtYeuCau"
                                           name="jobRequirements" rows="2"></textarea>
-                                @if (ViewContext.ModelState.ContainsKey("JobRequirements"))
+                                @if (ViewContext.ModelState["JobRequirements"]?.ValidationState == ModelValidationState.Invalid)
                                 {
                                     <span class="text-danger">Yêu cầu ứng viên không được để trống</span>
                                 }
@@ -353,7 +354,7 @@
                             <div class="col-md-10">
                                 <textarea class="form-control" cols="20" id="txtKyNang"
                                           name="relativeSkills" rows="2"></textarea>
-                                @if (ViewContext.ModelState.ContainsKey("RelativeSkills"))
+                                @if (ViewContext.ModelState["RelativeSkills"]?.ValidationState == ModelValidationState.Invalid)
                                 {
                                     <span class="text-danger">Kỹ năng liên quan không được để trống</span>
                                 }
@@ -367,7 +368,7 @@
                             <div class="col-md-10">
                                 <textarea class="form-control" cols="20" id="txtQuyenLoi"
                                           name="benefit" rows="2"></textarea>
-                                @if (ViewContext.ModelState.ContainsKey("Benefit"))
+                                @if (ViewContext.ModelState["Benefit"]?.ValidationState == ModelValidationState.Invalid)
                                 {
                                     <span class="text-danger">Quyền lợi không được để trống</span>
                                 }
@@ -381,7 +382,6 @@
                             <div class="col-md-6">
                                 <input class="form-control" data-val="true"
                                        id="numberOfCandidates" name="numberOfCandidates" type="number" value="1" min="1" max="100" />
-                                <span class="text-danger"></span>
                             </div>
                         </div>
 

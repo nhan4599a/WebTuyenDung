@@ -1,4 +1,4 @@
-﻿$('#create-recruiment-news-form').submit((e) => {
+﻿$('#create-recruiment-news-form').submit(() => {
 
     const salary = $('input[name=salary]').val()
     const minSalary = $('#salary-from').val()

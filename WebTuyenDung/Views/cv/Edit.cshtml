@@ -78,6 +78,9 @@
                             <form action="/cv/edit/@Model.Id" method="post" id="update-cv-form">
                                 @Html.AntiForgeryToken()
                                 @Html.HiddenFor(e => e.Image)
+                                @Html.HiddenFor(e => e.Address)
+                                @Html.HiddenFor(e => e.BirthDay)
+                                @Html.HiddenFor(e => e.PhoneNumber)
 
                                 <div class="form-horizontal">
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })

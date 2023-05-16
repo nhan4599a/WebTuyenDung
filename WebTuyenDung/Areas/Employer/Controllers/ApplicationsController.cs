@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Data;
 using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
-using WebTuyenDung.ViewModels.Abstraction;
-using WebTuyenDung.ViewModels.Employer;
-using Z.EntityFramework.Plus;
 
 namespace WebTuyenDung.Areas.Employer.Controllers
 {
@@ -46,14 +42,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
             var jobApplication = (await _dbContext.JobApplications.Include(e => e.RecruimentNews).FirstOrDefaultAsync(e => e.Id == id))!;
             jobApplication.Status = request.Status;
 
-            _dbContext.Notifications.Add(new Notification
-            {
-                RecruimentNewsId = jobApplication.RecruimentNewsId,
-                CandidateId = jobApplication.CandidateId,
-                Message = $"{User.GetName()} đã chuyển trạng thái đơn ứng tuyển của bạn sang {request.Status.GetRepresentation()}"
-            });
-
-            if (request.Status == JobApplicationStatus.Passed)
+            if (request.Status == JobApplicationStatus.Potential || request.Status == JobApplicationStatus.Passed)
             {
                 var countData = await _dbContext.PotentialCandidateCount
                                                 .FirstOrDefaultAsync(e => e.CandidateId == request.CandidateId

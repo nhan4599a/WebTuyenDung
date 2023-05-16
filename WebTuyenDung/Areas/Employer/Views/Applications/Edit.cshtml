@@ -47,14 +47,6 @@
                                 @Html.LabelFor(model => model.Status, "Trạng thái", new { @class = "control-label col-md-2" })
                                 <div class="col-md-6">
                                     <select name="status">
-                                        @if (Model.Status == JobApplicationStatus.Seen)
-                                        {
-                                            <option value="1" selected>Đã xem</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="1">Đã xem</option>
-                                        }
                                         @if (Model.Status == JobApplicationStatus.Potential)
                                         {
                                             <option value="2" selected>Ứng viên tiềm năng</option>

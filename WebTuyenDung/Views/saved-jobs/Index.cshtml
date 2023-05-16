@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="~/Assets/Client/css/home.css">
 }
 
+@section scripts_Main {
+    <script>
+        $('.recruitment__item > form').submit(function () {
+            const element = $(this)
+            const recruimentNewsId = element.data('id')
+
+            $.ajax({
+                url: `/api/recruiment-news/save/${recruimentNewsId}`,
+                method: 'POST',
+                data: {
+                    isSaveAction: false
+                },
+                success: function() {
+                    element.parent().parent().remove()
+                }
+            })
+        })
+    </script>
+}
+
 <div class="main__content">
     <div class="main__content--wrapper grid wide">
         <div class="row">
@@ -38,7 +58,7 @@
                                                     <div class="recruitment__name--employer">
                                                         <a href="/employer/@item.EmployerId" class="recruitment__employer--link text-line-1">
                                                             <span class="recruitment__icon"><i class="far fa-building"></i></span>
-                                                            <span class="">@item.EmployerName</span>
+                                                            <span>@item.EmployerName</span>
                                                         </a>
                                                     </div>
                                                     <p class="recruitment__salary">
@@ -50,7 +70,7 @@
                                                         <span>@item.JobType</span>
                                                     </p>
                                                 </div>
-                                                <form action="/api/recruiment-news/save/@item.RecruimentNewsId" method="post">
+                                                <form data-id="@item.RecruimentNewsId" method="post">
                                                     <button class="btn btn-bordered-info">
                                                         <i class="fa-solid fa-heart"></i>
                                                         <span>Bỏ lưu</span>

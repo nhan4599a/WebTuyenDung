@@ -1,8 +1,8 @@
-﻿using Mapster;
+﻿using FastEnumUtility;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
@@ -151,8 +151,9 @@ namespace WebTuyenDung.Controllers
             var detail = viewModel.Adapt<CurriculumVitaeDetail>();
             detail.Email = User.GetUsername();
             detail.PhoneNumber = User.GetPhoneNumber()!;
-            detail.BirthDay = User.GetBirthDay()!.GetApplicationTimeRepresentation();
-            detail.Gender = Enum.Parse<Gender>(User.GetGender()!);
+            detail.BirthDay = User.GetBirthDay()!.Value;
+            detail.Gender = FastEnum.Parse<Gender>(User.GetGender()! == "Nam" ? "Male" : "Female");
+            detail.Address = User.GetAddress()!;
 
             var cv = new CurriculumVitae
             {
@@ -193,7 +194,10 @@ namespace WebTuyenDung.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Replace(int id, ReplaceCurriculumVitaeRequest request)
         {
-            await _fileService.ReplaceFileAsync(request.Url!, request.CV!, FilePath.CurriculumTitae);
+            if (request.CV != null)
+            {
+                await _fileService.ReplaceFileAsync(request.Url!, request.CV!, FilePath.CurriculumTitae);
+            }
 
             await DbContext.CVs.Where(e => e.Id == id).UpdateFromQueryAsync(e => new CurriculumVitae
             {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using WebTuyenDung.Data.Configurations;
 using WebTuyenDung.Enums;
 
@@ -13,7 +14,7 @@ namespace WebTuyenDung.Models
 
         public string Email { get; set; } = default!;
 
-        public string BirthDay { get; set; } = default!;
+        public DateOnly BirthDay { get; set; } = default!;
 
         public string PhoneNumber { get; set; } = default!;
 
