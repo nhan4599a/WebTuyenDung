@@ -55,9 +55,9 @@ namespace WebTuyenDung.Controllers
                 var numeberOfCandidatesCounts = numberOfCandidatesQuery.ToDictionary(e => e.Key, e => e.Count);
 
                 numeberOfCandidatesCounts.TryGetValue(JobApplicationStatus.Potential, out var potentialCandidates);
-                numeberOfCandidatesCounts.TryGetValue(JobApplicationStatus.Potential, out var scheduledCandidates);
-                numeberOfCandidatesCounts.TryGetValue(JobApplicationStatus.Potential, out var passedCandidates);
-                numeberOfCandidatesCounts.TryGetValue(JobApplicationStatus.Potential, out var failedCandidates);
+                numeberOfCandidatesCounts.TryGetValue(JobApplicationStatus.Scheduled, out var scheduledCandidates);
+                numeberOfCandidatesCounts.TryGetValue(JobApplicationStatus.Passed, out var passedCandidates);
+                numeberOfCandidatesCounts.TryGetValue(JobApplicationStatus.Rejected, out var failedCandidates);
 
                 ViewData["potential-candidates"] = potentialCandidates;
                 ViewData["scheduled-candidates"] = scheduledCandidates;

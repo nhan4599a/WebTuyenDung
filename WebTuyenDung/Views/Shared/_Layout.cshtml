@@ -2,10 +2,10 @@
 @{
     var avatar = User.GetAvatar();
 
-    var numberOfPotentialCandidates = ((int?)ViewData["potential-candidates"]) ?? 0;
-    var numberOfScheduledCandidates = ((int?)ViewData["scheduled-candidates"]) ?? 0;
-    var numberOfPassedCandidates = ((int?)ViewData["passed-candidates"]) ?? 0;
-    var numberOfFailedCandidates = ((int?)ViewData["failed-candidates"]) ?? 0;
+    var numberOfPotentialCandidates = (ViewData["potential-candidates"] as int?) ?? 0;
+    var numberOfScheduledCandidates = (ViewData["scheduled-candidates"] as int?) ?? 0;
+    var numberOfPassedCandidates = (ViewData["passed-candidates"] as int?) ?? 0;
+    var numberOfFailedCandidates = (ViewData["failed-candidates"] as int?) ?? 0;
 
     var totalNumberOfCandidates = numberOfPotentialCandidates + numberOfScheduledCandidates + numberOfPassedCandidates + numberOfFailedCandidates;
 }
