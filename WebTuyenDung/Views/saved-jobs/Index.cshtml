@@ -11,7 +11,10 @@
 
 @section scripts_Main {
     <script>
-        $('.recruitment__item > form').submit(function () {
+        $('.recruitment__item > form').submit(function (e) {
+
+            e.preventDefault()
+
             const element = $(this)
             const recruimentNewsId = element.data('id')
 
@@ -22,6 +25,7 @@
                     isSaveAction: false
                 },
                 success: function() {
+                    alert('Bỏ lưu tin tuyển dụng thành công')
                     element.parent().parent().remove()
                 }
             })

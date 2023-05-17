@@ -4,6 +4,9 @@
 @model StatisticViewModel
 
 @{
+    ViewBag.Title = "Trang chủ";
+    ViewBag.CurrentPage = "Dashboards";
+
     var employerName = User.GetName();
 
     var chartData = new int[12];

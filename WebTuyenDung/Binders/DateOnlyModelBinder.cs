@@ -35,9 +35,11 @@ namespace WebTuyenDung.Binders
                     bindingContext.ModelState.AddModelError(modelName, $"Field {modelName} is required");
                     bindingContext.Result = ModelBindingResult.Failed();
                 }
+
+                bindingContext.ModelState.SetModelValue(modelName, valueResult);
+                return Task.CompletedTask;
             }
 
-            bindingContext.ModelState.SetModelValue(modelName, valueResult);
             var rawValue = valueResult.FirstValue;
 
             if (!DateOnly.TryParseExact(rawValue, DateTimeFormatConstants.DATE_ONLY_FORMAT, out var value))

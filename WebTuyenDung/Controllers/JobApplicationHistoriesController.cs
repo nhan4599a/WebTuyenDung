@@ -1,9 +1,11 @@
 ﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
+using WebTuyenDung.Constants;
 using WebTuyenDung.Data;
 using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
@@ -13,6 +15,7 @@ using WebTuyenDung.ViewModels.User;
 namespace WebTuyenDung.Controllers
 {
     [ControllerName("job-application-histories")]
+    [Authorize(Policy = AuthorizationConstants.CANDIDATE_ONLY_POLICY)]
     public class JobApplicationHistoriesController : BaseController
     {
         private readonly FileService _fileService;

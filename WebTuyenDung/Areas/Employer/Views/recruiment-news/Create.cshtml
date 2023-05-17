@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using WebTuyenDung.Enums;
 @model WebTuyenDung.Requests.CreateOrUpdateRecruimentNewsRequest
 
 @{
@@ -60,7 +61,7 @@
                                 </label>
                                 <div class="col-md-4">
                                     <input class="form-control" cols="20" id="jobName"
-                                           name="jobName" rows="2" />
+                                           name="jobName" rows="2" value="@Model?.JobName" />
                                     @if (ViewContext.ModelState["JobName"]?.ValidationState == ModelValidationState.Invalid)
                                     {
                                         <span class="text-danger">Tên công việc không được để trống</span>
@@ -74,14 +75,49 @@
                                     <select class="form-control text-box single-line selectpicker"
                                             data-live-search="true" data-val="true" id="jobType"
                                             name="jobType">
-                                        <option value="">
-                                            -- Chọn hình thức làm việc --
-                                        </option>
-                                        <option value="0">Parttime - Bán thời gian</option>
-                                        <option value="1">Fulltime - Toàn thời gian</option>
-                                        <option value="2">
-                                            Remote - Làm việc từ xa
-                                        </option>
+                                        @if (Model?.JobType == null)
+                                        {
+                                            <option value="" selected>
+                                                -- Chọn hình thức làm việc --
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="">
+                                                -- Chọn hình thức làm việc --
+                                            </option>
+                                        }
+                                        @if (Model?.JobType == JobType.PartTime)
+                                        {
+                                            <option value="0" selected>Parttime - Bán thời gian</option>
+
+                                        }
+                                        else
+                                        {
+                                            <option value="0">Parttime - Bán thời gian</option>
+                                        }
+                                        @if (Model?.JobType == JobType.FullTime)
+                                        {
+
+                                            <option value="1" selected>Fulltime - Toàn thời gian</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="1">Fulltime - Toàn thời gian</option>
+
+                                        }
+                                        @if (Model?.JobType == JobType.Remote)
+                                        {
+                                            <option value="2" selected>
+                                                Remote - Làm việc từ xa
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="2">
+                                                Remote - Làm việc từ xa
+                                            </option>
+                                        }
                                     </select>
                                     @if (ViewContext.ModelState["JobType"]?.ValidationState == ModelValidationState.Invalid)
                                     {
@@ -167,21 +203,44 @@
                                 <div class="col-md-4">
                                     <div class="form-check-inline">
                                         <label class="form-check-label">
-                                            <input type="radio" class="form-check-input"
-                                                   name="gender" checked>không yêu cầu
+                                            @if (Model?.Gender == null)
+                                            {
+                                                <input type="radio" class="form-check-input"
+                                                       name="gender" value="" checked> @: không yêu cầu
+                                            }
+                                            else
+                                            {
+                                                <input type="radio" class="form-check-input"
+                                                       name="gender" value=""> @: không yêu cầu
+                                            }
                                         </label>
                                     </div>
                                     <div class="form-check-inline">
                                         <label class="form-check-label">
-                                            <input type="radio" class="form-check-input"
-                                                   name="gender"
-                                                   aria-label="Radio button for following text input" value="0">Nam
+                                            @if (Model?.Gender == Gender.Male)
+                                            {
+                                                <input type="radio" class="form-check-input"
+                                                       name="gender" value="0" checked> @: Nam
+                                            }
+                                            else
+                                            {
+                                                <input type="radio" class="form-check-input"
+                                                       name="gender" value="0"> @: Nam
+                                            }
                                         </label>
                                     </div>
                                     <div class="form-check-inline">
                                         <label class="form-check-label">
-                                            <input type="radio" class="form-check-input"
-                                                   name="gender" value="1">Nữ
+                                            @if (Model?.Gender == Gender.Male)
+                                            {
+                                                <input type="radio" class="form-check-input"
+                                                       name="gender" value="1" checked> @: Nữ
+                                            }
+                                            else
+                                            {
+                                                <input type="radio" class="form-check-input"
+                                                       name="gender" value="1"> @: Nữ
+                                            }
                                         </label>
                                     </div>
                                 </div>
@@ -288,11 +347,11 @@
                             </label>
                             <div class="col-md-4">
                                 <input class="form-control" cols="20" id="workingAddress"
-                                       name="workingAddress" rows="2" />
+                                       name="workingAddress" rows="2" value="@Model?.WorkingAddress" />
                                 @if (ViewContext.ModelState["WorkingAddress"]?.ValidationState == ModelValidationState.Invalid
-                                    || ViewContext.ModelState["CityId"]?.ValidationState == ModelValidationState.Invalid
-                                    || ViewContext.ModelState["DistrictId"]?.ValidationState == ModelValidationState.Invalid
-                                    || ViewContext.ModelState["WardId"]?.ValidationState == ModelValidationState.Invalid)
+                                || ViewContext.ModelState["CityId"]?.ValidationState == ModelValidationState.Invalid
+                                || ViewContext.ModelState["DistrictId"]?.ValidationState == ModelValidationState.Invalid
+                                || ViewContext.ModelState["WardId"]?.ValidationState == ModelValidationState.Invalid)
                                 {
                                     <span class="text-danger">Địa chỉ làm việc không được để trống</span>
                                 }
@@ -324,8 +383,19 @@
                                 Mô tả công việc
                             </label>
                             <div class="col-md-10">
-                                <textarea class="form-control" cols="20" data-val="true" id="txtMoTa"
-                                          name="jobDescription" rows="2"></textarea>
+                                @if (Model?.JobDescription != null)
+                                {
+                                    <textarea class="form-control" cols="20" data-val="true"
+                                              id="txtMoTa" name="jobDescription" rows="2">
+                                        @Model.JobDescription
+                                        </textarea>
+                                }
+                                else
+                                {
+                                    <textarea class="form-control" cols="20" data-val="true"
+                                              id="txtMoTa" name="jobDescription" rows="2">
+                                    </textarea>
+                                }
                                 @if (ViewContext.ModelState["JobDescription"]?.ValidationState == ModelValidationState.Invalid)
                                 {
                                     <span class="text-danger">Mô tả công việc không được để trống</span>
@@ -338,8 +408,18 @@
                                 Yêu cầu ứng viên
                             </label>
                             <div class="col-md-10">
-                                <textarea class="form-control" cols="20" data-val="true" id="txtYeuCau"
-                                          name="jobRequirements" rows="2"></textarea>
+                                @if (Model?.JobRequirements != null)
+                                {
+                                    <textarea class="form-control" cols="20" data-val="true"
+                                              id="txtYeuCau" name="jobRequirements" rows="2">
+                                        @Model.JobRequirements
+                                    </textarea>
+                                }
+                                else
+                                {
+                                    <textarea class="form-control" cols="20" data-val="true" id="txtYeuCau"
+                                              name="jobRequirements" rows="2"></textarea>
+                                }
                                 @if (ViewContext.ModelState["JobRequirements"]?.ValidationState == ModelValidationState.Invalid)
                                 {
                                     <span class="text-danger">Yêu cầu ứng viên không được để trống</span>
@@ -352,8 +432,18 @@
                                 Kỹ năng liên quan
                             </label>
                             <div class="col-md-10">
-                                <textarea class="form-control" cols="20" id="txtKyNang"
-                                          name="relativeSkills" rows="2"></textarea>
+                                @if (Model?.RelativeSkills != null)
+                                {
+                                    <textarea class="form-control" cols="20" id="txtKyNang"
+                                        name="relativeSkills" rows="2">
+                                        @Model.RelativeSkills
+                                    </textarea>
+                                }
+                                else
+                                {
+                                    <textarea class="form-control" cols="20" id="txtKyNang"
+                                              name="relativeSkills" rows="2"></textarea>
+                                }
                                 @if (ViewContext.ModelState["RelativeSkills"]?.ValidationState == ModelValidationState.Invalid)
                                 {
                                     <span class="text-danger">Kỹ năng liên quan không được để trống</span>
@@ -366,8 +456,16 @@
                                 Quyền lợi
                             </label>
                             <div class="col-md-10">
-                                <textarea class="form-control" cols="20" id="txtQuyenLoi"
-                                          name="benefit" rows="2"></textarea>
+                                @if (Model?.Benefit != null)
+                                {
+                                    <textarea class="form-control" cols="20" id="txtQuyenLoi"
+                                        name="benefit" rows="2">@Model.Benefit</textarea>
+                                }
+                                else
+                                {
+                                    <textarea class="form-control" cols="20" id="txtQuyenLoi"
+                                              name="benefit" rows="2"></textarea>
+                                }
                                 @if (ViewContext.ModelState["Benefit"]?.ValidationState == ModelValidationState.Invalid)
                                 {
                                     <span class="text-danger">Quyền lợi không được để trống</span>
@@ -381,7 +479,7 @@
                             </label>
                             <div class="col-md-6">
                                 <input class="form-control" data-val="true"
-                                       id="numberOfCandidates" name="numberOfCandidates" type="number" value="1" min="1" max="100" />
+                                       id="numberOfCandidates" name="numberOfCandidates" type="number" value="@(Model?.NumberOfCandidates ?? 1)" min="1" max="100" />
                             </div>
                         </div>
 

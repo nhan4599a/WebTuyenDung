@@ -44,7 +44,6 @@ namespace WebTuyenDung.Areas.Admin.Controllers
             var recruimentNewsCountQuery = _dbContext
                                                 .RecruimentNews
                                                 .Where(e => e.IsApproved)
-                                                .GroupBy(e => e.IsApproved)
                                                 .DeferredCount()
                                                 .FutureValue();
 

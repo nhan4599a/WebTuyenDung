@@ -67,7 +67,6 @@ namespace WebTuyenDung.Areas.Employer.Controllers
 
             var applicationsCountChartDataQuery = _dbContext
                                                         .JobApplications
-                                                        .Where(e => e.Status != JobApplicationStatus.Received)
                                                         .GroupBy(e => e.CreatedAt.Month)
                                                         .Select(e => new GroupByToCountQueryResult<int>
                                                         {
