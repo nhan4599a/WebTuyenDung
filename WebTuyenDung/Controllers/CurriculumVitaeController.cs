@@ -48,6 +48,7 @@ namespace WebTuyenDung.Controllers
 
         [HttpGet("/cv/{id:int}")]
         [AllowAnonymous]
+        [ResponseCache(NoStore = true)]
         [SharedAction]
         public async Task<IActionResult> Index(int id)
         {
