@@ -33,9 +33,9 @@
                 str += "<td>" + value.view + "</td>";
                 str += `<td><span class="bad bad-success">${isApproved == 0 ? 'Chưa được duyệt' : 'Đã duyệt'}</span></td>`
                 if (isApproved == 0) {
-                    str += `<td class="d-flex">
+                    str += `<td>
                                 <a class="btn btn-warning" href="/employer/posts/edit/${value.id}">Sửa</a>`;
-                    str += `<a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a></td>`;
+                    str += `<a style="margin-left: 15px" class="btn btn-danger" href="#" data-user="${value.id}">Xóa</a></td>`;
                 } else {
                     str += `<td>
                                 <a class="btn btn-danger ml-1" href="#" data-user="${value.id}">Xóa</a>
@@ -73,7 +73,7 @@
 $("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
     event.preventDefault();
     var member_delete = $(this).attr('data-user');
-    if (confirm("Bạn có muốn xóa bài viết có Mã = " + member_delete + " này không?")) {
+    if (confirm("Bạn có muốn xóa bài viết có này không?")) {
         $.ajax({
             url: `/api/posts/${member_delete}`,
             type: "DELETE",

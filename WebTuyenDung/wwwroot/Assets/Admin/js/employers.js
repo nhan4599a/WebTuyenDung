@@ -65,7 +65,7 @@ $("body").on("click", "#datatablesSimple a.btn[data-action]", function (event) {
     event.preventDefault();
     const userId = $(this).data('user');
     const action = $(this).data('action');
-    var message = `Bạn có muốn ${action === 'approve' ? 'duyệt' : 'xóa'} nhà tuyển dụng có Mã = \"${userId}\" này không?`
+    var message = `Bạn có muốn ${action === 'approve' ? 'duyệt' : 'xóa'} nhà tuyển dụng này không?`
 
     if (confirm(message)) {
 

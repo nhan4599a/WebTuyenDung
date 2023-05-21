@@ -75,11 +75,19 @@
 
     @if (TempData["popup-success"] != null)
     {
-        <script>alert('Bạn đã ứng tuyển công việc này rồi, vui lòng theo dõi kết quả')</script>
+        <script>
+            $(document).ready(() => {
+                alert('Ứng tuyển thành công')
+            })
+        </script>
     }
     @if (TempData["popup-error"] != null)
     {
-        <script>alert('Ứng tuyển thành công')</script>
+        <script>
+            $(document).ready(() => {
+                alert('Bạn đã ứng tuyển công việc này rồi, vui lòng theo dõi kết quả')
+            })
+        </script>
     }
 }
 

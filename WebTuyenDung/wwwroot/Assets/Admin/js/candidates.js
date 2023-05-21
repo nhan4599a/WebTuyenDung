@@ -23,8 +23,8 @@
                 str += "<td>" + parseGender(value.gender) + "</td>";
                 str += "<td>" + value.birthDay + "</td>";
                 str += "<td>" + value.address + "</td>";
-                str += '<td style="display: inline-grid;"><a style="min-width: 90px" class="btn btn-success" href="/admin/candidates/' + value.id + '">Xem thông tin</a>';
-                str += '<a class="btn btn-danger mt-1" href="#" data-user=' + value.id + '>Xóa</a>';
+                str += '<td><a style="min-width: 90px" class="btn btn-success" href="/admin/candidates/' + value.id + '">Xem thông tin</a>';
+                str += '<a class="btn btn-danger" href="#" data-user=' + value.id + ' style="margin-left: 15px">Xóa</a>';
                 str += "</tr>";
                  
                 //create pagination
@@ -58,7 +58,7 @@
 $("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
     event.preventDefault();
     var userId = $(this).attr('data-user');
-    if (confirm("Bạn có muốn xóa ứng viên có Mã = " + userId + " này không?")) {
+    if (confirm("Bạn có muốn xóa ứng viên này không?")) {
         $.ajax({
             url: "/api/users/" + userId,
             type: "DELETE",

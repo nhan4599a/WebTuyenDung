@@ -88,6 +88,11 @@ namespace WebTuyenDung.Helper
                     .Add(ClaimTypes.StreetAddress, candidate.Address)
                     .Add(ClaimTypes.Gender, candidate.Gender.GetRepresentation());
             }
+            else if (user.Role == UserRole.Employer)
+            {
+                var employer = (user as Employer)!;
+                claims.Add(ClaimTypes.StreetAddress, employer.Address);
+            }
 
             var claimsIdentity = new ClaimsIdentity(claims, AuthenticationConstants.AUTHENTICATION_SCHEME);
 

@@ -83,8 +83,10 @@ namespace WebTuyenDung
             });
 
             services.AddSingleton<FileService>();
+            services.AddSingleton(Configuration.GetSection("EmailConfig").Get<EmailConfiguration>()!);
             services.AddSingleton<IAuthorizationMiddlewareResultHandler, AppAuthorizationResultHandler>();
             services.AddScoped<PostService>();
+            services.AddScoped<EmailService>();
             MappingConfigurations.ConfigMappings();
         }
 

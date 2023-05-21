@@ -23,12 +23,12 @@
                 str += "<td>" + parseUserRole(value.role) + "</td>";
                 str += "<td>" + value.createdAt + "</td>";
                 str += "<td>Hoạt động</td>";
-                str += '<td class="d-flex justify-content-around">';
+                str += '<td>';
                 if (value.role != 2) {
                     str += '<a class="btn btn-danger" href="#" data-user=' + value.id + ' data-action="remove">Xóa</a>';
                 }
                 if (value.role == 0 || (value.role == 2 && value.id != userId)) {
-                    str += `<a class="btn btn-success" href="#" data-user='${value.id}' data-target='${value.role == 0 ? 2 : 0}' data-action="role-assign">Gán làm ${value.role == 0 ? 'Admin' : 'Ứng viên'}</a></td>`
+                    str += `<a style="margin-left: 15px" class="btn btn-success" href="#" data-user='${value.id}' data-target='${value.role == 0 ? 2 : 0}' data-action="role-assign">Gán làm ${value.role == 0 ? 'Admin' : 'Ứng viên'}</a></td>`
                 }
                 str += "</tr>";
 
@@ -82,7 +82,7 @@ $("body").on("click", "#datatablesSimple a.btn[data-action]", function (event) {
     } else {
         const targetRole = $(this).data('target')
 
-        if (confirm(`Bạn có muốn gán tài khoản có id = "${user_delete}" này thành ${parseUserRole(targetRole)} không?`)) {
+        if (confirm(`Bạn có muốn gán tài khoản này thành ${parseUserRole(targetRole)} không?`)) {
             $.ajax({
                 url: "/api/users/" + user_delete,
                 type: "patch",

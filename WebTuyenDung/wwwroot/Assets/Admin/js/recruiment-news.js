@@ -79,7 +79,7 @@ $('body').on('click', '#datatablesSimple a.btn.btn-success', function (e) {
 
     const recruimentNewsId = $(this).data('id');
 
-    if (confirm(`Bạn có muốn duyệt tin tuyển dụng có Mã = ${recruimentNewsId} này không?`)) {
+    if (confirm(`Bạn có muốn duyệt tin tuyển dụng này không?`)) {
         $.ajax({
             url: `/api/recruiment-news/approve/${recruimentNewsId}`,
             type: 'PUT',

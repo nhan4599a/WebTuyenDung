@@ -212,6 +212,14 @@ namespace WebTuyenDung.Controllers
         [AutoShortCircuitValidationFailedRequest]
         public async Task<IActionResult> Edit(int id, CurriculumVitaeDetailViewModel request)
         {
+            var userId = User.GetUserId();
+            var isNameInUsed = await DbContext.CVs.AnyAsync(e => e.CandidateId == userId && e.Name == request.Name);
+            if (isNameInUsed)
+            {
+                ModelState.AddModelError("Name", "Name is already in used");
+                return BadRequest(ModelState);
+            }
+
             var transaction = await DbContext.Database.BeginTransactionAsync();
 
             if (request.ImageFile != null)

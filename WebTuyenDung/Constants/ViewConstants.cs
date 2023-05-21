@@ -15,5 +15,13 @@
         public const string WAIT_FOR_APPROVAL_POSTS = "WaitForApprovalRecruimentPosts";
 
         public const string CITIES = "Cities";
+
+        public const string POTENTIAL_JOB_APPLICATIONS = "potential-job-applications";
+
+        public const string SCHEDULED_JOB_APPLICATIONS = "scheduled-job-applications";
+
+        public const string PASSED_JOB_APPLICATIONS = "passed-job-applications";
+
+        public const string FAILED_JOB_APPLICATIONS = "failed-job-applications";
     }
 }

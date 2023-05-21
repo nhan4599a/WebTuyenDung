@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Data;
 using WebTuyenDung.Enums;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
 using WebTuyenDung.Requests;
+using WebTuyenDung.Services;
+using Z.EntityFramework.Plus;
 
 namespace WebTuyenDung.Areas.Employer.Controllers
 {
@@ -37,7 +41,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, UpdateJobApplicationRequest request)
+        public async Task<IActionResult> Edit(int id, UpdateJobApplicationRequest request, [FromServices] EmailService emailService)
         {
             var jobApplication = (await _dbContext.JobApplications.Include(e => e.RecruimentNews).FirstOrDefaultAsync(e => e.Id == id))!;
             jobApplication.Status = request.Status;
@@ -64,6 +68,30 @@ namespace WebTuyenDung.Areas.Employer.Controllers
             }
             _dbContext.Entry(jobApplication).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
+
+            if (request.Status != JobApplicationStatus.Potential)
+            {
+                var candidateInfoQuery = _dbContext.Candidates
+                                                            .Where(e => e.Id == jobApplication.CandidateId)
+                                                            .Select(e => new
+                                                            {
+                                                                e.Username,
+                                                                e.Name
+                                                            })
+                                                            .DeferredFirstOrDefault();
+
+                var emailQuery = _dbContext.CVs
+                                            .Where(e => e.Id == jobApplication.CVId && e.Type == CVType.DirectInput)
+                                            .Select(e => e.Detail!.Email)
+                                            .DeferredFirstOrDefault();
+
+                var candidateInfo = await candidateInfoQuery.ExecuteAsync();
+                var email = await emailQuery.ExecuteAsync();
+
+                var sendMailRequest = BuildSendMailRequest(email ?? candidateInfo!.Username, candidateInfo!.Name, jobApplication.RecruimentNewsId, jobApplication.JobName, request.Status);
+
+                await emailService.SendAsync(sendMailRequest);
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -93,6 +121,40 @@ namespace WebTuyenDung.Areas.Employer.Controllers
             }
 
             return jobApplication;
+        }
+
+        private SendMailRequest BuildSendMailRequest(
+            string candidateEmail,
+            string candidateName,
+            int jobId,
+            string jobName,
+            JobApplicationStatus status)
+        {
+            string subject = $"Thư thông báo kết quả tuyển dụng - {candidateName}";
+            string body = $"Nhà tuyển dụng \"{User.GetName()}\" đã ";
+
+            if (status == JobApplicationStatus.Scheduled)
+            {
+                var scheduledTime = DateTime.Now.AddDays(7);
+                var scheduledTimeRepresentation = $"09:00 AM thứ {((int)scheduledTime.DayOfWeek) + 1} ngày {scheduledTime:dd/MM/yyyy}";
+                body += $"duyệt qua đơn ứng tuyển cho công việc <a href=\"https://localhost:5000/recruiment-news/{jobId}\">{jobName}</a> của bạn và mời bạn phỏng vấn vào lúc {scheduledTimeRepresentation} tại địa chỉ công ty ở {User.GetAddress()}";
+            }
+            else if (status == JobApplicationStatus.Passed)
+            {
+                body += $"đánh pass đơn ứng tuyển cho công việc <a href=\"https://localhost:5000/recruiment-news/{jobId}\">{jobName}</a>";
+            }
+            else
+            {
+                body += $"đánh trượt đơn ứng tuyển cho công việc <a href=\"https://localhost:5000/recruiment-news/{jobId}\">{jobName}</a>";
+            }
+
+            return new SendMailRequest
+            {
+                ToAddress = candidateEmail,
+                Subject = subject,
+                Body = body,
+                IsHTMLBody = true
+            };
         }
     }
 }

@@ -76,7 +76,7 @@
 $("body").on("click", "#datatablesSimple a.btn.btn-danger", function (event) {
     event.preventDefault();
     var member_delete = $(this).attr('data-user');
-    if (confirm("Bạn có muốn xóa tin tuyển dụng có Mã = " + member_delete + " này không?")) {
+    if (confirm("Bạn có muốn xóa tin tuyển dụng này không?")) {
         $.ajax({
             url: `/api/recruiment-news/${member_delete}`,
             type: "DELETE",
