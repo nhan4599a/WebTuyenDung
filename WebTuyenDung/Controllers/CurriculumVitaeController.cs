@@ -213,7 +213,8 @@ namespace WebTuyenDung.Controllers
         public async Task<IActionResult> Edit(int id, CurriculumVitaeDetailViewModel request)
         {
             var userId = User.GetUserId();
-            var isNameInUsed = await DbContext.CVs.AnyAsync(e => e.CandidateId == userId && e.Name == request.Name);
+            var isNameInUsed = await DbContext.CVs.Where(e => e.Id != id && e.CandidateId == userId && e.Name == request.Name).AnyAsync();
+
             if (isNameInUsed)
             {
                 ModelState.AddModelError("Name", "Name is already in used");

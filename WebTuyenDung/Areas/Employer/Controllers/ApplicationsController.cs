@@ -131,21 +131,21 @@ namespace WebTuyenDung.Areas.Employer.Controllers
             JobApplicationStatus status)
         {
             string subject = $"Thư thông báo kết quả tuyển dụng - {candidateName}";
-            string body = $"Nhà tuyển dụng \"{User.GetName()}\" đã ";
+            string body;
 
             if (status == JobApplicationStatus.Scheduled)
             {
                 var scheduledTime = DateTime.Now.AddDays(7);
                 var scheduledTimeRepresentation = $"09:00 AM thứ {((int)scheduledTime.DayOfWeek) + 1} ngày {scheduledTime:dd/MM/yyyy}";
-                body += $"duyệt qua đơn ứng tuyển cho công việc <a href=\"https://localhost:5000/recruiment-news/{jobId}\">{jobName}</a> của bạn và mời bạn phỏng vấn vào lúc {scheduledTimeRepresentation} tại địa chỉ công ty ở {User.GetAddress()}";
+                body = $"Nhà tuyển dụng \"{User.GetName()}\" đã duyệt qua đơn ứng tuyển cho công việc <a href=\"https://localhost:5000/recruiment-news/{jobId}\">{jobName}</a> của bạn và mời bạn phỏng vấn vào lúc {scheduledTimeRepresentation} tại địa chỉ công ty ở {User.GetAddress()}";
             }
             else if (status == JobApplicationStatus.Passed)
             {
-                body += $"đánh pass đơn ứng tuyển cho công việc <a href=\"https://localhost:5000/recruiment-news/{jobId}\">{jobName}</a>";
+                body = $"Kết quả tuyển dụng cho công việc cho công việc <a href=\"https://localhost:5000/recruiment-news/{jobId}\">{jobName}</a> mà bạn đã ứng tuyển từ nhà tuyển dụng \"{User.GetName()}\" là: đã đậu phỏng vấn";
             }
             else
             {
-                body += $"đánh trượt đơn ứng tuyển cho công việc <a href=\"https://localhost:5000/recruiment-news/{jobId}\">{jobName}</a>";
+                body = $"Kết quả tuyển dụng cho công việc cho công việc <a href=\"https://localhost:5000/recruiment-news/{jobId}\">{jobName}</a> mà bạn đã ứng tuyển từ nhà tuyển dụng \"{User.GetName()}\" là: đã trượt phỏng vấn";
             }
 
             return new SendMailRequest
