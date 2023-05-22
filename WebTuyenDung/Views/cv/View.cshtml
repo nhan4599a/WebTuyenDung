@@ -169,8 +169,8 @@
 				</div>
 			</div>
 		</label>
-		<ul style="position:absolute;top:862px;white-space:nowrap" class="ft10">@Html.Raw(Model.Skills)</ul>
-		<ul style="position:absolute;top:562px;white-space:nowrap" class="ft10">@Html.Raw(Model.SoftSkills)</ul>
+		@Html.Raw(Model.Skills.Insert(3, " style=\"position:absolute;top:862px;white-space:nowrap\" class=\"ft10\""))
+		@Html.Raw(Model.SoftSkills.Insert(3, " style=\"position:absolute;top:562px;white-space:nowrap\" class=\"ft10\""))
 		<p id="about" style="position:absolute;top:362px;left:23px;white-space:nowrap" class="ft19">@Model.Introduction</p>
 		<p style="position:absolute;top:384px;left:379px;white-space:nowrap" class="ft13">@Model.Education</p>
 		<p style="position:absolute;top:517px;left:379px;white-space:nowrap" class="ft13">@Model.Experience</p>

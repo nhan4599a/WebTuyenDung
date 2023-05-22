@@ -238,9 +238,9 @@ namespace WebTuyenDung.Controllers
                 Introduction = request.Introduction,
                 Objective = request.Objective,
                 Experience = request.Experience,
-                Skills = request.Skills.Substring(4, request.Skills.Length - 9),
+                Skills = request.Skills,
                 Education = request.Education,
-                SoftSkills = request.SoftSkills.Substring(4, request.SoftSkills.Length - 9)
+                SoftSkills = request.SoftSkills
             });
 
             await transaction.CommitAsync();

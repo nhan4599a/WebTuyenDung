@@ -32,11 +32,11 @@
             const thisElement = document.getElementById('update-cv-form')
             const formData = new FormData(thisElement)
 
-            formData.delete('skills')
-            formData.append('skills', CKEDITOR.instances['txtKyNang'].getData())
+            formData.delete('Skills')
+            formData.append('Skills', CKEDITOR.instances['txtKyNang'].getData())
 
-            formData.delete('softSkills')
-            formData.append('softSkills', CKEDITOR.instances['txtKyNangMem'].getData())
+            formData.delete('SoftSkills')
+            formData.append('SoftSkills', CKEDITOR.instances['txtKyNangMem'].getData())
             
             formData.delete('ImageFile')
             formData.append('ImageFile', document.getElementById('Image-File').files[0])
@@ -75,7 +75,7 @@
                             <h4 class="header-title mb-0">Thông tin tạo hồ sơ xin việc</h4>
                         </div>
                         <div class="collapse pt-3 show">
-                            <form action="/cv/edit/@Model.Id" method="post" id="update-cv-form">
+                            <form id="update-cv-form">
                                 @Html.AntiForgeryToken()
                                 @Html.HiddenFor(e => e.Image)
                                 @Html.HiddenFor(e => e.Address)

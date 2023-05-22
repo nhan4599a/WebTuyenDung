@@ -73,11 +73,6 @@ namespace WebTuyenDung.Configurations
                 .Map(e => e.Education, source => source.Detail!.Education)
                 .Map(e => e.SoftSkills, source => source.Detail!.SoftSkills);
 
-            TypeAdapterConfig<CreateCVViewModel, CurriculumVitaeDetail>
-                .NewConfig()
-                .Map(e => e.Skills, source => source.Skills.Substring(4, source.Skills.Length - 9))
-                .Map(e => e.SoftSkills, source => source.SoftSkills.Substring(4, source.SoftSkills.Length - 9));
-
             TypeAdapterConfig<Candidate, PotentialCandidateViewModel>
                 .NewConfig()
                 .Map(e => e.Email, source => source.Username);
