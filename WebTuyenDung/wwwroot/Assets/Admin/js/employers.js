@@ -24,10 +24,11 @@
                 str += "<td>" + value.address + "</td>";
                 str += "<td>" + value.website + "</td>";
                 if (value.isApproved) {
-                    str += '<td class="display: inline-grid;"><a style="min-width: 90px" class="btn btn-success" href="/admin/employers/' + value.id + '">Xem thông tin</a>';
-                    str += '<a class="btn btn-danger mt-1" href="#" data-user=' + value.id + ' data-action="delete">Xóa</a>';
+                    str += '<td><a style="min-width: 90px" class="btn btn-success" href="/admin/employers/' + value.id + '">Xem thông tin</a>';
+                    str += '<a class="btn btn-danger" style="margin-left: 15px" href="#" data-user=' + value.id + ' data-action="delete">Xóa</a>';
                 } else {
-                    str += `<td class="display: inline-grid">
+                    str += `<td>
+                                <a style="min-width: 90px" class="btn btn-success" href="/admin/employers/${value.id}">Xem thông tin</a>
                                 <a style="min-width: 90px" class="btn btn-success" href="#" data-user="${value.id}" data-action="approve">Duyệt</a>
                             </td>`
                 }

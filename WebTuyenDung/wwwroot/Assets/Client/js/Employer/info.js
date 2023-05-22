@@ -38,3 +38,11 @@ input_cover.addEventListener('change', (e) => {
         return;
     }
 });
+
+console.log($('input[name=PhoneNumber]'))
+
+document.querySelector('input[name=PhoneNumber]').onbeforeinput = function (e) {
+    if (e.target.value.length >= 10 && e.inputType !== 'deleteContentBackward') {
+        e.preventDefault()
+    }
+}

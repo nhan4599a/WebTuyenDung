@@ -17,11 +17,12 @@ namespace WebTuyenDung.ApiControllers
         [HttpPatch("approve/{employerId}")]
         public async Task<IActionResult> ApproveEmployer(int employerId)
         {
-            await DbContext.Employers.SingleMergeAsync(new Models.Employer
-            {
-                Id = employerId,
-                IsApproved = true
-            });
+            await DbContext.Employers
+                            .Where(e => e.Id == employerId)
+                            .UpdateFromQueryAsync(e => new Employer
+                            {
+                                IsApproved = true
+                            });
 
             return Ok();
         }
