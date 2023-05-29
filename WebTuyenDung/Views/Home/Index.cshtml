@@ -89,6 +89,27 @@
                     $('#upload-form-error').text(JSON.parse(response.responseText)['Name'][0])
                 }
             })
+
+            const videoSrc = document.querySelector("#video-source");
+            const videoTag = document.querySelector("#video-tag");
+            const inputTag = document.querySelector("#input-tag");
+
+            inputTag.addEventListener('change', readVideo)
+
+            function readVideo(event) {
+                console.log(event.target.files)
+                if (event.target.files && event.target.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        console.log('loaded')
+                        videoSrc.src = e.target.result
+                        videoTag.load()
+                    }.bind(this)
+
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+            }
         }
     </script>
     <script src="/Assets/Shared/upload-file/upload-file.js"></script>
@@ -286,6 +307,13 @@
                     <span class="material-icons remove-file-icon">delete</span>
                     <div class="progress-bar"> </div>
                 </div>
+                <h4>Upload video clip của bạn</h4>
+                <input type="file" accept="video/*" id="input-tag" />
+                <hr>
+                <video controls id="video-tag">
+                    <source id="video-source" src="splashVideo">
+                    Your browser does not support the video tag.
+                </video>
                 <button type="submit" class="upload-button"> Upload </button>
             </form>
         </form>
