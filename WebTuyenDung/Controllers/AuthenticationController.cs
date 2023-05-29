@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
@@ -39,9 +40,16 @@ namespace WebTuyenDung.Controllers
             {
                 return BadRequest("Sai tên đăng nhập hoặc mật khẩu");
             }
-            if (user is Employer employer && !employer.IsApproved)
+
+            var employer = user as Employer;
+
+            if (employer != null && !employer.IsApproved)
             {
                 return BadRequest("Nhà tuyển dụng chưa được xác nhận bởi admin");
+            }
+            if (employer != null && employer.LockedOutAt != null && employer.LockedOutAt < DateTimeOffset.Now)
+            {
+                return BadRequest("Bạn chưa thanh toán tiền cho admin");
             }
 
             await HttpContext.SignInAsync(user);

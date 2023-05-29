@@ -29,5 +29,28 @@ namespace WebTuyenDung.ApiControllers
 
             return query.PaginateAsync<Employer, EmployerViewModel>(searchRequest);
         }
+
+        [HttpPatch("make-as-paid/{id}")]
+        public async Task<IActionResult> MakeAsPaid([FromRoute] int id)
+        {
+            var transaction = await DbContext.Database.BeginTransactionAsync();
+
+            var count = await DbContext
+                                .Debt
+                                .Where(e => e.EmployerId == id)
+                                .UpdateFromQueryAsync(e => new EmployerDebt
+                                {
+                                    Balance = 0
+                                });
+
+            await DbContext.Employers.Where(e => e.Id == id).UpdateFromQueryAsync(e => new Employer
+            {
+                LockedOutAt = null
+            });
+
+            await transaction.CommitAsync();
+
+            return count == 1 ? Ok() : NotFound();
+        }
     }
 }

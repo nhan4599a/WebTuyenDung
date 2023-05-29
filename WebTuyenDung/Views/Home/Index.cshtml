@@ -97,7 +97,6 @@
             inputTag.addEventListener('change', readVideo)
 
             function readVideo(event) {
-                console.log(event.target.files)
                 if (event.target.files && event.target.files[0]) {
                     var reader = new FileReader();
 

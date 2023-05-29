@@ -56,8 +56,6 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                 return View();
             }
 
-            var transaction = await _dbContext.Database.BeginTransactionAsync();
-
             var recruimentNews = request.Adapt<RecruimentNews>();
 
             if (request.Salary != "Khác" && request.Salary != "Thỏa thuận")
@@ -75,15 +73,6 @@ namespace WebTuyenDung.Areas.Employer.Controllers
             _dbContext.RecruimentNews.Add(recruimentNews);
 
             var saveItemsCount = await _dbContext.SaveChangesAsync();
-
-            await _dbContext.Debt
-                            .Where(e => e.EmployerId == employerId)
-                            .UpdateFromQueryAsync(e => new EmployerDebt
-                            {
-                                Balance = e.Balance + SystemConstants.PRICE_PER_RECRUIMENT_NEWS
-                            });
-
-            await transaction.CommitAsync();
 
             return RedirectToAction(nameof(Index));
         }

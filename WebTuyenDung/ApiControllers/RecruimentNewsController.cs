@@ -1,9 +1,11 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
+using WebTuyenDung.Constants;
 using WebTuyenDung.Data;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
@@ -52,6 +54,8 @@ namespace WebTuyenDung.ApiControllers
         [HttpPut("approve/{id}")]
         public async Task<IActionResult> Approve(int id)
         {
+            var transaction = await DbContext.Database.BeginTransactionAsync();
+
             var approvedCount = await DbContext
                                         .RecruimentNews
                                         .Where(e => e.Id == id)
@@ -59,6 +63,33 @@ namespace WebTuyenDung.ApiControllers
                                         {
                                             IsApproved = true
                                         });
+
+            var employerId = await DbContext.RecruimentNews.Where(e => e.Id == id).Select(e => e.EmployerId).FirstOrDefaultAsync();
+
+            await DbContext.Debt
+                            .Where(e => e.EmployerId == employerId)
+                            .UpdateFromQueryAsync(e => new EmployerDebt
+                            {
+                                Balance = e.Balance + SystemConstants.PRICE_PER_RECRUIMENT_NEWS
+                            });
+
+            await DbContext.Employers
+                            .Where(e => e.Id == employerId)
+                            .UpdateFromQueryAsync(e => new Employer
+                            {
+                                LockedOutAt = DateTimeOffset.Now.AddMinutes(5)
+                            });
+
+            //var lockedOutAt = DateTimeHelper.LastDayOfCurrentMonth().AddDays(5);
+
+            //await DbContext.Employers
+            //                .Where(e => e.Id == employerId)
+            //                .UpdateFromQueryAsync(e => new Employer
+            //                {
+            //                    LockedOutAt = lockedOutAt
+            //                });
+
+            await transaction.CommitAsync();
 
             return approvedCount == 1 ? Ok() : BadRequest();
         }

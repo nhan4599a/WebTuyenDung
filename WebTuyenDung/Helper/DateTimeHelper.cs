@@ -31,5 +31,22 @@ namespace WebTuyenDung.Helper
         {
             return DateOnly.ParseExact(date, DateTimeFormatConstants.DATE_ONLY_FORMAT);
         }
+
+        public static DateTimeOffset LastDayOfCurrentMonth()
+        {
+            var current = DateTimeOffset.Now;
+
+            return new DateTimeOffset(current.Year, current.Month, GetDayCountOfMonth(current.Month, current.Year), 0, 0, 0, TimeSpan.Zero);
+        }
+
+        public static int GetDayCountOfMonth(int month, int year)
+        {
+            if (month == 2)
+                return DateTime.IsLeapYear(year) ? 29 : 28;
+
+            var moduleResultCompareValue = month <= 7 ? 1 : 0;
+
+            return month % 2 == moduleResultCompareValue ? 31 : 30;
+        }
     }
 }

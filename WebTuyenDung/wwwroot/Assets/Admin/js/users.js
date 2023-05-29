@@ -67,7 +67,7 @@ $("body").on("click", "#datatablesSimple a.btn[data-action]", function (event) {
     const user_delete = $(this).attr('data-user');
 
     if (action === 'remove') {
-        if (confirm(`Bạn có muốn xóa tài khoản có id = "${user_delete}" này không?`)) {
+        if (confirm(`Bạn có muốn xóa tài khoản này không?`)) {
             $.ajax({
                 url: "/api/users/" + user_delete,
                 type: "DELETE",
