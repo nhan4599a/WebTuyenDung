@@ -121,6 +121,8 @@ namespace WebTuyenDung.Controllers
                 return BadRequest("Tên đăng nhập đã được sử dụng");
             }
 
+            var transaction = await DbContext.Database.BeginTransactionAsync();
+
             var employer = signUpRequest.Adapt<Employer>();
             employer.IsApproved = false;
             employer.Role = UserRole.Employer;
@@ -128,6 +130,13 @@ namespace WebTuyenDung.Controllers
             DbContext.Employers.Add(employer);
 
             await DbContext.SaveChangesAsync();
+
+            DbContext.Debt.Add(new EmployerDebt
+            {
+                EmployerId = employer.Id
+            });
+
+            await transaction.CommitAsync();
 
             return Redirect("/authentication/sign-in?ReturnUrl=%2FEmployer");
         }

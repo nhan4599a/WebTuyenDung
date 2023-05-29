@@ -48,6 +48,7 @@
                                                         <th>Họ tên</th>
                                                         <th>Số điện thoại</th>
                                                         <th>Email</th>
+                                                        <th>CV</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -58,6 +59,12 @@
                                                             <td>@job.Value[i].Name</td>
                                                             <td>@job.Value[i].PhoneNumber</td>
                                                             <td>@job.Value[i].Email</td>
+                                                            <td style="display: flex; flex-direction: column">
+                                                                @foreach (var cvItem in job.Value[i].CVs)
+                                                                {
+                                                                    <a href="@(cvItem.Url ?? $"/cv/{cvItem.Id}")" target="_blank">@cvItem.Name</a>
+                                                                }
+                                                            </td>
                                                         </tr>
                                                     }
                                                 </tbody>

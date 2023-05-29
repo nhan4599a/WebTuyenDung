@@ -8,6 +8,7 @@
 		<ItemGroup>
 		  <Content Remove="DataSamples\CandidateData.json" />
 		  <Content Remove="DataSamples\EmployerData.json" />
+		  <Content Remove="DataSamples\EmployerDebtData.json" />
 		  <Content Remove="DataSamples\LocaleData.json" />
 		  <Content Remove="DataSamples\PostData.json" />
 		  <Content Remove="DataSamples\RecruimentNewsData.json" />
@@ -31,6 +32,9 @@
 		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  </EmbeddedResource>
 		  <EmbeddedResource Include="DataSamples\EmployerData.json">
+		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  </EmbeddedResource>
+		  <EmbeddedResource Include="DataSamples\EmployerDebtData.json">
 		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  </EmbeddedResource>
 		  <EmbeddedResource Include="DataSamples\LocaleData.json">

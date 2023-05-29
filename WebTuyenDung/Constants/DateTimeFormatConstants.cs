@@ -1,6 +1,6 @@
 ﻿namespace WebTuyenDung.Constants
 {
-    public class DateTimeFormatConstants
+    public static class DateTimeFormatConstants
     {
         public const string DATE_ONLY_FORMAT = "dd/MM/yyyy";
 

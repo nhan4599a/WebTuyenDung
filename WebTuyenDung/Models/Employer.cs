@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WebTuyenDung.Models
 {
@@ -17,6 +18,8 @@ namespace WebTuyenDung.Models
         public string PhoneNumber { get; set; } = default!;
 
         public Locale City { get; set; } = default!;
+
+        public DateTimeOffset? LockedOutAt { get; set; }
 
         public bool IsApproved { get; set; }
 

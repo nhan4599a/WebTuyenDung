@@ -15,5 +15,7 @@ namespace WebTuyenDung.Models
 
         [MaxLength(10)]
         public string PhoneNumber { get; set; } = default!;
+
+        public List<CurriculumVitae> CVs { get; set; } = default!;
     }
 }

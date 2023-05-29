@@ -35,6 +35,8 @@ namespace WebTuyenDung.Data
 
         public DbSet<LikedCurriculumVitae> LikedCVs { get; set; }
 
+        public DbSet<EmployerDebt> Debt { get; set; }
+
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
             base.ConfigureConventions(configurationBuilder);
@@ -64,7 +66,8 @@ namespace WebTuyenDung.Data
                 .HasUserData()
                 .HasData<RecruimentNews>()
                 .HasData<Post>()
-                .HasData<Locale>();
+                .HasData<Locale>()
+                .HasData<EmployerDebt>();
         }
     }
 }

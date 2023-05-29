@@ -10,7 +10,9 @@ namespace WebTuyenDung.Models
     {
         public string Name { get; set; } = default!;
 
-        public string FilePath { get; set; } = default!;
+        public string ImagePath { get; set; } = default!;
+
+        public string? VideoPath { get; set; }
 
         public int CandidateId { get; set; }
 

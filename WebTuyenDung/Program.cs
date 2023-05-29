@@ -15,7 +15,12 @@ namespace WebTuyenDung
             return Host.CreateDefaultBuilder(args)
                        .ConfigureWebHostDefaults(webBuilder =>
                        {
-                           webBuilder.UseStartup<Startup>();
+                           webBuilder
+                               .UseStartup<Startup>()
+                               .UseKestrel(options =>
+                               {
+                                   options.Limits.MaxRequestBodySize = 256 * 1024 * 1024;
+                               });
                        });
         }
     }

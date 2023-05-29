@@ -39,7 +39,7 @@ namespace WebTuyenDung.Configurations
 
             TypeAdapterConfig<CurriculumVitae, CurriculumVitaeViewModel>
                 .NewConfig()
-                .Map(dest => dest.Url, source => source.Type == CVType.DirectInput ? null : source.FilePath);
+                .Map(dest => dest.Url, source => source.Type == CVType.DirectInput ? null : source.ImagePath);
 
             TypeAdapterConfig<JobApplication, JobApplicationHistoryViewModel>
                 .NewConfig()
@@ -58,7 +58,7 @@ namespace WebTuyenDung.Configurations
 
             TypeAdapterConfig<CurriculumVitae, CurriculumVitaeDetailViewModel>
                 .NewConfig()
-                .Map(e => e.Image, source => source.FilePath)
+                .Map(e => e.Image, source => source.ImagePath)
                 .Map(e => e.Introduction, source => source.Detail!.Introduction)
                 .Map(e => e.ExpectedPosition, source => source.Detail!.ExpectedPosition)
                 .Map(e => e.Email, source => source.Detail!.Email)

@@ -16,5 +16,7 @@ namespace WebTuyenDung.ViewModels.Employer
         public List<BaseRecruimentNewsViewModel> TopViewRecruimentNews { get; set; } = default!;
 
         public Dictionary<int, int> ApplicationsCountChartData { get; set; } = default!;
+
+        public int Balance { get; set; }
     }
 }

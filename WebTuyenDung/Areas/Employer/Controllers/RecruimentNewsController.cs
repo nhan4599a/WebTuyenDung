@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using WebTuyenDung.Attributes;
+using WebTuyenDung.Constants;
 using WebTuyenDung.Data;
 using WebTuyenDung.Helper;
 using WebTuyenDung.Models;
@@ -16,11 +17,11 @@ namespace WebTuyenDung.Areas.Employer.Controllers
     [ControllerName("recruiment-news")]
     public class RecruimentNewsController : BaseEmployerController
     {
-        private readonly RecruimentDbContext dbContext;
+        private readonly RecruimentDbContext _dbContext;
 
         public RecruimentNewsController(RecruimentDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            this._dbContext = dbContext;
         }
 
         public IActionResult Index()
@@ -31,7 +32,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         [HttpGet]
         public Task<IPaginationResult<MinimalRecruimentNewsViewModel>> Search(SearchRecruimentNewsRequest searchRequest)
         {
-            IQueryable<RecruimentNews> query = dbContext.RecruimentNews.AsNoTracking().FilterRecruimentNewsByMode(searchRequest.Mode);
+            IQueryable<RecruimentNews> query = _dbContext.RecruimentNews.AsNoTracking().FilterRecruimentNewsByMode(searchRequest.Mode);
 
             if (!string.IsNullOrWhiteSpace(searchRequest.Keyword))
             {
@@ -55,6 +56,8 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                 return View();
             }
 
+            var transaction = await _dbContext.Database.BeginTransactionAsync();
+
             var recruimentNews = request.Adapt<RecruimentNews>();
 
             if (request.Salary != "Khác" && request.Salary != "Thỏa thuận")
@@ -65,11 +68,22 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                 recruimentNews.MaximumSalary = MaximumSalary;
             }
 
-            recruimentNews.EmployerId = User.GetUserId();
+            var employerId = User.GetUserId();
 
-            dbContext.RecruimentNews.Add(recruimentNews);
+            recruimentNews.EmployerId = employerId;
 
-            var saveItemsCount = await dbContext.SaveChangesAsync();
+            _dbContext.RecruimentNews.Add(recruimentNews);
+
+            var saveItemsCount = await _dbContext.SaveChangesAsync();
+
+            await _dbContext.Debt
+                            .Where(e => e.EmployerId == employerId)
+                            .UpdateFromQueryAsync(e => new EmployerDebt
+                            {
+                                Balance = e.Balance + SystemConstants.PRICE_PER_RECRUIMENT_NEWS
+                            });
+
+            await transaction.CommitAsync();
 
             return RedirectToAction(nameof(Index));
         }
@@ -77,7 +91,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var recruimentNews = await dbContext.RecruimentNews.FirstOrDefaultAsync(e => e.Id == id);
+            var recruimentNews = await _dbContext.RecruimentNews.FirstOrDefaultAsync(e => e.Id == id);
 
             if (recruimentNews == null)
             {
@@ -91,7 +105,7 @@ namespace WebTuyenDung.Areas.Employer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CreateOrUpdateRecruimentNewsRequest request)
         {
-            var updatedCount = await dbContext
+            var updatedCount = await _dbContext
                                         .RecruimentNews
                                         .Where(e => e.Id == id)
                                         .UpdateFromQueryAsync(e => new RecruimentNews

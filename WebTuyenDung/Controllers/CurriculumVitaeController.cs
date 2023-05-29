@@ -60,7 +60,7 @@ namespace WebTuyenDung.Controllers
             var queryResult = await DbContext
                                         .CVs
                                         .Where(e => e.Id == id)
-                                        .Select(e => new { e.Type, e.FilePath, e.CandidateId })
+                                        .Select(e => new { e.Type, e.ImagePath, e.CandidateId })
                                         .FirstOrDefaultAsync();
 
             if (queryResult == null)
@@ -85,7 +85,7 @@ namespace WebTuyenDung.Controllers
             }
             else
             {
-                var actualCvPath = _fileService.GetStaticFileUrlForFile(queryResult.FilePath, FilePath.CurriculumTitae)!;
+                var actualCvPath = _fileService.GetStaticFileUrlForFile(queryResult.ImagePath, FilePath.CurriculumTitae)!;
                 return RedirectPermanent(actualCvPath);
             }
         }
@@ -114,7 +114,7 @@ namespace WebTuyenDung.Controllers
                 {
                     CandidateId = userId,
                     Name = request.Name,
-                    FilePath = cvPath,
+                    ImagePath = cvPath,
                     IsUploadDirectlyByUser = true,
                     Type = CVType.File
                 });
@@ -149,6 +149,11 @@ namespace WebTuyenDung.Controllers
             }
 
             var filePath = await _fileService.SaveAsync(viewModel.Image, FilePath.CurriculumTitae);
+            string? videoPath = null;
+            if (viewModel.Video != null)
+            {
+                videoPath = await _fileService.SaveAsync(viewModel.Video, FilePath.CurriculumTitae);
+            }
             var detail = viewModel.Adapt<CurriculumVitaeDetail>();
             detail.Email = User.GetUsername();
             detail.PhoneNumber = User.GetPhoneNumber()!;
@@ -162,7 +167,8 @@ namespace WebTuyenDung.Controllers
                 CandidateId = candidateId,
                 Type = CVType.DirectInput,
                 IsUploadDirectlyByUser = true,
-                FilePath = filePath,
+                ImagePath = filePath,
+                VideoPath = videoPath,
                 Detail = detail
             };
 

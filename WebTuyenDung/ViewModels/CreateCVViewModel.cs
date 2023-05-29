@@ -6,6 +6,8 @@ namespace WebTuyenDung.ViewModels
     {
         public IFormFile Image { get; set; } = default!;
 
+        public IFormFile? Video { get; set; }
+
         public string Name { get; set; } = default!;
 
         public string ExpectedPosition { get; set; } = default!;

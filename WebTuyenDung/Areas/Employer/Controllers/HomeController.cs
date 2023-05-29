@@ -75,12 +75,15 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                                                         })
                                                         .Future();
 
+            var balanceQuery = _dbContext.Debt.Where(e => e.EmployerId == employerId).Select(e => e.Balance).DeferredFirst().FutureValue();
+
             var recruimentNewsCount = recruimentNewsCountQuery.ToDictionary(e => e.Key, e => e.Count);
             var approvedPostsCount = await approvedPostsCountQuery.ValueAsync();
             var candidatesCount = await candidatesCountQuery.ValueAsync();
             var topViewRecruimentNews = await topViewRecruimentNewsQuery.ToListAsync();
             var temp = await applicationsCountChartDataQuery.ToListAsync();
             var applicationsCountChartData = applicationsCountChartDataQuery.ToDictionary(e => e.Key, e => e.Count);
+            var balance = await balanceQuery.ValueAsync();
 
             return new StatisticViewModel
             {
@@ -89,7 +92,8 @@ namespace WebTuyenDung.Areas.Employer.Controllers
                 ApprovedPosts = approvedPostsCount,
                 TotalCandidates = candidatesCount,
                 TopViewRecruimentNews = topViewRecruimentNews,
-                ApplicationsCountChartData = applicationsCountChartData
+                ApplicationsCountChartData = applicationsCountChartData,
+                Balance = balance
             };
         }
     }

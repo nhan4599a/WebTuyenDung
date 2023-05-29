@@ -88,7 +88,7 @@ namespace WebTuyenDung.Controllers
                 var savedCV = new CurriculumVitae
                 {
                     Name = $"{candidateName} - {jobName} - {DateTime.Now:dd/MM/yyyy}",
-                    FilePath = cvFilePath,
+                    ImagePath = cvFilePath,
                     CandidateId = candidateId,
                     IsUploadDirectlyByUser = false,
                     Type = CVType.File
